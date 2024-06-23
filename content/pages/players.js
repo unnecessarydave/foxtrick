@@ -1066,11 +1066,8 @@ Foxtrick.Pages.Players.getPlayerList = function(doc, callback, options) {
 				player.lastPositionType = Foxtrick.L10n.getPositionType(position);
 
 				let ratingCircle = matchLink.previousElementSibling;
-				let fullStars = ratingCircle.querySelector('.stars-full, .stars-full-twodigits');
-				let full = fullStars && parseInt(fullStars.textContent, 10) || 0;
-				let halfStars = ratingCircle.querySelector('.stars-half, .stars-half-twodigits');
-				let half = halfStars && parseFloat(halfStars.textContent) || 0;
-				let rating = full + half;
+				let fullStars = ratingCircle.getAttribute('rating');
+				let rating = fullStars && parseFloat(fullStars) || 0;
 
 				let stamCircle = ratingCircle.querySelector('circle[transform][stroke-dasharray]');
 				if (stamCircle) {
