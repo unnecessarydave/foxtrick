@@ -1066,21 +1066,15 @@ Foxtrick.Pages.Players.getPlayerList = function(doc, callback, options) {
 				player.lastPositionType = Foxtrick.L10n.getPositionType(position);
 
 				let ratingCircle = matchLink.previousElementSibling;
-				let fullStars = ratingCircle.getAttribute('rating');
-				let rating = fullStars && parseFloat(fullStars) || 0;
-
-				let stamCircle = ratingCircle.querySelector('circle[transform][stroke-dasharray]');
-				if (stamCircle) {
-					let bgCircle = ratingCircle.querySelector('circle.background');
-					let totalStamina = parseFloat(stamCircle.getAttribute('stroke-dasharray'));
-					let staminaVal = parseFloat(stamCircle.getAttribute('stroke-dashoffset'));
-					let bgVal = parseFloat(bgCircle.getAttribute('stroke-dashoffset'));
-					let staminaLoss = staminaVal - bgVal;
-					let lossPctg = staminaLoss / totalStamina;
-					let finalPctg = 1 - lossPctg;
+				if (ratingCircle) {
+					let fullStars = ratingCircle.getAttribute('rating');
+					let rating = fullStars && parseFloat(fullStars) || 0;
+					let stamina = ratingCircle.getAttribute('stamina');
+					let staminaVal = stamina && parseFloat(stamina) || 1;
+					let lossPctg = 1-staminaVal;
 
 					player.lastRating = rating; // =average
-					player.lastRatingEndOfGame = finalPctg * rating;
+					player.lastRatingEndOfGame = rating * staminaVal;
 					player.lastRatingDecline = lossPctg * rating;
 					return;
 				}
