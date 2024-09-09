@@ -1035,6 +1035,24 @@
 			"symbol": "XPF"
 		},
 		{
+			"code": "BSD",
+			"eurorate": "1.0",
+			"leagues": {
+				"172": "Bahamas"
+			},
+			"name": "Bahamian dollar",
+			"symbol": "BS$"
+		},
+		{
+			"code": "RWF",
+			"eurorate": "0.05",
+			"leagues": {
+				"173": "Rwanda"
+			},
+			"name": "Rwandan franc",
+			"symbol": "RWF"
+		},
+		{
 			"code": "PEN",
 			"eurorate": "1.0",
 			"leagues": {
