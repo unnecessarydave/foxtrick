@@ -185,7 +185,7 @@ Foxtrick.Pages.Players.getPlayerNodes = function(doc, include) {
 	};
 
 	let mainBody = doc.getElementById('mainBody');
-	let playerList = doc.querySelector('.playerList');
+	let playerList = doc.querySelector('#mainBody > .playerList');
 	let nodeColl = playerList ? playerList.children : mainBody.children;
 
 	let nodes = /** @type {HTMLElement[]} */ ([...nodeColl]);
