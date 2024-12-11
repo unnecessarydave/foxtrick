@@ -20,7 +20,7 @@ Foxtrick.modules['LiveAlert'] = {
 	run: function(doc) {
 		let isNewLive = Foxtrick.Pages.Match.isNewLive(doc);
 		let results = isNewLive ?
-			doc.querySelector('#ngLive .htbox-content') :
+			doc.querySelector('#ngLive .ht-tabs') :
 			Foxtrick.getMBElement(doc, 'UpdatePanelPopupMessages');
 
 		if (!results)
@@ -32,10 +32,18 @@ Foxtrick.modules['LiveAlert'] = {
 		if (!isNewLive)
 			return;
 
+		// call runTabs after page load to set initial stored values for scores
+		this.runTabs(doc, results);
+
+		/*
+		 * The score tabs in the Live scores banner now update immediately,
+		 * so we no longer need this. 
+		 *
 		// add overlay pre-announce support
 		let container = doc.querySelector('.live-left-container');
 		if (container)
 			Foxtrick.onChange(container, this.runOverlay.bind(this));
+		*/
 	},
 
 	// onChange: function(doc) {
@@ -118,7 +126,7 @@ Foxtrick.modules['LiveAlert'] = {
 		var ret = null;
 
 		if (Foxtrick.Pages.Match.isNewLive(tab.ownerDocument))
-			ret = Foxtrick.toArray(tab.querySelectorAll('.ellipsis'));
+			ret = Foxtrick.toArray(tab.querySelectorAll('span.ellipsis'));
 		else
 			ret = [tab.querySelector('.hometeam'), tab.querySelector('.awayteam')];
 
