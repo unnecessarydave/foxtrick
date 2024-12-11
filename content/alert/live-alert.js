@@ -208,6 +208,7 @@ Foxtrick.modules['LiveAlert'] = {
 
 			Foxtrick.util.notify.create(txt, url, { id: info.teamsText })
 				.catch(e => e.message != Foxtrick.TIMEOUT_ERROR ? Promise.reject(e) : e)
+				// @ts-ignore: MODULE_NAME is set after module is loaded
 				.catch(Foxtrick.catch(MODULE));
 		}
 
