@@ -328,7 +328,8 @@ Foxtrick.reportError = (err) => {
 
 	switch (Foxtrick.Prefs.getString('errorReporting')) {
 		case 'reportAll':
-			report();
+			// Disabled while using free plan on exceptionless.io
+			//report();
 			break;
 		case 'ignoreAll':
 			return;

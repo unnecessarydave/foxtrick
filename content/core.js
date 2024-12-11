@@ -494,16 +494,18 @@ Foxtrick.modules.Core = {
 			disagree.style.justifyContent = 'space-around';
 			options.appendChild(disagree);
 
-			let always = doc.createElement('button');
-			always.type = 'button';
-			always.textContent = Foxtrick.L10n.getString('reportBug.always');
-			Foxtrick.onClick(always, function() {
-				Foxtrick.Prefs.setString('errorReporting', 'reportAll');
-				let doc = note.ownerDocument;
-				hideNote();
-				Foxtrick.modules.Core.reportBug(doc);
-			});
-			agree.appendChild(always);
+			// Disabled while using free plan on exceptionless.io 
+			//
+			// let always = doc.createElement('button');
+			// always.type = 'button';
+			// always.textContent = Foxtrick.L10n.getString('reportBug.always');
+			// Foxtrick.onClick(always, function() {
+			// 	Foxtrick.Prefs.setString('errorReporting', 'reportAll');
+			// 	let doc = note.ownerDocument;
+			// 	hideNote();
+			// 	Foxtrick.modules.Core.reportBug(doc);
+			// });
+			// agree.appendChild(always);
 
 			let report = doc.createElement('button');
 			report.type = 'button';
