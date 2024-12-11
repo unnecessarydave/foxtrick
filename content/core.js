@@ -341,7 +341,7 @@ Foxtrick.modules.Core = {
 	 */
 	addBugReportLink: function(doc) {
 		const NOTE_ID = 'ft-bug-report-confirm';
-		const BUG_DATA_URL = 'https://www.foxtrick.org/bug-report-data';
+		const BUG_DATA_URL = 'https://foxtrick-ng.github.io/datacollection.html';
 
 		var bottom = doc.getElementById('bottom');
 		if (!bottom)
@@ -446,7 +446,7 @@ Foxtrick.modules.Core = {
 	 */
 	displayErrorNotice: function(doc, ask) {
 		const NOTE_ID = 'ft-bug-ask-notice';
-		const BUG_DATA_URL = 'https://www.foxtrick.org/bug-report-data';
+		const BUG_DATA_URL = 'https://foxtrick-ng.github.io/datacollection.html';
 
 		if (doc.getElementById(NOTE_ID))
 			return;
