@@ -77,14 +77,15 @@ Foxtrick.modules.Core = {
 	},
 
 	/**
-	* @param {document} doc
-	*/
+	 * test
+	 * @param {Document} doc HTML document object
+	 */
 	showReleaseModal: function(doc) {
 		// TODO: this needs maintenance:
 		// use release-notes-links.yml directly
 
 		var CONTRIBUTE_URL = 'https://www.foxtrick.org/contribute';
-		var CHANGES_URL = 'foxtrick://preferences.html#tab=changes';
+		var CHANGES_URL = 'https://foxtrick-ng.github.io/releasenotes.html';
 		var UPDATES_URL = 'https://twitter.com/Foxtrick';
 
 		var content = doc.createDocumentFragment();
@@ -95,9 +96,11 @@ Foxtrick.modules.Core = {
 		header.textContent = Foxtrick.L10n.getString('changes.newVersion');
 		content.appendChild(header);
 
+		/* disable until we have a new contribute page
 		var pSupport = doc.createElement('p');
 		Foxtrick.L10n.appendLink('changes.support', pSupport, CONTRIBUTE_URL);
 		content.appendChild(pSupport);
+		*/
 
 		var link = doc.createElement('a');
 		link.href = CHANGES_URL;
@@ -105,10 +108,11 @@ Foxtrick.modules.Core = {
 		link.target = '_blank';
 		content.appendChild(link);
 
+		/* disable until we decide what to replace the Twitter link with, if anything
 		var pUpdates = doc.createElement('p');
 		Foxtrick.L10n.appendLink('changes.updates', pUpdates, UPDATES_URL);
 		content.appendChild(pUpdates);
-
+		*/
 		Foxtrick.makeModal(doc, Foxtrick.version, content);
 	},
 
