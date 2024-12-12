@@ -310,7 +310,7 @@
 		"browser_style": false,
 		"open_in_tab": true
 	},
-	"homepage_url": "https://www.foxtrick.org/",
+	"homepage_url": "https://foxtrick-ng.github.io/",
 	// <!-- gecko-specific -->
 	"browser_specific_settings": {
 		"gecko": {
