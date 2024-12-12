@@ -320,6 +320,5 @@
 		}
 	},
 	// <!-- end gecko-specific -->
-	"update_url": "https://www.foxtrick.org/nightly/chrome/update.xml",
 	"version": "0.17.9"
 }
