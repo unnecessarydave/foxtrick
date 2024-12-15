@@ -40,7 +40,7 @@ Foxtrick.modules.LargeFlags = {
 			new: 93,
 		};
 
-		let { isNewDesign } = Foxtrick.Pages.Player.getInfoTable(doc);
+		let isNewDesign  = Foxtrick.Pages.Player.isNewDesign(doc);
 		let size = SIZES[isNewDesign ? 'new' : 'old'];
 
 		let img = flag.querySelector('img');

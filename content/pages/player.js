@@ -444,10 +444,9 @@ Foxtrick.Pages.Player.getTeamName = function(doc) {
  * @return {{isNewDesign: boolean, isYouth: boolean, table: HTMLTableElement}}
  */
 Foxtrick.Pages.Player.getInfoTable = function(doc) {
-	var isNewDesign = false;
-	var infoDiv = doc.querySelector('.transferPlayerInformation');
-	if (infoDiv)
-		isNewDesign = true;
+	var infoDiv, isNewDesign = this.isNewDesign(doc);
+	if (isNewDesign)
+		infoDiv = doc.querySelector('.transferPlayerInformation');
 	else
 		infoDiv = doc.querySelector('.playerInfo');
 
@@ -456,6 +455,16 @@ Foxtrick.Pages.Player.getInfoTable = function(doc) {
 
 	return { isNewDesign, isYouth, table };
 };
+
+/**
+ * Test if Player page is in new or classic view.
+ * @param  {document} doc HTMLDocument
+ * @return {boolean} isNewDesign
+ */
+Foxtrick.Pages.Player.isNewDesign = function(doc) {
+	let testElement = !!doc.querySelector('.transferPlayerInformation');
+	return testElement ? true : false;
+}
 
 /**
  * Get the player wage cell.
@@ -537,7 +546,7 @@ Foxtrick.Pages.Player.getSpecialtyNumber = function(doc) {
 	var specNr = 0;
 	try {
 		var playerNode = doc.querySelector('.playerInfo');
-		var isNewDesign = !!playerNode.querySelector('.transferPlayerInformation');
+		var isNewDesign = this.isNewDesign(doc);
 
 		if (isNewDesign) {
 			const SPEC_PREFIX = 'icon-speciality-'; // HT-TYPO
