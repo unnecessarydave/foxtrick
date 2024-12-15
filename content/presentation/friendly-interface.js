@@ -29,6 +29,9 @@ Foxtrick.modules['FriendlyInterface'] = {
 			// a player has highlight <=> he is a national player
 			var highlight = playerInfo.querySelector('.highlight');
 			if (highlight) {
+				if (Foxtrick.Pages.Player.isNewDesign(doc))
+					return; // new design for Player page already adds NT link
+				
 				var text = highlight.textContent;
 				var leagueId = Foxtrick.Pages.Player.getNationalityId(doc);
 				let league = Foxtrick.XMLData.League[leagueId];
