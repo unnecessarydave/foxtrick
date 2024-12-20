@@ -108,6 +108,7 @@ Foxtrick.entry.contentScriptInit = function(data) {
 	Foxtrick.XMLData.htCurrencyJSON = JSON.parse(data.currencyJSON);
 	Foxtrick.XMLData.aboutJSON = JSON.parse(data.aboutJSON);
 	Foxtrick.XMLData.worldDetailsJSON = JSON.parse(data.worldDetailsJSON);
+	Foxtrick.XMLData.nationalTeamsJSON = JSON.parse(data.nationalTeamsJSON);
 	Foxtrick.XMLData.League = data.league;
 	Foxtrick.XMLData.countryToLeague = data.countryToLeague;
 };
