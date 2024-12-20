@@ -7,10 +7,9 @@
 
 'use strict';
 
-/* eslint-disable */
 if (!this.Foxtrick)
+	// @ts-ignore
 	var Foxtrick = {};
-/* eslint-enable */
 
 if (!Foxtrick.util)
 	Foxtrick.util = {};
@@ -83,6 +82,7 @@ Foxtrick.util.matchView.fillMatches = function(container, xml, errorText) {
 
 	/**
 	 * Map HTO match type to NT match types
+	 * 
 	 * @param {number} type match type 
 	 * @return {number} match type
 	 */
@@ -115,8 +115,8 @@ Foxtrick.util.matchView.fillMatches = function(container, xml, errorText) {
 	// get last previous and first future match
 	playedMatches.reverse();
 	var displayed = Foxtrick.map(function(matches) {
-		// only supported types (no HTO)
-		return Foxtrick.nth(getMatchInfo, matches);
+		// only supported types
+		return Foxtrick.nth((type) => !!getMatchInfo(type), matches);
 	}, [playedMatches, notPlayedMatches]);
 
 	var nextMatchDate = displayed[1] ? xml.time('MatchDate', displayed[1]) : null;
