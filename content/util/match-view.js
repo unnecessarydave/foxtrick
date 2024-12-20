@@ -76,13 +76,10 @@ Foxtrick.util.matchView.fillMatches = function(container, xml, errorText) {
 		return type2info(type, cup);
 	};
 
-	/**
-	 * Detects if the Team is a NT/U21 team.
-	 * @return {boolean} is NT/U21
-	 */
-	const isNt = function() {
-		return xml.text('ShortTeamName') == '';
-	}
+	/* FIXME: Only NTs have an empty ShortTeamName.
+	This is obviously a hack. Best fixed by refactoring this module to use
+	nationalteammatches.xml for NT matches. */
+	let isNt = xml.text('ShortTeamName') == '';
 
 	/**
 	 * Map HTO match type to NT match types
@@ -91,7 +88,7 @@ Foxtrick.util.matchView.fillMatches = function(container, xml, errorText) {
 	 */
 	const mapNtType = function(type) {
 		let ntTypeMap = { 50: 10, 51: 11, 61: 12 };
-		return isNt() ? ntTypeMap[type] : type;
+		return isNt ? ntTypeMap[type] : type;
 	}
 
 	var doc = container.ownerDocument;
@@ -142,7 +139,7 @@ Foxtrick.util.matchView.fillMatches = function(container, xml, errorText) {
 		matchLink.dataset.matchType = match.type;
 		
 		let sourceSystem = 'Hattrick';
-		if (isNt())
+		if (isNt)
 			sourceSystem = 'HTOIntegrated';
 		else if (isYouth)
 			sourceSystem = 'Youth';
