@@ -2,6 +2,7 @@
 /**
  * friendly-interface
  * More friendly interface tweaks
+ * 
  * @author ryanli, convincedd
  */
 
@@ -15,7 +16,7 @@ Foxtrick.modules['FriendlyInterface'] = {
 		'HideSpeechlessSecretary',
 	],
 
-	// eslint-disable-next-line complexity
+
 	run: function(doc) {
 		var module = this;
 		if (Foxtrick.isPage(doc, 'playerDetails') &&

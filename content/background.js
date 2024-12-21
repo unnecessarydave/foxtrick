@@ -9,10 +9,8 @@
 
 'use strict';
 
-/* eslint-disable */
 if (!this.Foxtrick)
 	var Foxtrick = {};
-/* eslint-enable */
 
 if (!Foxtrick.loader)
 	Foxtrick.loader = {};
@@ -433,17 +431,13 @@ if (Foxtrick.arch == 'Sandboxed')
  * @typedef FT.ResourceDict
  * @prop {Record<string, *>} prefsChromeUser
  * @prop {Record<string, *>} prefsChromeDefault
-
  * @prop {Record<string, string>} propertiesDefault
  * @prop {Record<string, string>} properties
  * @prop {string} screenshotsDefault
  * @prop {string} screenshots
-
  * @prop {number} plForm
  * @prop {number} plFormDefault
- *
  * @prop {string} [cssText]
-
  * @prop {Record<string, string>} htLangJSON
  * @prop {string} currencyJSON
  * @prop {string} aboutJSON

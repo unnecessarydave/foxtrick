@@ -1,16 +1,15 @@
 /**
  * xml-load.js
  * xml loading
+ * 
  * @author convinced, LA-MJ
  */
 
 'use strict';
 
-/* eslint-disable */
 if (!this.Foxtrick)
 	// @ts-ignore
 	var Foxtrick = {};
-/* eslint-enable */
 
 Foxtrick.XMLData = {
 	MODULE_NAME: 'XMLData',
@@ -37,6 +36,7 @@ Foxtrick.XMLData = {
 	/**
 	 * @param {boolean} _ reInit
 	 */
+	/* eslint-disable-next-line no-unused-vars */
 	init: function(_) {
 		var module = this;
 
@@ -121,6 +121,9 @@ Foxtrick.XMLData = {
  * @prop {string} CupName
  * @prop {string} MatchRound
  * @prop {string} MatchRoundsLeft
+ */
+
+/** 
  * @typedef Countrydefinition
  * @prop {string} Available
  * @prop {string} CountryCode
@@ -130,6 +133,9 @@ Foxtrick.XMLData = {
  * @prop {string} CurrencyRate
  * @prop {string} DateFormat
  * @prop {string} TimeFormat
+ */
+
+/**
  * @typedef LeagueDefinition
  * @prop {string} ActiveTeams
  * @prop {string} ActiveUsers

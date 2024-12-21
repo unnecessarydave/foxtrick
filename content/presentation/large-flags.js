@@ -1,6 +1,7 @@
 /**
  * large-flags.js
  * Script which replaces the tiny country flag on player pages with a large one
+ * 
  * @author larsw84, LA-MJ
  */
 
