@@ -474,6 +474,9 @@ Foxtrick.Pages.Player.getInfoTable = function(doc) {
 /**
  * Test if Player page is in new or classic view.
  * 
+ * Note: this will return false for youth players,
+ * regardless of the view.
+ * 
  * @param  {document} doc HTMLDocument
  * @return {boolean} isNewDesign
  */
