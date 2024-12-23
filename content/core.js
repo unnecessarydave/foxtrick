@@ -399,8 +399,8 @@ Foxtrick.modules.Core = {
 				return;
 
 
-			// add a somewhat sane limit of 200K
-			const Ki = 1024, KB = 200, MAX_LENGTH = KB * Ki;
+			// set to 50K for free exceptionless.io
+			const Ki = 1024, KB = 50, MAX_LENGTH = KB * Ki;
 
 			var bug = log;
 			if (bug.length > MAX_LENGTH)
