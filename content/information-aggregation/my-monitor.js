@@ -145,8 +145,7 @@ Foxtrick.modules.MyMonitor = {
 			 * @type {MyMonitorFilterType[]}
 			 */
 			var matchesByType = [
-			//	README: disabled as this does the same thing as source: Senior in current implementation
-			//	'Official',
+				'Official',
 			//	README: diabled as NT matches are now source: HTOIntegrated
 			//	'NT',
 			];
