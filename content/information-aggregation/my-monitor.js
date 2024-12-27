@@ -146,7 +146,7 @@ Foxtrick.modules.MyMonitor = {
 			 */
 			var matchesByType = [
 				'Official',
-			//	README: diabled as NT matches are now source: HTOIntegrated
+			//	README: disabled as NT matches are now source: HTOIntegrated
 			//	'NT',
 			];
 
