@@ -247,7 +247,7 @@ Foxtrick.dump = function(content) {
 };
 
 /**
- * @param {string} header
+ * @param {object} header
  * @param {string} bug
  * @param {string} prefs
  * @param {function(string):void} [refIdCb]
@@ -257,13 +257,14 @@ Foxtrick.reportBug = (header, bug, prefs, refIdCb) => {
 	let { teamId, teamName } = Foxtrick.modules.Core.TEAM;
 	client.config.setUserIdentity(String(teamId), String(teamName));
 
-	let b = client.createLog('bugReport', header, 'Error')
+	let b = client.createLog('bugReport', header.summary, 'Error')
 		// eslint-disable-next-line no-magic-numbers
 		.setReferenceId(Math.floor((1 + Math.random()) * 0x10000000000).toString(16).slice(1))
 		.addTags(String(Foxtrick.branch.match(/^\w+/)))
 		.setProperty('HTLang', Foxtrick.Prefs.getString('htLanguage'))
 		.setProperty('bug', String(bug))
-		.setProperty('prefs', String(prefs));
+		.setProperty('prefs', String(prefs))
+		.setManualStackingKey(header.stackKey, header.stackKey);
 
 	let doc = Foxtrick.log.doc;
 	if (Foxtrick.isStage(doc))
