@@ -91,7 +91,7 @@ Foxtrick.modules['PsicoTSI'] = {
 			return;
 
 		var p = Foxtrick.Pages.Player.getSkills(doc);
-		var entryPoint = doc.querySelector('.ownerAndStatusPlayerInfo ~ .flex') ||
+		var entryPoint = doc.querySelector('#mainBody > .separator') ||
 			Foxtrick.getMBElement(doc, 'updBestLatest') ||
 			Foxtrick.getMBElement(doc, 'updPlayerTabs');
 
