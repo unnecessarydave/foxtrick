@@ -37,7 +37,7 @@ Foxtrick.modules.ShowFriendlyBooked = {
 				let teamLink = teamCell.querySelector('a').href;
 				let teamId = Foxtrick.util.id.getTeamIdFromUrl(teamLink);
 
-				let destCell = row.cells[4];
+				let destCell = row.cells[5];
 				destCell.textContent = Foxtrick.L10n.getString('status.loading.abbr');
 				destCell.title = Foxtrick.L10n.getString('status.loading');
 
