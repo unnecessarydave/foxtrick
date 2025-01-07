@@ -48,16 +48,6 @@ Foxtrick.modules['NewMail'] = {
 
 		if (myHt.getElementsByTagName('span').length) {
 			let mailCountSpan = myHt.getElementsByTagName('span')[0];
-
-			Foxtrick.onClick(mailCountSpan, function() {
-				let doc = this.ownerDocument;
-				let newURL = new URL('/MyHattrick/Inbox/', doc.location.origin);
-				doc.location.assign(newURL);
-
-				// disable MyHT link
-				return false;
-			});
-
 			newMailCount = parseInt(mailCountSpan.textContent.match(/\d+/)[0], 10) || 0;
 		}
 
