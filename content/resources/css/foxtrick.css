@@ -143,6 +143,10 @@ html[dir="rtl"] .date { padding-right: initial; }
 	width: 100%;
 }
 
+.ft-hidden {
+	display: none !important;
+}
+
 /* faux-link */
 .ft-link { cursor: pointer; text-decoration: underline; }
 
