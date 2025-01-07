@@ -407,8 +407,10 @@ Foxtrick.modules.Core = {
 				bug = bug.slice(bug.length - MAX_LENGTH);
 
 			let url = new URL(doc.URL);
-			let href = `${url.pathname}?${url.searchParams.toString()}`;
-			let header = 'BUG URL: ' + href;
+			let header = {
+				summary: `BUG URL: ${url.pathname}?${url.searchParams.toString()}`,
+				stackKey: url.pathname
+			};
 
 			var prefs = Foxtrick.Prefs.save({ notes: true, skipFiles: true });
 

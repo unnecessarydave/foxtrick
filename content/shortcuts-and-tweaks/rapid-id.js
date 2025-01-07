@@ -153,7 +153,7 @@ Foxtrick.modules['RapidId'] = {
 				// hide rightnow on demand
 				var rightnow = doc.getElementById('ctl00_ctl00_ucOngoingEvents_pnlOngoingEvents');
 				if (rightnow)
-					Foxtrick.addClass(rightnow, 'hidden');
+					Foxtrick.addClass(rightnow, 'ft-hidden');
 			}
 			catch (e) {
 				Foxtrick.log(e);
