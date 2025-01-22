@@ -409,6 +409,14 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 			return ret;
 		});
 
+		Foxtrick.Manifest = {
+			manifest_version: 3 // default 3 because offline document doesn't have chrome.runtime.getManifest
+		};
+		if (chrome.runtime.getManifest)
+				Foxtrick.Manifest = chrome.runtime.getManifest();
+		console.log('manifest version: ' + Foxtrick.Manifest.manifest_version);
+		console.log('context: ' + Foxtrick.context);
+
 		var ACTIVE_TABS = new Set();
 
 		Foxtrick.SB.tabs.getId = function(tab) {
@@ -495,10 +503,12 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 
 					ACTIVE_TABS.clear();
 					ACTIVE_TABS.add(senderId);
-
-					for (let i of tabListOld) {
-						let msg = { req: 'checkAlive', id: i };
-						chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
+					
+					if (Foxtrick.Manifest.manifest_version == 2) {
+						for (let i of tabListOld) {
+							let msg = { req: 'checkAlive', id: i };
+							chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
+						}
 					}
 				};
 

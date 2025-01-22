@@ -10,10 +10,16 @@
 // jscs:disable disallowFunctionDeclarations
 
 var BackgroundPage, isChrome = false, Foxtrick;
-if (typeof window.chrome == 'object') {
-	BackgroundPage = chrome.extension.getBackgroundPage();
-	isChrome = true;
-	Foxtrick = BackgroundPage.Foxtrick;
+if (Foxtrick && Foxtrick.Manifest.manifest_version == 3) {
+	if (typeof window.chrome == 'object')
+		isChrome = true;
+	Foxtrick.entry.init(false);
+} else {
+	if (typeof window.chrome == 'object') {
+		BackgroundPage = chrome.extension.getBackgroundPage();
+		isChrome = true;
+		Foxtrick = BackgroundPage.Foxtrick;
+	}
 }
 
 function shutDown() {
@@ -22,7 +28,9 @@ function shutDown() {
 function visitLink() {
 	if (isChrome) {
 		// jshint -W040
-		chrome.tabs.create({ url: this.href });
+		let url = this.href;
+		chrome.tabs.create({ url: url });
+		this.href = '';
 		// jshint +W040
 
 		window.close();
@@ -36,20 +44,26 @@ function visitLink() {
 function toggleEnabled() {
 	var checked = document.getElementById('foxtrick-toolbar-deactivate').checked;
 	Foxtrick.Prefs.setBool('disableTemporary', checked);
+	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 function toggleHighlight() {
 	var checked = document.getElementById('foxtrick-toolbar-highlight').checked;
 	Foxtrick.Prefs.setBool('featureHighlight', checked);
+	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 function toggleTranslationKeys() {
 	var checked = document.getElementById('foxtrick-toolbar-translationKeys').checked;
 	Foxtrick.Prefs.setBool('translationKeys', checked);
+	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 
 function clearCache() {
+	if (Foxtrick.Manifest.manifest_version == 3) {
+		Foxtrick.context = 'content';
+	}
 	Foxtrick.clearCaches();
 	window.close();
 }

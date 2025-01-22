@@ -160,9 +160,11 @@ if (Foxtrick.platform == 'Firefox') {
 if (Foxtrick.platform == 'Chrome') {
 
 	Foxtrick.modules.UI.onLoad = function() {
-		chrome.pageAction.onClicked.addListener(function(tab) {
-			Foxtrick.Prefs.disable(tab); // in case pop-up is disabled
-		});
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			chrome.pageAction.onClicked.addListener(function(tab) {
+				Foxtrick.Prefs.disable(tab); // in case pop-up is disabled
+			});
+		}
 	};
 
 	Foxtrick.modules.UI.update = function(tab) {
@@ -175,7 +177,7 @@ if (Foxtrick.platform == 'Chrome') {
 	};
 
 	Foxtrick.modules.UI.updateIcon = function(tab) {
-		if (!tab || !tab.id)
+		if (!tab || !tab.id || Foxtrick.Manifest.manifest_version == 3)
 			return;
 
 		chrome.pageAction.show(tab.id);
