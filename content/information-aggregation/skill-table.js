@@ -1771,10 +1771,6 @@ Foxtrick.modules.SkillTable = {
 					let link = createLink('addHomegrown');
 					options.appendChild(link);
 				}
-				else if (Foxtrick.Pages.Players.isRegular(doc)) {
-					let link = createLink('showTimeInClub');
-					options.appendChild(link);
-				}
 				return options;
 			};
 
