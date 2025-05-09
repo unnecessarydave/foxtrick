@@ -38,7 +38,7 @@
 				"CupTeams": ""
 			}
 		],
-		"FetchedDate": "2024-12-20 20:03:02",
+		"FetchedDate": "2025-05-09 21:26:04",
 		"FileName": "nationalTeams.xml",
 		"LeagueOfficeTypeID": "2",
 		"NationalTeams": [
@@ -47,1068 +47,1068 @@
 				"LeagueId": "46",
 				"NationalTeamID": "3038",
 				"NationalTeamName": "Schweiz",
-				"RatingScores": "18177"
+				"RatingScores": "12276"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "39",
 				"NationalTeamID": "3039",
 				"NationalTeamName": "Österreich",
-				"RatingScores": "14301"
+				"RatingScores": "12334"
 			},
 			{
 				"Dress": "G010101",
 				"LeagueId": "32",
 				"NationalTeamID": "3033",
 				"NationalTeamName": "Türkiye",
-				"RatingScores": "26306"
+				"RatingScores": "18412"
 			},
 			{
 				"Dress": "N052004",
 				"LeagueId": "142",
 				"NationalTeamID": "3247",
 				"NationalTeamName": "Tanzania",
-				"RatingScores": "25891"
+				"RatingScores": "17352"
 			},
 			{
 				"Dress": "N211616",
 				"LeagueId": "1",
 				"NationalTeamID": "3000",
 				"NationalTeamName": "Sverige",
-				"RatingScores": "14003"
+				"RatingScores": "8430"
 			},
 			{
 				"Dress": "N160301",
 				"LeagueId": "5",
 				"NationalTeamID": "3004",
 				"NationalTeamName": "France",
-				"RatingScores": "14366"
+				"RatingScores": "12392"
 			},
 			{
 				"Dress": "B030303",
 				"LeagueId": "85",
 				"NationalTeamID": "3150",
 				"NationalTeamName": "Iran",
-				"RatingScores": "26346"
+				"RatingScores": "15081"
 			},
 			{
 				"Dress": "E160316",
 				"LeagueId": "50",
 				"NationalTeamID": "3089",
 				"NationalTeamName": "Hellas",
-				"RatingScores": "12547"
+				"RatingScores": "7031"
 			},
 			{
 				"Dress": "N050305",
 				"LeagueId": "4",
 				"NationalTeamID": "3003",
 				"NationalTeamName": "Italia",
-				"RatingScores": "23683"
+				"RatingScores": "15651"
 			},
 			{
 				"Dress": "N050503",
 				"LeagueId": "67",
 				"NationalTeamID": "3116",
 				"NationalTeamName": "Slovensko",
-				"RatingScores": "34293"
+				"RatingScores": "21818"
 			},
 			{
 				"Dress": "N030403",
 				"LeagueId": "3",
 				"NationalTeamID": "3002",
 				"NationalTeamName": "Deutschland",
-				"RatingScores": "36956"
+				"RatingScores": "18423"
 			},
 			{
 				"Dress": "N030503",
 				"LeagueId": "12",
 				"NationalTeamID": "3023",
 				"NationalTeamName": "Suomi",
-				"RatingScores": "38139"
+				"RatingScores": "22008"
 			},
 			{
 				"Dress": "N020102",
 				"LeagueId": "132",
 				"NationalTeamID": "3224",
 				"NationalTeamName": "Bangladesh",
-				"RatingScores": "11305"
+				"RatingScores": "6126"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "17",
 				"NationalTeamID": "3010",
 				"NationalTeamName": "Canada",
-				"RatingScores": "27703"
+				"RatingScores": "18998"
 			},
 			{
 				"Dress": "N080308",
 				"LeagueId": "14",
 				"NationalTeamID": "3025",
 				"NationalTeamName": "Nederland",
-				"RatingScores": "36134"
+				"RatingScores": "23200"
 			},
 			{
 				"Dress": "N040404",
 				"LeagueId": "103",
 				"NationalTeamID": "3176",
 				"NationalTeamName": "Moldova",
-				"RatingScores": "8099"
+				"RatingScores": "8455"
 			},
 			{
 				"Dress": "N010311",
 				"LeagueId": "96",
 				"NationalTeamID": "3166",
 				"NationalTeamName": "Panama",
-				"RatingScores": "16548"
+				"RatingScores": "9901"
 			},
 			{
 				"Dress": "A070407",
 				"LeagueId": "7",
 				"NationalTeamID": "3006",
 				"NationalTeamName": "Argentina",
-				"RatingScores": "44304"
+				"RatingScores": "24456"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "11",
 				"NationalTeamID": "3022",
 				"NationalTeamName": "Danmark",
-				"RatingScores": "21042"
+				"RatingScores": "16944"
 			},
 			{
 				"Dress": "N030201",
 				"LeagueId": "62",
 				"NationalTeamID": "3106",
 				"NationalTeamName": "Bulgaria",
-				"RatingScores": "31460"
+				"RatingScores": "20217"
 			},
 			{
 				"Dress": "H030202",
 				"LeagueId": "64",
 				"NationalTeamID": "3110",
 				"NationalTeamName": "Slovenija",
-				"RatingScores": "8185"
+				"RatingScores": "6764"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "138",
 				"NationalTeamID": "3238",
 				"NationalTeamName": "Prateh Kampuchea",
-				"RatingScores": "12858"
+				"RatingScores": "10724"
 			},
 			{
 				"Dress": "G191919",
 				"LeagueId": "101",
 				"NationalTeamID": "3174",
 				"NationalTeamName": "Malta",
-				"RatingScores": "10107"
+				"RatingScores": "12603"
 			},
 			{
 				"Dress": "N070303",
 				"LeagueId": "63",
 				"NationalTeamID": "3108",
 				"NationalTeamName": "Israel",
-				"RatingScores": "36338"
+				"RatingScores": "21870"
 			},
 			{
 				"Dress": "N050403",
 				"LeagueId": "56",
 				"NationalTeamID": "3086",
 				"NationalTeamName": "Eesti",
-				"RatingScores": "37059"
+				"RatingScores": "22832"
 			},
 			{
 				"Dress": "A020202",
 				"LeagueId": "75",
 				"NationalTeamID": "3126",
 				"NationalTeamName": "Nigeria",
-				"RatingScores": "32167"
+				"RatingScores": "21388"
 			},
 			{
 				"Dress": "G050305",
 				"LeagueId": "38",
 				"NationalTeamID": "3021",
 				"NationalTeamName": "Ísland",
-				"RatingScores": "23868"
+				"RatingScores": "15923"
 			},
 			{
 				"Dress": "N190503",
 				"LeagueId": "18",
 				"NationalTeamID": "3026",
 				"NationalTeamName": "Chile",
-				"RatingScores": "35805"
+				"RatingScores": "23444"
 			},
 			{
 				"Dress": "N010305",
 				"LeagueId": "52",
 				"NationalTeamID": "3090",
 				"NationalTeamName": "Česko",
-				"RatingScores": "34898"
+				"RatingScores": "21211"
 			},
 			{
 				"Dress": "E030103",
 				"LeagueId": "24",
 				"NationalTeamID": "3029",
 				"NationalTeamName": "Polska",
-				"RatingScores": "23527"
+				"RatingScores": "16950"
 			},
 			{
 				"Dress": "C030206",
 				"LeagueId": "121",
 				"NationalTeamID": "3198",
 				"NationalTeamName": "Senegal",
-				"RatingScores": "17037"
+				"RatingScores": "8211"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "44",
 				"NationalTeamID": "3037",
 				"NationalTeamName": "Belgium",
-				"RatingScores": "43337"
+				"RatingScores": "25885"
 			},
 			{
 				"Dress": "N010201",
 				"LeagueId": "25",
 				"NationalTeamID": "3014",
 				"NationalTeamName": "Portugal",
-				"RatingScores": "18682"
+				"RatingScores": "17721"
 			},
 			{
 				"Dress": "N011111",
 				"LeagueId": "36",
 				"NationalTeamID": "3035",
 				"NationalTeamName": "España",
-				"RatingScores": "43328"
+				"RatingScores": "29100"
 			},
 			{
 				"Dress": "H200420",
 				"LeagueId": "94",
 				"NationalTeamID": "3160",
 				"NationalTeamName": "Jamaica",
-				"RatingScores": "10957"
+				"RatingScores": "13089"
 			},
 			{
 				"Dress": "N190419",
 				"LeagueId": "98",
 				"NationalTeamID": "3178",
 				"NationalTeamName": "Shqiperia",
-				"RatingScores": "9746"
+				"RatingScores": "10821"
 			},
 			{
 				"Dress": "G070705",
 				"LeagueId": "20",
 				"NationalTeamID": "3027",
 				"NationalTeamName": "India",
-				"RatingScores": "11344"
+				"RatingScores": "10973"
 			},
 			{
 				"Dress": "D030103",
 				"LeagueId": "91",
 				"NationalTeamID": "3156",
 				"NationalTeamName": "Belarus",
-				"RatingScores": "28265"
+				"RatingScores": "16620"
 			},
 			{
 				"Dress": "N020302",
 				"LeagueId": "21",
 				"NationalTeamID": "3012",
 				"NationalTeamName": "Ireland",
-				"RatingScores": "35402"
+				"RatingScores": "19882"
 			},
 			{
 				"Dress": "H141414",
 				"LeagueId": "74",
 				"NationalTeamID": "3130",
 				"NationalTeamName": "Bolivia",
-				"RatingScores": "27160"
+				"RatingScores": "14420"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "59",
 				"NationalTeamID": "3102",
 				"NationalTeamName": "Hong Kong",
-				"RatingScores": "9843"
+				"RatingScores": "9023"
 			},
 			{
 				"Dress": "N160316",
 				"LeagueId": "125",
 				"NationalTeamID": "3210",
 				"NationalTeamName": "Cabo Verde",
-				"RatingScores": "11329"
+				"RatingScores": "5611"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "34",
 				"NationalTeamID": "3034",
 				"NationalTeamName": "China",
-				"RatingScores": "19635"
+				"RatingScores": "14086"
 			},
 			{
 				"Dress": "K030303",
 				"LeagueId": "23",
 				"NationalTeamID": "3013",
 				"NationalTeamName": "Perú",
-				"RatingScores": "34105"
+				"RatingScores": "16591"
 			},
 			{
 				"Dress": "N060206",
 				"LeagueId": "66",
 				"NationalTeamID": "3113",
 				"NationalTeamName": "Lietuva",
-				"RatingScores": "24348"
+				"RatingScores": "19952"
 			},
 			{
 				"Dress": "N030503",
 				"LeagueId": "2",
 				"NationalTeamID": "3001",
 				"NationalTeamName": "England",
-				"RatingScores": "25379"
+				"RatingScores": "16427"
 			},
 			{
 				"Dress": "G050503",
 				"LeagueId": "69",
 				"NationalTeamID": "3112",
 				"NationalTeamName": "Bosna i Hercegovina",
-				"RatingScores": "21485"
+				"RatingScores": "14323"
 			},
 			{
 				"Dress": "N010501",
 				"LeagueId": "30",
 				"NationalTeamID": "3032",
 				"NationalTeamName": "Hanguk",
-				"RatingScores": "22903"
+				"RatingScores": "13448"
 			},
 			{
 				"Dress": "B110511",
 				"LeagueId": "99",
 				"NationalTeamID": "3170",
 				"NationalTeamName": "Honduras",
-				"RatingScores": "12628"
+				"RatingScores": "7486"
 			},
 			{
 				"Dress": "N010302",
 				"LeagueId": "51",
 				"NationalTeamID": "3082",
 				"NationalTeamName": "Magyarország",
-				"RatingScores": "9412"
+				"RatingScores": "6850"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "145",
 				"NationalTeamID": "3260",
 				"NationalTeamName": "O'zbekiston",
-				"RatingScores": "14053"
+				"RatingScores": "8832"
 			},
 			{
 				"Dress": "N090303",
 				"LeagueId": "29",
 				"NationalTeamID": "3016",
 				"NationalTeamName": "Venezuela",
-				"RatingScores": "11771"
+				"RatingScores": "6292"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "61",
 				"NationalTeamID": "3104",
 				"NationalTeamName": "Cymru",
-				"RatingScores": "7717"
+				"RatingScores": "9708"
 			},
 			{
 				"Dress": "K020201",
 				"LeagueId": "144",
 				"NationalTeamID": "3251",
 				"NationalTeamName": "Dhivehi Raajje",
-				"RatingScores": "11826"
+				"RatingScores": "12074"
 			},
 			{
 				"Dress": "N010401",
 				"LeagueId": "102",
 				"NationalTeamID": "3172",
 				"NationalTeamName": "Kyrgyzstan",
-				"RatingScores": "7986"
+				"RatingScores": "8486"
 			},
 			{
 				"Dress": "N030301",
 				"LeagueId": "104",
 				"NationalTeamID": "3182",
 				"NationalTeamName": "Sakartvelo",
-				"RatingScores": "9571"
+				"RatingScores": "9400"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "9",
 				"NationalTeamID": "3008",
 				"NationalTeamName": "Norge",
-				"RatingScores": "12651"
+				"RatingScores": "10530"
 			},
 			{
 				"Dress": "F010305",
 				"LeagueId": "58",
 				"NationalTeamID": "3088",
 				"NationalTeamName": "Hrvatska",
-				"RatingScores": "26034"
+				"RatingScores": "20752"
 			},
 			{
 				"Dress": "N210501",
 				"LeagueId": "73",
 				"NationalTeamID": "3128",
 				"NationalTeamName": "Ecuador",
-				"RatingScores": "10403"
+				"RatingScores": "8491"
 			},
 			{
 				"Dress": "N030501",
 				"LeagueId": "81",
 				"NationalTeamID": "3138",
 				"NationalTeamName": "Costa Rica",
-				"RatingScores": "10409"
+				"RatingScores": "5077"
 			},
 			{
 				"Dress": "N200401",
 				"LeagueId": "130",
 				"NationalTeamID": "3222",
 				"NationalTeamName": "Angola",
-				"RatingScores": "36637"
+				"RatingScores": "22003"
 			},
 			{
 				"Dress": "N050305",
 				"LeagueId": "111",
 				"NationalTeamID": "3190",
 				"NationalTeamName": "Nicaragua",
-				"RatingScores": "17259"
+				"RatingScores": "11259"
 			},
 			{
 				"Dress": "N012101",
 				"LeagueId": "70",
 				"NationalTeamID": "3120",
 				"NationalTeamName": "Việt Nam",
-				"RatingScores": "13790"
+				"RatingScores": "9259"
 			},
 			{
 				"Dress": "N061603",
 				"LeagueId": "16",
 				"NationalTeamID": "3024",
 				"NationalTeamName": "Brasil",
-				"RatingScores": "35707"
+				"RatingScores": "20177"
 			},
 			{
 				"Dress": "N010307",
 				"LeagueId": "84",
 				"NationalTeamID": "3146",
 				"NationalTeamName": "Lëtzebuerg",
-				"RatingScores": "9146"
+				"RatingScores": "8702"
 			},
 			{
 				"Dress": "N070404",
 				"LeagueId": "28",
 				"NationalTeamID": "3031",
 				"NationalTeamName": "Uruguay",
-				"RatingScores": "29133"
+				"RatingScores": "17157"
 			},
 			{
 				"Dress": "N030501",
 				"LeagueId": "35",
 				"NationalTeamID": "3019",
 				"NationalTeamName": "Rossiya",
-				"RatingScores": "11048"
+				"RatingScores": "8552"
 			},
 			{
 				"Dress": "K030505",
 				"LeagueId": "72",
 				"NationalTeamID": "3124",
 				"NationalTeamName": "Paraguay",
-				"RatingScores": "16348"
+				"RatingScores": "7636"
 			},
 			{
 				"Dress": "N090309",
 				"LeagueId": "53",
 				"NationalTeamID": "3083",
 				"NationalTeamName": "Latvija",
-				"RatingScores": "35628"
+				"RatingScores": "20220"
 			},
 			{
 				"Dress": "N110311",
 				"LeagueId": "26",
 				"NationalTeamID": "3030",
 				"NationalTeamName": "Scotland",
-				"RatingScores": "13257"
+				"RatingScores": "10935"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "140",
 				"NationalTeamID": "3242",
 				"NationalTeamName": "Suriyah",
-				"RatingScores": "9891"
+				"RatingScores": "6378"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "148",
 				"NationalTeamID": "3258",
 				"NationalTeamName": "Palestine",
-				"RatingScores": "18713"
+				"RatingScores": "10792"
 			},
 			{
 				"Dress": "N040404",
 				"LeagueId": "95",
 				"NationalTeamID": "3162",
 				"NationalTeamName": "Kenya",
-				"RatingScores": "11799"
+				"RatingScores": "9464"
 			},
 			{
 				"Dress": "N010503",
 				"LeagueId": "57",
 				"NationalTeamID": "3087",
 				"NationalTeamName": "Srbija",
-				"RatingScores": "32775"
+				"RatingScores": "25018"
 			},
 			{
 				"Dress": "N030221",
 				"LeagueId": "27",
 				"NationalTeamID": "3015",
 				"NationalTeamName": "South Africa",
-				"RatingScores": "12807"
+				"RatingScores": "13401"
 			},
 			{
 				"Dress": "N140302",
 				"LeagueId": "71",
 				"NationalTeamID": "3122",
 				"NationalTeamName": "Pakistan",
-				"RatingScores": "7747"
+				"RatingScores": "5399"
 			},
 			{
 				"Dress": "N010106",
 				"LeagueId": "97",
 				"NationalTeamID": "3158",
 				"NationalTeamName": "Severna Makedonija",
-				"RatingScores": "7156"
+				"RatingScores": "6329"
 			},
 			{
 				"Dress": "E020104",
 				"LeagueId": "106",
 				"NationalTeamID": "3180",
 				"NationalTeamName": "Al Urdun",
-				"RatingScores": "13215"
+				"RatingScores": "11325"
 			},
 			{
 				"Dress": "N080208",
 				"LeagueId": "126",
 				"NationalTeamID": "3208",
 				"NationalTeamName": "Côte d'Ivoire",
-				"RatingScores": "18729"
+				"RatingScores": "10006"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "123",
 				"NationalTeamID": "3214",
 				"NationalTeamName": "Bahrain",
-				"RatingScores": "12274"
+				"RatingScores": "7266"
 			},
 			{
 				"Dress": "G210421",
 				"LeagueId": "136",
 				"NationalTeamID": "3234",
 				"NationalTeamName": "Brunei",
-				"RatingScores": "8703"
+				"RatingScores": "5444"
 			},
 			{
 				"Dress": "N030201",
 				"LeagueId": "77",
 				"NationalTeamID": "3134",
 				"NationalTeamName": "Al Maghrib",
-				"RatingScores": "14006"
+				"RatingScores": "12337"
 			},
 			{
 				"Dress": "I070706",
 				"LeagueId": "112",
 				"NationalTeamID": "3188",
 				"NationalTeamName": "Kazakhstan",
-				"RatingScores": "8688"
+				"RatingScores": "8773"
 			},
 			{
 				"Dress": "K030514",
 				"LeagueId": "8",
 				"NationalTeamID": "3007",
 				"NationalTeamName": "USA",
-				"RatingScores": "29758"
+				"RatingScores": "20670"
 			},
 			{
 				"Dress": "N060501",
 				"LeagueId": "19",
 				"NationalTeamID": "3011",
 				"NationalTeamName": "Colombia",
-				"RatingScores": "14809"
+				"RatingScores": "12651"
 			},
 			{
 				"Dress": "K040420",
 				"LeagueId": "143",
 				"NationalTeamID": "3249",
 				"NationalTeamName": "Uganda",
-				"RatingScores": "14442"
+				"RatingScores": "11056"
 			},
 			{
 				"Dress": "N060506",
 				"LeagueId": "68",
 				"NationalTeamID": "3118",
 				"NationalTeamName": "Ukraina",
-				"RatingScores": "15824"
+				"RatingScores": "9159"
 			},
 			{
 				"Dress": "D010304",
 				"LeagueId": "33",
 				"NationalTeamID": "3018",
 				"NationalTeamName": "Misr",
-				"RatingScores": "6351"
+				"RatingScores": "4771"
 			},
 			{
 				"Dress": "N040404",
 				"LeagueId": "113",
 				"NationalTeamID": "3192",
 				"NationalTeamName": "Suriname",
-				"RatingScores": "16596"
+				"RatingScores": "15299"
 			},
 			{
 				"Dress": "N090903",
 				"LeagueId": "141",
 				"NationalTeamID": "3245",
 				"NationalTeamName": "Dawlat Qatar",
-				"RatingScores": "8932"
+				"RatingScores": "6001"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "146",
 				"NationalTeamID": "3254",
 				"NationalTeamName": "Cameroon",
-				"RatingScores": "26756"
+				"RatingScores": "18132"
 			},
 			{
 				"Dress": "G020302",
 				"LeagueId": "79",
 				"NationalTeamID": "3144",
 				"NationalTeamName": "Saudi Arabia",
-				"RatingScores": "5604"
+				"RatingScores": "9674"
 			},
 			{
 				"Dress": "N030301",
 				"LeagueId": "80",
 				"NationalTeamID": "3148",
 				"NationalTeamName": "Tounes",
-				"RatingScores": "7724"
+				"RatingScores": "3372"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "134",
 				"NationalTeamID": "3230",
 				"NationalTeamName": "Oman",
-				"RatingScores": "18064"
+				"RatingScores": "9904"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "120",
 				"NationalTeamID": "3202",
 				"NationalTeamName": "Lubnan",
-				"RatingScores": "15681"
+				"RatingScores": "6921"
 			},
 			{
 				"Dress": "N040404",
 				"LeagueId": "124",
 				"NationalTeamID": "3212",
 				"NationalTeamName": "Barbados",
-				"RatingScores": "16492"
+				"RatingScores": "12044"
 			},
 			{
 				"Dress": "N030503",
 				"LeagueId": "76",
 				"NationalTeamID": "3132",
 				"NationalTeamName": "Føroyar",
-				"RatingScores": "23577"
+				"RatingScores": "13176"
 			},
 			{
 				"Dress": "N020302",
 				"LeagueId": "93",
 				"NationalTeamID": "3164",
 				"NationalTeamName": "Northern Ireland",
-				"RatingScores": "10625"
+				"RatingScores": "6478"
 			},
 			{
 				"Dress": "N030303",
 				"LeagueId": "137",
 				"NationalTeamID": "3236",
 				"NationalTeamName": "Ghana",
-				"RatingScores": "9515"
+				"RatingScores": "12469"
 			},
 			{
 				"Dress": "N050505",
 				"LeagueId": "55",
 				"NationalTeamID": "3085",
 				"NationalTeamName": "Pilipinas",
-				"RatingScores": "11278"
+				"RatingScores": "8961"
 			},
 			{
 				"Dress": "N010301",
 				"LeagueId": "54",
 				"NationalTeamID": "3084",
 				"NationalTeamName": "Indonesia",
-				"RatingScores": "13673"
+				"RatingScores": "8534"
 			},
 			{
 				"Dress": "N212101",
 				"LeagueId": "37",
 				"NationalTeamID": "3020",
 				"NationalTeamName": "România",
-				"RatingScores": "28598"
+				"RatingScores": "19526"
 			},
 			{
 				"Dress": "J051911",
 				"LeagueId": "88",
 				"NationalTeamID": "3152",
 				"NationalTeamName": "República Dominicana",
-				"RatingScores": "25373"
+				"RatingScores": "13115"
 			},
 			{
 				"Dress": "G060303",
 				"LeagueId": "89",
 				"NationalTeamID": "3140",
 				"NationalTeamName": "Cyprus",
-				"RatingScores": "6656"
+				"RatingScores": "10278"
 			},
 			{
 				"Dress": "K010301",
 				"LeagueId": "47",
 				"NationalTeamID": "3036",
 				"NationalTeamName": "Singapore",
-				"RatingScores": "9490"
+				"RatingScores": "7982"
 			},
 			{
 				"Dress": "N050321",
 				"LeagueId": "105",
 				"NationalTeamID": "3186",
 				"NationalTeamName": "Andorra",
-				"RatingScores": "23990"
+				"RatingScores": "19649"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "147",
 				"NationalTeamID": "3256",
 				"NationalTeamName": "Cuba",
-				"RatingScores": "19898"
+				"RatingScores": "14808"
 			},
 			{
 				"Dress": "G070707",
 				"LeagueId": "107",
 				"NationalTeamID": "3184",
 				"NationalTeamName": "Guatemala",
-				"RatingScores": "23178"
+				"RatingScores": "17104"
 			},
 			{
 				"Dress": "N020302",
 				"LeagueId": "118",
 				"NationalTeamID": "3196",
 				"NationalTeamName": "Algérie",
-				"RatingScores": "15561"
+				"RatingScores": "12700"
 			},
 			{
 				"Dress": "N010304",
 				"LeagueId": "133",
 				"NationalTeamID": "3228",
 				"NationalTeamName": "Al Yaman",
-				"RatingScores": "14400"
+				"RatingScores": "11960"
 			},
 			{
 				"Dress": "N050505",
 				"LeagueId": "100",
 				"NationalTeamID": "3168",
 				"NationalTeamName": "El Salvador",
-				"RatingScores": "6360"
+				"RatingScores": "10303"
 			},
 			{
 				"Dress": "N050505",
 				"LeagueId": "127",
 				"NationalTeamID": "3220",
 				"NationalTeamName": "Al Kuwayt",
-				"RatingScores": "8431"
+				"RatingScores": "8693"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "110",
 				"NationalTeamID": "3194",
 				"NationalTeamName": "Trinidad & Tobago",
-				"RatingScores": "15944"
+				"RatingScores": "10599"
 			},
 			{
 				"Dress": "H202001",
 				"LeagueId": "139",
 				"NationalTeamID": "3240",
 				"NationalTeamName": "Bénin",
-				"RatingScores": "10240"
+				"RatingScores": "10308"
 			},
 			{
 				"Dress": "N050105",
 				"LeagueId": "117",
 				"NationalTeamID": "3204",
 				"NationalTeamName": "Liechtenstein",
-				"RatingScores": "14670"
+				"RatingScores": "9100"
 			},
 			{
 				"Dress": "F160511",
 				"LeagueId": "15",
 				"NationalTeamID": "3009",
 				"NationalTeamName": "Oceania",
-				"RatingScores": "23407"
+				"RatingScores": "11550"
 			},
 			{
 				"Dress": "N010501",
 				"LeagueId": "119",
 				"NationalTeamID": "3200",
 				"NationalTeamName": "Mongol Uls",
-				"RatingScores": "8453"
+				"RatingScores": "9402"
 			},
 			{
 				"Dress": "N050105",
 				"LeagueId": "60",
 				"NationalTeamID": "3100",
 				"NationalTeamName": "Chinese Taipei",
-				"RatingScores": "13350"
+				"RatingScores": "12481"
 			},
 			{
 				"Dress": "N050305",
 				"LeagueId": "22",
 				"NationalTeamID": "3028",
 				"NationalTeamName": "Nippon",
-				"RatingScores": "18731"
+				"RatingScores": "8045"
 			},
 			{
 				"Dress": "G050102",
 				"LeagueId": "129",
 				"NationalTeamID": "3218",
 				"NationalTeamName": "Azərbaycan",
-				"RatingScores": "25677"
+				"RatingScores": "14474"
 			},
 			{
 				"Dress": "N010101",
 				"LeagueId": "131",
 				"NationalTeamID": "3226",
 				"NationalTeamName": "Crna Gora",
-				"RatingScores": "8241"
+				"RatingScores": "8924"
 			},
 			{
 				"Dress": "N030303",
 				"LeagueId": "128",
 				"NationalTeamID": "3216",
 				"NationalTeamName": "Al Iraq",
-				"RatingScores": "14028"
+				"RatingScores": "9164"
 			},
 			{
 				"Dress": "N010401",
 				"LeagueId": "135",
 				"NationalTeamID": "3232",
 				"NationalTeamName": "Moçambique",
-				"RatingScores": "11658"
+				"RatingScores": "5045"
 			},
 			{
 				"Dress": "G040404",
 				"LeagueId": "83",
 				"NationalTeamID": "3142",
 				"NationalTeamName": "United Arab Emirates",
-				"RatingScores": "13574"
+				"RatingScores": "11641"
 			},
 			{
 				"Dress": "I060406",
 				"LeagueId": "45",
 				"NationalTeamID": "3040",
 				"NationalTeamName": "Malaysia",
-				"RatingScores": "8701"
+				"RatingScores": "5545"
 			},
 			{
 				"Dress": "K080501",
 				"LeagueId": "122",
 				"NationalTeamID": "3206",
 				"NationalTeamName": "Hayastan",
-				"RatingScores": "26511"
+				"RatingScores": "15902"
 			},
 			{
 				"Dress": "N020301",
 				"LeagueId": "6",
 				"NationalTeamID": "3005",
 				"NationalTeamName": "México",
-				"RatingScores": "23711"
+				"RatingScores": "18092"
 			},
 			{
 				"Dress": "N060606",
 				"LeagueId": "31",
 				"NationalTeamID": "3017",
 				"NationalTeamName": "Prathet Thai",
-				"RatingScores": "13607"
+				"RatingScores": "7767"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "149",
 				"NationalTeamID": "3297",
 				"NationalTeamName": "São Tomé e Príncipe",
-				"RatingScores": "18191"
+				"RatingScores": "9809"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "151",
 				"NationalTeamID": "3299",
 				"NationalTeamName": "Comoros",
-				"RatingScores": "9252"
+				"RatingScores": "8652"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "152",
 				"NationalTeamID": "3300",
 				"NationalTeamName": "Sri Lanka",
-				"RatingScores": "12656"
+				"RatingScores": "11181"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "153",
 				"NationalTeamID": "3301",
 				"NationalTeamName": "Curaçao",
-				"RatingScores": "8965"
+				"RatingScores": "7805"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "154",
 				"NationalTeamID": "3302",
 				"NationalTeamName": "Guam",
-				"RatingScores": "19364"
+				"RatingScores": "10976"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "155",
 				"NationalTeamID": "3303",
 				"NationalTeamName": "RD Congo",
-				"RatingScores": "13149"
+				"RatingScores": "10519"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "156",
 				"NationalTeamID": "3298",
 				"NationalTeamName": "Ītyōṗṗyā",
-				"RatingScores": "5513"
+				"RatingScores": "6328"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "157",
 				"NationalTeamID": "3304",
 				"NationalTeamName": "Saint Vincent and the Grenadines",
-				"RatingScores": "8691"
+				"RatingScores": "11611"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "158",
 				"NationalTeamID": "3305",
 				"NationalTeamName": "Belize",
-				"RatingScores": "6990"
+				"RatingScores": "6746"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "159",
 				"NationalTeamID": "3306",
 				"NationalTeamName": "Madagasikara",
-				"RatingScores": "10295"
+				"RatingScores": "6692"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "160",
 				"NationalTeamID": "3307",
 				"NationalTeamName": "Botswana",
-				"RatingScores": "12176"
+				"RatingScores": "14085"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "161",
 				"NationalTeamID": "3308",
 				"NationalTeamName": "Myanmar",
-				"RatingScores": "5736"
+				"RatingScores": "12180"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "162",
 				"NationalTeamID": "3309",
 				"NationalTeamName": "Zambia",
-				"RatingScores": "7140"
+				"RatingScores": "9026"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "163",
 				"NationalTeamID": "3310",
 				"NationalTeamName": "San Marino",
-				"RatingScores": "6793"
+				"RatingScores": "5143"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "164",
 				"NationalTeamID": "3311",
 				"NationalTeamName": "Haiti",
-				"RatingScores": "5284"
+				"RatingScores": "7448"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "165",
 				"NationalTeamID": "3312",
 				"NationalTeamName": "Puerto Rico",
-				"RatingScores": "5950"
+				"RatingScores": "5641"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "166",
 				"NationalTeamID": "3313",
 				"NationalTeamName": "Grenada",
-				"RatingScores": "0"
+				"RatingScores": "2378"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "167",
 				"NationalTeamID": "3315",
 				"NationalTeamName": "Burkina Faso",
-				"RatingScores": "0"
+				"RatingScores": "2894"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "168",
 				"NationalTeamID": "3317",
 				"NationalTeamName": "Nepal",
-				"RatingScores": "0"
+				"RatingScores": "4295"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "169",
 				"NationalTeamID": "3319",
 				"NationalTeamName": "Guyana",
-				"RatingScores": "0"
+				"RatingScores": "2563"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "170",
 				"NationalTeamID": "3321",
 				"NationalTeamName": "Tahiti",
-				"RatingScores": "0"
+				"RatingScores": "1688"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "171",
 				"NationalTeamID": "3323",
 				"NationalTeamName": "Guinée",
-				"RatingScores": "0"
+				"RatingScores": "2018"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "172",
 				"NationalTeamID": "3325",
 				"NationalTeamName": "Bahamas",
-				"RatingScores": "0"
+				"RatingScores": "618"
 			},
 			{
 				"Dress": "N000000",
 				"LeagueId": "173",
 				"NationalTeamID": "3327",
 				"NationalTeamName": "Rwanda",
-				"RatingScores": "0"
+				"RatingScores": "640"
 			}
 		],
 		"UserID": "13992846",
-		"UserSupporterTier": "platinum",
+		"UserSupporterTier": "diamond",
 		"Version": "1.6"
 	}
 }
