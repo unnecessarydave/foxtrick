@@ -39,9 +39,9 @@ Foxtrick.modules.PlayerStatsExperience = {
 	/** @typedef {'matchCup'|'matchCupA'|'matchCupB1'|'matchCupB2'|'matchCupB3'|'matchCupC'|'matchFriendly'|'matchLeague'|'matchMasters'|'matchNewbie'|'matchNtAfricaCup'|'matchNtAmericaCup'|'matchNtAsiaCup'|'matchNtEuropeCup'|'matchNtNationsCup'|'matchNtWildcard'|'matchNtWorldCup'|'matchQualification'|'matchSingleMatch'|'matchSingleMatchFast'|'matchTournament'|'matchTournamentFast'|'matchTournamentLadder'} MatchTypeClassRaw */
 
 	// eslint-disable-next-line max-len
-	/** @typedef {'series'|'cup'|'challenger_cup_1'|'challenger_cup_2'|'challenger_cup_3'|'consolation_cup'|'friendly'|'qualifier'|'masters'|'nt_worldcup'|'nations_cup'|'nt_wildcard'|'nt_cup_europe'|'nt_cup_americas'|'nt_cup_africa'|'nt_cup_asia'|'nt_worldcup_u21'|'nations_cup_u21'|'nt_wildcard_u21'|'nt_cup_europe_u21'|'nt_cup_americas_u21'|'nt_cup_africa_u21'|'nt_cup_asia_u21'} GameIconClass */
+	/** @typedef {'series'|'cup'|'challenger_cup_1'|'challenger_cup_2'|'challenger_cup_3'|'consolation_cup'|'friendly'|'qualifier'|'masters'|'nt_worldcup'|'nations_cup'|'nt_wildcard'|'nt_contender'|'nt_cup_europe'|'nt_cup_americas'|'nt_cup_africa'|'nt_cup_asia'|'nt_worldcup_u21'|'nations_cup_u21'|'nt_wildcard_u21'|'nt_contender_u21'|'nt_cup_europe_u21'|'nt_cup_americas_u21'|'nt_cup_africa_u21'|'nt_cup_asia_u21'} GameIconClass */
 	// eslint-disable-next-line max-len
-	/** @typedef {'series'|'cup'|'challenger_cup_1'|'challenger_cup_2'|'challenger_cup_3'|'consolation_cup'|'friendly'|'qualifier'|'masters'|'matchNtContinental'|'matchNtContinentalKO'|'matchNtNationsCup'|'matchNtNationsCupKO'|'matchNtWildcard'|'matchNtWorldCup'|'matchNtFriendly'|'matchNtLeague'|'matchNtFinals'|'matchNtFriendlyNew'|'matchNtWorldCupFinals'} MatchTypeClass */
+	/** @typedef {'series'|'cup'|'challenger_cup_1'|'challenger_cup_2'|'challenger_cup_3'|'consolation_cup'|'friendly'|'qualifier'|'masters'|'matchNtContenderLeague'|'matchNtContinental'|'matchNtContinentalKO'|'matchNtNationsCup'|'matchNtNationsCupKO'|'matchNtWildcard'|'matchNtWorldCup'|'matchNtFriendly'|'matchNtLeague'|'matchNtFinals'|'matchNtFriendlyNew'|'matchNtWorldCupFinals'} MatchTypeClass */
 
 	// don't randomly rename, parts of this are taken from hattrick using image classnames
 	/** @type {Record<MatchTypeClass, number>} */
@@ -77,7 +77,7 @@ Foxtrick.modules.PlayerStatsExperience = {
 		matchNtContinentalKO: 21.0, // 1/4f+
 		matchNtNationsCup: 7.0,
 		matchNtNationsCupKO: 14.0, // 1/4f+
-
+		matchNtContenderLeague: 7.0,
 		matchNtWildcard: 14.0,
 		matchNtWorldCup: 28.0,
 		matchNtWorldCupFinals: 56.0, // semi+
@@ -272,6 +272,10 @@ Foxtrick.modules.PlayerStatsExperience = {
 
 					if (gameIcon.includes('nt_wildcard')) {
 						return 'matchNtWildcard';
+					}
+
+					if (gameIcon.includes('nt_contender')) {
+						return 'matchNtContenderLeague';
 					}
 
 					if (gameIcon.includes('nations_cup')) { // also catch u21, which has the addition "-u21" at the end
