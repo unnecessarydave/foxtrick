@@ -270,6 +270,10 @@ Foxtrick.modules.PlayerStatsExperience = {
 						return 'matchNtWorldCup';
 					}
 
+					if (gameIcon.includes('nt_wildcard')) {
+						return 'matchNtWildcard';
+					}
+
 					if (gameIcon.includes('nations_cup')) { // also catch u21, which has the addition "-u21" at the end
 						// weeks 14-16 in final season are KO
 						// eslint-disable-next-line no-magic-numbers
