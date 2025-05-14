@@ -36,30 +36,32 @@ Foxtrick.modules['LinksArena'] = {
 		for (let seating of SEATING_TYPES) info[seating] = null;
 		let retVal = {info: info};
 
+		let rowIdx;  // Row index of the first seating row
+		let arenaTable;
+
 		if (arenaInfo) {
 			// We are on the stadium page.
-			let arenaTable = arenaInfo.getElementsByTagName('table')[0];
-			if (arenaTable) {
-				let rowIdx = 3;
-				for (let seating of SEATING_TYPES) {
-					info[seating] = Foxtrick.trimnum(arenaTable.rows[rowIdx].cells[1].textContent);
-					rowIdx++;
-				}
-				return retVal;
-			}
+			arenaTable = arenaInfo.getElementsByTagName('table')[0];
+			/**
+			 * Determine the index of the first seating row based on row count:
+			 * - expanded stadiums have a 'Last improvement' row ahead of the seating rows
+			 * - there are 2 additional rows at the bottom if the stadium is owned by the user
+			 */
+			rowIdx = arenaTable.rows.length == 6 || arenaTable.rows.length == 8 ? 2 : 3;
 		}
 
 		if (arenaExpansion) {
 			// We are on the stadium expansion page.
-			let arenaTable = arenaExpansion.getElementsByTagName('table')[0];
-			if (arenaTable) {
-				let rowIdx = 2;
-				for (let seating of SEATING_TYPES) {
-					info[seating] = Foxtrick.trimnum(arenaTable.rows[rowIdx].cells[1].textContent);
-					rowIdx++;
-				}
-				return retVal;
+			arenaTable = arenaExpansion.getElementsByTagName('table')[0];
+			rowIdx = 2;
+		}
+
+		if (arenaTable) {
+			for (let seating of SEATING_TYPES) {
+				info[seating] = Foxtrick.trimnum(arenaTable.rows[rowIdx].cells[1].textContent);
+				rowIdx++;
 			}
 		}
+		return retVal;
 	}
 };
