@@ -308,7 +308,7 @@ Foxtrick.modules.HTMSPoints = {
 			pointsDiff = skills.days / DAYS_IN_WEEK * WEEK_PTS_PER_AGE[skills.years];
 
 			// subtracting 16 weeks per whole year until 28
-			for (let i = skills.years; i > AGE_FACTOR; i--)
+			for (let i = skills.years-1; i >= AGE_FACTOR; i--)
 				pointsDiff += WEEKS_IN_SEASON * WEEK_PTS_PER_AGE[i];
 
 			pointsDiff = -pointsDiff;
