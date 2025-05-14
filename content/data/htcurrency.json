@@ -966,7 +966,8 @@
 			"eurorate": "0.4",
 			"leagues": {
 				"157": "Saint Vincent and the Grenadines",
-				"166": "Grenada"
+				"166": "Grenada",
+				"174": "Saint Kitts and Nevis"
 			},
 			"name": "Eastern Caribbean dollar",
 			"symbol": "dollar"
@@ -1065,7 +1066,8 @@
 			"code": "GNF",
 			"eurorate": "100.0",
 			"leagues": {
-				"171": "Guinea"
+				"171": "Guinea",
+				"175": "Guinea Ecuatorial"
 			},
 			"name": "Guinean franc",
 			"symbol": "franc"
