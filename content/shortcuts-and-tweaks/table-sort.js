@@ -227,7 +227,7 @@ Foxtrick.modules.TableSort = {
 			tables = doc.querySelectorAll('#mainBody table');
 
 		for (let table of tables) {
-			if (table.id == 'ft_skilltable' || Foxtrick.hasClass(table, 'tablesorter'))
+			if (table.id == 'ft_skilltable' || Foxtrick.hasClass(table, 'league-table') || Foxtrick.hasClass(table, 'tablesorter'))
 				continue;
 
 			let ths = table.querySelectorAll('th');
