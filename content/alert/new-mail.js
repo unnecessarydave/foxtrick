@@ -48,17 +48,6 @@ Foxtrick.modules['NewMail'] = {
 
 		if (myHt.getElementsByTagName('span').length) {
 			let mailCountSpan = myHt.getElementsByTagName('span')[0];
-			mailCountSpan.className = 'ft-new-mail';
-
-			Foxtrick.onClick(mailCountSpan, function() {
-				let doc = this.ownerDocument;
-				let newURL = new URL('/MyHattrick/Inbox/', doc.location.origin);
-				doc.location.assign(newURL);
-
-				// disable MyHT link
-				return false;
-			});
-
 			newMailCount = parseInt(mailCountSpan.textContent.match(/\d+/)[0], 10) || 0;
 		}
 
@@ -80,21 +69,6 @@ Foxtrick.modules['NewMail'] = {
 			}
 		}
 
-		// mail count in left menu
-		let subMenu = doc.getElementsByClassName('subMenu')[0];
-		if (subMenu) {
-			let subMenuBox = subMenu.getElementsByClassName('subMenuBox')[0];
-			let listItems = subMenuBox.getElementsByTagName('li');
-			let mailCountItems = Foxtrick.filter(function(n) {
-				return n.getElementsByTagName('span').length > 0;
-			}, listItems);
-
-			if (mailCountItems.length) {
-				let mailCountSpan = mailCountItems[0].getElementsByTagName('span')[0];
-				mailCountSpan.className = 'ft-new-mail';
-			}
-		}
-
 		// new forum message
 		var newForumCount = 0;
 
@@ -103,12 +77,6 @@ Foxtrick.modules['NewMail'] = {
 		if (forum && forum.textContent.indexOf('(') > -1) {
 			// has new message, no span this time, we need to add it
 			newForumCount = Number(forum.textContent.match(/\d+/)[0]);
-			forum.textContent = forum.textContent.replace(/\(\d+\)/, '');
-
-			let span = doc.createElement('span');
-			span.className = 'ft-new-forum-msg';
-			span.textContent = '(' + newForumCount + ')';
-			forum.appendChild(span);
 		}
 		else {
 			// no new forum messages

@@ -37,7 +37,7 @@ Foxtrick.modules.ShowFriendlyBooked = {
 				let teamLink = teamCell.querySelector('a').href;
 				let teamId = Foxtrick.util.id.getTeamIdFromUrl(teamLink);
 
-				let destCell = row.cells[4];
+				let destCell = row.cells[5];
 				destCell.textContent = Foxtrick.L10n.getString('status.loading.abbr');
 				destCell.title = Foxtrick.L10n.getString('status.loading');
 
@@ -97,7 +97,16 @@ Foxtrick.modules.ShowFriendlyBooked = {
 
 			if (Foxtrick.util.layout.isSupporter(doc)) {
 				let updPnlLiveLeagueTable = Foxtrick.Pages.Series.getLiveTable(doc);
-				Foxtrick.insertBefore(link, updPnlLiveLeagueTable.querySelector('br'));
+				let headerBr = updPnlLiveLeagueTable.querySelector('br');
+				try {
+					if (headerBr)
+						Foxtrick.insertBefore(link, headerBr);
+					else
+						// no <br> in header, probably HGL during season break
+						Foxtrick.prependChild(link, updPnlLiveLeagueTable.firstElementChild.firstElementChild);
+				} catch {
+					Foxtrick.log(this.MODULE_NAME+': Error inserting link into series table')
+				}
 			}
 			else {
 				let table = Foxtrick.Pages.Series.getTable(doc);

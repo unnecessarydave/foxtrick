@@ -131,7 +131,7 @@ Foxtrick.log.cache = '';
 
 Foxtrick.log.client = null;
 Foxtrick.lazyProp(Foxtrick.log, 'client', () => {
-	var client = new Foxtrick.exceptionless.ExceptionlessClient('Z6ACuQcWkqEirnhl1n7FD38J0rWxYNepS2DN9s7F', 'https://bugs.foxtrick.org');
+	var client = new Foxtrick.exceptionless.ExceptionlessClient('grAEJTrH20BcgqO3sF4bIlnXhgZfMCqCuE9gUsLG', 'https://api.exceptionless.io');
 	client.config.updateSettingsWhenIdleInterval = 0;
 	client.config.useReferenceIds(); // Foxtrick.log.client.getLastReferenceId();
 	client.config.includeMachineName = false;
@@ -247,7 +247,7 @@ Foxtrick.dump = function(content) {
 };
 
 /**
- * @param {string} header
+ * @param {object} header
  * @param {string} bug
  * @param {string} prefs
  * @param {function(string):void} [refIdCb]
@@ -257,13 +257,14 @@ Foxtrick.reportBug = (header, bug, prefs, refIdCb) => {
 	let { teamId, teamName } = Foxtrick.modules.Core.TEAM;
 	client.config.setUserIdentity(String(teamId), String(teamName));
 
-	let b = client.createLog('bugReport', header, 'Error')
+	let b = client.createLog('bugReport', header.summary, 'Error')
 		// eslint-disable-next-line no-magic-numbers
 		.setReferenceId(Math.floor((1 + Math.random()) * 0x10000000000).toString(16).slice(1))
 		.addTags(String(Foxtrick.branch.match(/^\w+/)))
 		.setProperty('HTLang', Foxtrick.Prefs.getString('htLanguage'))
 		.setProperty('bug', String(bug))
-		.setProperty('prefs', String(prefs));
+		.setProperty('prefs', String(prefs))
+		.setManualStackingKey(header.stackKey, header.stackKey);
 
 	let doc = Foxtrick.log.doc;
 	if (Foxtrick.isStage(doc))
@@ -328,7 +329,8 @@ Foxtrick.reportError = (err) => {
 
 	switch (Foxtrick.Prefs.getString('errorReporting')) {
 		case 'reportAll':
-			report();
+			// Disabled while using free plan on exceptionless.io
+			//report();
 			break;
 		case 'ignoreAll':
 			return;
