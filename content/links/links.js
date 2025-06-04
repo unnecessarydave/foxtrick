@@ -407,8 +407,14 @@ Foxtrick.modules.Links = {
 				let test = props.allow;
 				let [type, ...rest] = test;
 
-				// @ts-ignore
-				allowed = COMPARE[type](...rest);
+				 // catching errors here allows us to add new COMPARE functions
+				 // without throwing errors for users on older versions
+				try {
+					// @ts-ignore
+					allowed = COMPARE[type](...rest);
+				} catch (e) {
+					Foxtrick.log(`WARNING: COMPARE[${type}] failed -\n ${e.message}\n ${e.stack}`);
+				}
 			}
 
 			if (!allowed)
