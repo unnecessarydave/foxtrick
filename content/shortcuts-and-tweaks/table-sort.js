@@ -49,18 +49,25 @@ Foxtrick.modules.TableSort = {
 				}
 				table.setAttribute('lastSortIndex', String(index));
 
-				// get text to sort by. first try textContent, then title
+				// get text to sort by. first try textContent, then title, then alt
 				/**
 				 * @param  {HTMLTableCellElement} el
 				 * @return {string}
 				 */
 				var getText = function(el) {
-					var text = el.textContent.trim() || el.title.trim();
+					var text = el.textContent.trim();
 					if (text == '') {
-						// use first title instead
-						/** @type {HTMLElement} */
-						let tEl = el.querySelector('[title]');
-						text = tEl && tEl.title.trim() || '';
+						for (let att of ['title', 'alt']) {
+							text = el.getAttribute(`${att}`) ? el.getAttribute(`${att}`).trim() : '';
+							if (text != '')
+								break;
+							// check descendent nodes
+							let tEl = el.querySelector(`[${att}]`);
+							if (tEl)
+								text = tEl.getAttribute(`${att}`).trim();
+							if (text != '')
+								break;
+						}
 					}
 					return text;
 				};
