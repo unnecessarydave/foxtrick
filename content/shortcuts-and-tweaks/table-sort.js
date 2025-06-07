@@ -121,7 +121,7 @@ Foxtrick.modules.TableSort = {
 				// rows to be sorted
 				var rows = [];
 				for (let i = sortStart + 1; i < sortEnd; ++i)
-					rows.push(Foxtrick.cloneElement(table.rows[i], true));
+					rows.push(table.rows[i]);
 
 				/**
 				 * @param  {HTMLTableRowElement} a
@@ -209,11 +209,10 @@ Foxtrick.modules.TableSort = {
 				// sort them
 				rows.sort(cmp);
 
-				// put them back
-				for (let i = sortStart + 1; i < sortEnd; ++i) {
-					table.rows[i].parentNode.replaceChild(rows[i - 1 - sortStart], table.rows[i]);
-					table.rows[i].setAttribute('lastSort', String(i));
-				}
+				// insert sorted rows after table header
+				// no need to remove existing rows, inserting a Node removes it from its previous position
+				/** @type  {HTMLElement} */
+				(table.rows[sortStart].parentNode).after(...rows);
 			}
 			catch (e) {
 				Foxtrick.log(e);
@@ -227,7 +226,7 @@ Foxtrick.modules.TableSort = {
 			tables = doc.querySelectorAll('#mainBody table');
 
 		for (let table of tables) {
-			if (table.id == 'ft_skilltable' || Foxtrick.hasClass(table, 'league-table') || Foxtrick.hasClass(table, 'tablesorter'))
+			if (table.id == 'ft_skilltable' || Foxtrick.hasClass(table, 'tablesorter'))
 				continue;
 
 			let ths = table.querySelectorAll('th');
