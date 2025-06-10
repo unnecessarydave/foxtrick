@@ -2,24 +2,30 @@
 
 from __future__ import print_function
 from Hattrick.CHPP import Client
-from Hattrick.CHPP import Credentials
-from Hattrick.CHPP import AccessToken
 
 import xml.etree.ElementTree as ET
 import os
 import sys
 import codecs
 
-CONSUMER_KEY = Credentials.KEY
-CONSUMER_SECRET = Credentials.SECRET
+def init():
+    if os.environ.get('GITHUB_ACTIONS'):
+        CONSUMER_KEY = os.environ.get('CHPP_CONSUMER_KEY')
+        CONSUMER_SECRET = os.environ.get('CHPP_CONSUMER_SECRET')
+        ACCESS_TOKEN_KEY = os.environ.get('CHPP_ACCESS_TOKEN_KEY')
+        ACCESS_TOKEN_SECRET = os.environ.get('CHPP_ACCESS_TOKEN_SECRET')
+    else:
+        from Hattrick.CHPP import Credentials
+        from Hattrick.CHPP import AccessToken
+        CONSUMER_KEY = Credentials.KEY
+        CONSUMER_SECRET = Credentials.SECRET
+        ACCESS_TOKEN_KEY = AccessToken.KEY
+        ACCESS_TOKEN_SECRET = AccessToken.SECRET
 
-ACCESS_TOKEN_KEY = AccessToken.KEY
-ACCESS_TOKEN_SECRET = AccessToken.SECRET
-
-chpp = Client.ChppClient(CONSUMER_KEY, CONSUMER_SECRET)
-chpp.setAccessToken((AccessToken.KEY, AccessToken.SECRET))
-session = chpp.getSession()
-
+    global chpp
+    chpp = Client.ChppClient(CONSUMER_KEY, CONSUMER_SECRET)
+    chpp.setAccessToken((ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET))
+    session = chpp.getSession()
 
 def getCoaches(id):
     # no get started
@@ -63,7 +69,7 @@ def saveCoaches(coaches, filename):
         print(filename, 'written')
 
 
-def run(cwd='~/repos/master/res/staff'):
+def run(cwd='.'):
     u20 = getCoaches(4)
     nt = getCoaches(2)
 
@@ -75,6 +81,7 @@ def run(cwd='~/repos/master/res/staff'):
 
 
 if __name__ == '__main__':
+    init()
     if len(sys.argv) > 1:
         run(sys.argv[1])
     else:
