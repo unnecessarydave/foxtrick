@@ -112,6 +112,9 @@
 		"teamlink": {
 			"url": "http://www.ht-flagtools.org/profile.php?teamId=[teamid]"
 		},
+		"flagslink": {
+			"url": "http://www.ht-flagtools.org/profile.php?teamId=[teamid]"
+		},
 		"title": "HT Flagtools",
 		"img": "https://www.foxtrick.org/res/linkicons/flagtools.ico"
 	},
