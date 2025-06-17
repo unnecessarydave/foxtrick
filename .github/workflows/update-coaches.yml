@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   update-coaches:
+    if: github.repository == "foxtrick-ng/foxtrick"
     environment:
       name: CHPP
     runs-on: ubuntu-latest

@@ -5,9 +5,9 @@ on:
 
   push:
     branches:
-      - 'cdn'
+      - "cdn"
     paths:
-      - 'res/**'
+      - "res/**"
 
 permissions:
   contents: read
@@ -20,6 +20,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.repository == "foxtrick-ng/foxtrick"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -32,7 +33,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'res'
+          path: "res"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
