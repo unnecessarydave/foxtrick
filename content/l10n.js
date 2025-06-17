@@ -930,7 +930,7 @@ Foxtrick.L10n.getCountryNameLocal = function(leagueId, lang) {
 			},
 
 			__parse: function(props) {
-				const L10N_RE = /^(.+?)=(.+)$/mg;
+				const L10N_RE = /^(.+?)=(.*)$/mg;
 				var ret = {};
 
 				let prop;
