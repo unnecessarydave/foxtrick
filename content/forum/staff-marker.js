@@ -566,8 +566,15 @@ Foxtrick.modules.StaffMarker = {
 					}
 				}
 
-				if (!skip)
-					target.insertBefore(marker, target.firstChild);
+				if (!skip) {
+					var parent = target.parentElement;
+					if (parent && Foxtrick.hasClass(parent, 'ft-popup-span')) {
+						// we want staff markers outside of popup spans
+						parent.before(marker);
+					} else {
+						target.before(marker);
+					}
+				}
 			}
 		};
 
