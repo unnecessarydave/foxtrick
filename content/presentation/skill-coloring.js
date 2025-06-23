@@ -286,6 +286,15 @@ Foxtrick.modules.SkillColoring = {
 		result.appendChild(doc.createTextNode(skillTranslated ? ` (${skill}` : ' ('));
 
 		if (skillNumber) {
+			// hide Hattrick's number if it exists
+			if (Foxtrick.hasClass(el.nextElementSibling, 'denominationNumber')) {
+				Foxtrick.addClass(el.nextElementSibling, 'hidden');
+			} else
+			if (el.parentElement.tagName === 'HT-SKILL-LINK') {
+				let next = el.parentElement.nextElementSibling;
+				Foxtrick.hasClass(next, 'denominationNumber') && Foxtrick.addClass(next, 'hidden');
+			}
+
 			let numSpan = doc.createElement('span');
 			Foxtrick.addClass(numSpan, 'ft-skill-number');
 			numSpan.textContent = skillTranslated ? ` ${level}` : String(level);
