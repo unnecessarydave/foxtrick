@@ -230,7 +230,7 @@ pref("extensions.foxtrick.prefs.module.LiveAlert.own.enabled", true);
 pref("extensions.foxtrick.prefs.module.LiveAlert.own_text", "foxtrick://resources/sounds/cheer_8k.wav");
 pref("extensions.foxtrick.prefs.module.LiveAlert.opponent.enabled", true);
 pref("extensions.foxtrick.prefs.module.LiveAlert.opponent_text", "foxtrick://resources/sounds/ovation.wav");
-pref("extensions.foxtrick.prefs.module.LocalTime.enabled", true);
+pref("extensions.foxtrick.prefs.module.LocalTime.enabled", false);
 pref("extensions.foxtrick.prefs.module.LocalTime.local", false);
 pref("extensions.foxtrick.prefs.module.LoyaltyDisplay.enabled", true);
 pref("extensions.foxtrick.prefs.module.ManagerButtons.enabled", false);
