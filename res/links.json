@@ -379,5 +379,40 @@
 		},
 		"title": "Rate My Academy",
 		"img": "https://www.foxtrick.org/res/linkicons/ratemyacademy.ico"
+	},
+	"hattrickorganizer": {
+		"title": "Hattrick Organizer",
+		"img_cdn": "https://foxtrick-ng.github.io/foxtrick/linkicons/ho.png",
+		"img": "https://cdn.jsdelivr.net/gh/ho-dev/hattrickOrganizer@master/utils/buildResources/Logo_stable.png",
+		"teamlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"playerslink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"traininglink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"playedmatchlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"matchlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"youthlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"youthplayerlistlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"youthmatchlistlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"youthtraininglink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		},
+		"playedyouthmatchlink": {
+			"url": "https://ho-dev.github.io/HattrickOrganizer/"
+		}
 	}
 }
