@@ -13,6 +13,8 @@ Foxtrick.modules['TeamSelectBox'] = {
 	MODULE_CATEGORY: Foxtrick.moduleCategories.PRESENTATION,
 	PAGES: ['allPlayers', 'youthPlayers'],
 
+	OPTIONS: ['RememberState'],
+
 	run: async function(doc) {
 		var listBox; // sidebarBox containing player list
 		var sidebarBoxes = doc.getElementsByClassName('sidebarBox');
@@ -107,11 +109,9 @@ Foxtrick.modules['TeamSelectBox'] = {
 		 * @param {State} state
 		 */
 		var setState = function(state) {
-			try {
-				Foxtrick.storage.set('TeamSelectBox.state', state);
-			} catch (e) {
-				Foxtrick.log(e);
-			}
+			if (!Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
+				return;
+			Foxtrick.storage.set('TeamSelectBox.state', state);
 		}
 
 		/**
@@ -119,16 +119,16 @@ Foxtrick.modules['TeamSelectBox'] = {
 		 * @returns {Promise<State>} state
 		 */
 		var getState = function() {
-			try {
-				return Foxtrick.storage.get('TeamSelectBox.state');
-			} catch (e) {
-				Foxtrick.log(e);
-			}
+			if (!Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
+				return;
+			return Foxtrick.storage.get('TeamSelectBox.state');
 		}
 
-		let savedState = await getState();
 		let state;
-		switch (savedState) {
+		if (Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
+			state = await getState();
+
+		switch (state) {
 			case 'selectbox':
 				toSelectBox();
 				state = 'selectbox';
@@ -137,7 +137,7 @@ Foxtrick.modules['TeamSelectBox'] = {
 				state = 'list';
 				Foxtrick.toggleExpanderArrow(boxHead);
 				break;
-			default: // saved state is null, we start with select box
+			default: // saved state is null, or RememberState is off, we start with select box
 				toSelectBox();
 				state = 'selectbox';
 				break;
