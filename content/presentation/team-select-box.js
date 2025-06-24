@@ -33,29 +33,25 @@ Foxtrick.modules['TeamSelectBox'] = {
 			return bLinks.length - aLinks.length;
 		});
 		listBox = linkBoxes[0];
+		var listTable = listBox.getElementsByTagName('table')[0];
+
+		if (!listTable || listTable.rows.length <= 1)
+			return; // zero or one player in the list
 
 		var header = listBox.getElementsByTagName('h2')[0];
 		var boxHead = header.parentNode;
-		Foxtrick.addBoxToSidebar(doc, header.textContent, null, 0, false, true)
+		var sidebarBox = Foxtrick.addBoxToSidebar(doc, header.textContent, null, 0, false, true)
+		sidebarBox.id = 'ft-team-select-box';
 
 		var toList = function() {
-			var option = listBox.getElementsByTagName('option')[0];
-			var pn = option.parentNode;
-			pn.removeChild(option);
-			option = listBox.getElementsByTagName('option')[0];
-			while (option != null) {
-				var player = doc.createElement('a');
-				player.href = option.value;
-				player.textContent = option.textContent;
-				pn.parentNode.appendChild(player);
-				pn.removeChild(option);
-				option = listBox.getElementsByTagName('option')[0];
-			}
-			var selectbox = listBox.getElementsByTagName('select')[0];
-			pn.parentNode.removeChild(selectbox);
+			toggleSelectBox();
 		};
 
 		var toSelectBox = function() {
+			if (toggleSelectBox())
+				return;
+
+			// create a select box with all players
 			var selectBox = doc.createElement('select');
 			var selected = function() {
 				doc.location.href = selectBox.value;
@@ -66,7 +62,7 @@ Foxtrick.modules['TeamSelectBox'] = {
 			option.textContent = Foxtrick.L10n.getString('TeamSelectBox.selectplayer');
 			selectBox.appendChild(option);
 
-			var players = listBox.getElementsByTagName('a');
+			var players = listTable.getElementsByTagName('a');
 			for (var i = 0; i < players.length; ++i) {
 				var player = players[i];
 				if (player.href.trim().length == 0)
@@ -78,18 +74,25 @@ Foxtrick.modules['TeamSelectBox'] = {
 				selectBox.appendChild(option);
 			}
 			var boxBody = listBox.getElementsByClassName('boxBody')[0];
-			if (boxBody) {  // normal skin
-				boxBody.textContent = ''; // clear it first
+			if (boxBody) {
+				Foxtrick.toggleClass(listTable, 'hidden');
 				boxBody.appendChild(selectBox);
 			}
-			else {  // simple skin. has no inner boxBody
-				var headerdiv = listBox.getElementsByTagName('div')[0];
-				headerdiv = listBox.removeChild(headerdiv);
-				listBox.textContent = ''; // clear it first
-				listBox.appendChild(headerdiv);
-				listBox.appendChild(selectBox);
-			}
 		};
+
+		/**
+		 * Toggle between list and select box
+		 * @returns {boolean} true if select box was toggled
+		 */
+		var toggleSelectBox = function() {
+			var selectBox = listBox.getElementsByTagName('select')[0];
+			if (selectBox && listTable) {
+				Foxtrick.toggleClass(selectBox, 'hidden');
+				Foxtrick.toggleClass(listTable, 'hidden');
+				return true;
+			}
+			return false
+		}
 
 		var showAsList = true; // is shown as list initially
 		var toggle = function() {
