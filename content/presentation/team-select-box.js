@@ -5,11 +5,15 @@
  * @author convinced, ryanli
  */
 
+/**
+ * @typedef {'selectbox' | 'list'} State
+ */
+
 Foxtrick.modules['TeamSelectBox'] = {
 	MODULE_CATEGORY: Foxtrick.moduleCategories.PRESENTATION,
 	PAGES: ['allPlayers', 'youthPlayers'],
 
-	run: function(doc) {
+	run: async function(doc) {
 		var listBox; // sidebarBox containing player list
 		var sidebarBoxes = doc.getElementsByClassName('sidebarBox');
 
@@ -44,12 +48,15 @@ Foxtrick.modules['TeamSelectBox'] = {
 		sidebarBox.id = 'ft-team-select-box';
 
 		var toList = function() {
-			toggleSelectBox();
+			if (toggleSelectBox())
+				setState('list');
 		};
 
 		var toSelectBox = function() {
-			if (toggleSelectBox())
+			if (toggleSelectBox()) {
+				setState('selectbox');
 				return;
+			}
 
 			// create a select box with all players
 			var selectBox = doc.createElement('select');
@@ -78,6 +85,7 @@ Foxtrick.modules['TeamSelectBox'] = {
 				Foxtrick.toggleClass(listTable, 'hidden');
 				boxBody.appendChild(selectBox);
 			}
+			setState('selectbox');
 		};
 
 		/**
@@ -94,17 +102,50 @@ Foxtrick.modules['TeamSelectBox'] = {
 			return false
 		}
 
-		var showAsList = true; // is shown as list initially
-		var toggle = function() {
+		/**
+		 * Sets global state of the select box
+		 * @param {State} state
+		 */
+		var setState = function(state) {
 			try {
-				showAsList = !showAsList;
-				(showAsList) ? toList() : toSelectBox();
-			}
-			catch (e) {
+				Foxtrick.storage.set('TeamSelectBox.state', state);
+			} catch (e) {
 				Foxtrick.log(e);
 			}
+		}
+
+		/**
+		 * Gets global state of the select box
+		 * @returns {Promise<State>} state
+		 */
+		var getState = function() {
+			try {
+				return Foxtrick.storage.get('TeamSelectBox.state');
+			} catch (e) {
+				Foxtrick.log(e);
+			}
+		}
+
+		let savedState = await getState();
+		let state;
+		switch (savedState) {
+			case 'selectbox':
+				toSelectBox();
+				state = 'selectbox';
+				break;
+			case 'list':
+				state = 'list';
+				Foxtrick.toggleExpanderArrow(boxHead);
+				break;
+			default: // saved state is null, we start with select box
+				toSelectBox();
+				state = 'selectbox';
+				break;
+		}
+
+		var toggle = function() {
+			(state === 'selectbox') ? toList() : toSelectBox();
 		};
 		Foxtrick.onClick(boxHead, toggle);
-		toggle();
 	}
 };
