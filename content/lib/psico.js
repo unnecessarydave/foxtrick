@@ -357,7 +357,7 @@ Foxtrick.psico = {
 		var comparing_wage = wage;
 		//DEBUG
 		var debug = '\n';
-		debug += 'WAGE (without 20%): ' + parseInt(wage, 10) + '\n';
+		debug += 'WAGE (without 20% and 10%): ' + parseInt(wage, 10) + '\n';
 
 		//removing base salary from wage
 		wage -= 250;
