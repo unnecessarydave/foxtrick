@@ -258,14 +258,7 @@
 			"content/loader-chrome.js"
 		],
 		"matches": [
-			"*://*.hattrick.org/*",
-			"*://*.hattrick.ws/*",
-			"*://*.hattrick.bz/*",
-			"*://*.hat-trick.net/*",
-			"*://*.hattrick.uol.com.br/*",
-			"*://*.hattrick.interia.pl/*",
-			"*://*.hattrick.name/*",
-			"*://*.hattrick.fm/*"
+			"*://*.hattrick.org/*"
 		],
 		"run_at": "document_start"
 	} ],
@@ -322,5 +315,5 @@
 		}
 	},
 	// <!-- end gecko-specific -->
-	"version": "0.17.9"
+	"version": "0.18.0"
 }
