@@ -15,10 +15,10 @@ Foxtrick.modules['NotifyChromeVersion'] = {
      * Firefox update.json url used to find the latest release version number
      * - Chrome and Firefox version numbers are in sync.
      */
-    UPDATE_JSON_URL: 'https://foxtrick-ng.github.io/download/release/firefox/update.json',
+    UPDATE_JSON_URL: 'https://foxtrick-ng.github.io/download/prerelease/firefox/update.json',
     
     /** Extension GUID */
-    GUID: '{bcfe9090-dfc6-41d6-a49c-127432ec04ea}', // release branch
+    GUID: '{4b64746e-3984-4364-a7de-cd462be9e844}', // prerelease branch
 
     /** Chrome update instructions url */
     CHROME_UPDATE_URL: 'https://foxtrick-ng.github.io/chromeupgrade.html',
