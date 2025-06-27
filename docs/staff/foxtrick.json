@@ -1,0 +1,2010 @@
+{
+	"duties": {
+		"developer": {
+			"alt": "Foxtrick developer",
+			"url": "chrome://foxtrick/content/resources/img/staff/foxtrick.png"
+		},
+		"helper": {
+			"alt": "Foxtrick helper",
+			"url": "chrome://foxtrick/content/resources/img/staff/foxtrick.png"
+		},
+		"supporter": {
+			"alt": "Foxtrick Supporter",
+			"url": "chrome://foxtrick/content/resources/img/staff/foxtrick.png"
+		},
+		"translator": {
+			"alt": "Foxtrick translator",
+			"url": "chrome://foxtrick/content/resources/img/staff/foxtrick.png"
+		}
+	},
+	"internal": "true",
+	"list": [
+		{
+			"duty": "translator",
+			"id": "10038631",
+			"name": "Mohammad-SE"
+		},
+		{
+			"duty": "translator",
+			"id": "10167326",
+			"name": "<goomis90>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10245282",
+			"name": "marcolav"
+		},
+		{
+			"duty": "translator",
+			"id": "10246801",
+			"name": "silkevicious"
+		},
+		{
+			"duty": "translator",
+			"id": "1028143",
+			"name": "<kosio>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10330011",
+			"name": "<holyoli>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10344768",
+			"name": "raetselecke"
+		},
+		{
+			"duty": "supporter",
+			"id": "10354068",
+			"name": "<gtavo>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10357856",
+			"name": "rattlerx"
+		},
+		{
+			"duty": "supporter",
+			"id": "10380313",
+			"name": "<ehemaliger-manager>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10403021",
+			"name": "luigimonte"
+		},
+		{
+			"duty": "translator",
+			"id": "10438815",
+			"name": "<puuslik>"
+		},
+		{
+			"duty": "translator",
+			"id": "1048018",
+			"name": "LA-ivo"
+		},
+		{
+			"duty": "supporter",
+			"id": "10491436",
+			"name": "<flight_of_icarus>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10511346",
+			"name": "AH-galla"
+		},
+		{
+			"duty": "supporter",
+			"id": "10537236",
+			"name": "Clepto"
+		},
+		{
+			"duty": "translator",
+			"id": "10562696",
+			"name": "<minskj-GIGANT>"
+		},
+		{
+			"duty": "translator",
+			"id": "10613189",
+			"name": "<Romanolus>"
+		},
+		{
+			"duty": "translator",
+			"id": "10621734",
+			"name": "dritte333"
+		},
+		{
+			"duty": "supporter",
+			"id": "10621822",
+			"name": "<Baldruus>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10648045",
+			"name": "BigDima"
+		},
+		{
+			"duty": "supporter",
+			"id": "10648080",
+			"name": "tperic"
+		},
+		{
+			"duty": "supporter",
+			"id": "10680966",
+			"name": "vegar56"
+		},
+		{
+			"duty": "supporter",
+			"id": "10726446",
+			"name": "Cenarius"
+		},
+		{
+			"duty": "supporter",
+			"id": "10763413",
+			"name": "h-b-o"
+		},
+		{
+			"duty": "supporter",
+			"id": "10765674",
+			"name": "Nonnolorenzo"
+		},
+		{
+			"duty": "supporter",
+			"id": "10775786",
+			"name": "<Ucha_Cuervo>"
+		},
+		{
+			"duty": "supporter",
+			"id": "10780200",
+			"name": "welwelsken"
+		},
+		{
+			"duty": "developer",
+			"id": "10800601",
+			"name": "HT-Tasos"
+		},
+		{
+			"duty": "supporter",
+			"id": "10808283",
+			"name": "ypo333"
+		},
+		{
+			"duty": "translator",
+			"id": "10942797",
+			"name": "mrksik"
+		},
+		{
+			"duty": "translator",
+			"id": "10968856",
+			"name": "serjhanti"
+		},
+		{
+			"duty": "translator",
+			"id": "11006315",
+			"name": "timh1704"
+		},
+		{
+			"duty": "supporter",
+			"id": "11017062",
+			"name": "DDriver"
+		},
+		{
+			"duty": "supporter",
+			"id": "11035584",
+			"name": "thejohn"
+		},
+		{
+			"duty": "supporter",
+			"id": "11037511",
+			"name": "lucian_baciu"
+		},
+		{
+			"duty": "supporter",
+			"id": "11087526",
+			"name": "siftekhar"
+		},
+		{
+			"duty": "supporter",
+			"id": "11097458",
+			"name": "faber_civitas_nova"
+		},
+		{
+			"duty": "translator",
+			"id": "11101114",
+			"name": "<aaa-aaa>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11164939",
+			"name": "gorecki69"
+		},
+		{
+			"duty": "supporter",
+			"id": "11168396",
+			"name": "principiante56"
+		},
+		{
+			"duty": "supporter",
+			"id": "11290737",
+			"name": "Kaleb_D"
+		},
+		{
+			"duty": "supporter",
+			"id": "11315240",
+			"name": "<aleksi_h>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11320073",
+			"name": "<Dr_Fleischwolf>"
+		},
+		{
+			"duty": "translator",
+			"id": "1132186",
+			"name": "gucan"
+		},
+		{
+			"duty": "developer",
+			"id": "11335334",
+			"name": "CatzHoek"
+		},
+		{
+			"duty": "supporter",
+			"id": "11367759",
+			"name": "Aeropaddy"
+		},
+		{
+			"duty": "supporter",
+			"id": "11386166",
+			"name": "<FloZorgo>"
+		},
+		{
+			"duty": "supporter",
+			"id": "1140197",
+			"name": "<schmidde>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11449158",
+			"name": "brulcb"
+		},
+		{
+			"duty": "supporter",
+			"id": "11525655",
+			"name": "<brutuscat>"
+		},
+		{
+			"duty": "translator",
+			"id": "11528071",
+			"name": "HPE-Flatron"
+		},
+		{
+			"duty": "supporter",
+			"id": "11528359",
+			"name": "<antonin298>"
+		},
+		{
+			"duty": "translator",
+			"id": "11551835",
+			"name": "Limonada123"
+		},
+		{
+			"duty": "supporter",
+			"id": "11562839",
+			"name": "rdroze"
+		},
+		{
+			"duty": "supporter",
+			"id": "11578876",
+			"name": "FCJoe"
+		},
+		{
+			"duty": "supporter",
+			"id": "11599538",
+			"name": "<ernest11>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11616717",
+			"name": "nic016"
+		},
+		{
+			"duty": "supporter",
+			"id": "11650318",
+			"name": "GikuMD"
+		},
+		{
+			"duty": "translator",
+			"id": "11703834",
+			"name": "<Estupor>"
+		},
+		{
+			"duty": "translator",
+			"id": "11749601",
+			"name": "t54g05"
+		},
+		{
+			"duty": "supporter",
+			"id": "11749650",
+			"name": "Elle2-GIGA"
+		},
+		{
+			"duty": "translator",
+			"id": "11758667",
+			"name": "<Alan_Smithee>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11765709",
+			"name": "<visviva>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11792210",
+			"name": "himbeerkracherl"
+		},
+		{
+			"duty": "supporter",
+			"id": "11793121",
+			"name": "<neandertal>"
+		},
+		{
+			"duty": "translator",
+			"id": "11817135",
+			"name": "Davit_P"
+		},
+		{
+			"duty": "supporter",
+			"id": "11860277",
+			"name": "inulinux12"
+		},
+		{
+			"duty": "translator",
+			"id": "11869364",
+			"name": "<LucaXVI>"
+		},
+		{
+			"duty": "supporter",
+			"id": "11916705",
+			"name": "papi_"
+		},
+		{
+			"duty": "translator",
+			"id": "11935403",
+			"name": "Fondhaarp"
+		},
+		{
+			"duty": "translator",
+			"id": "11988102",
+			"name": "levang"
+		},
+		{
+			"duty": "supporter",
+			"id": "12019593",
+			"name": "realper"
+		},
+		{
+			"duty": "supporter",
+			"id": "12029988",
+			"name": "Ingepepe"
+		},
+		{
+			"duty": "supporter",
+			"id": "12058681",
+			"name": "<robertkr>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12066737",
+			"name": "<pimhitv>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12068053",
+			"name": "Sellas"
+		},
+		{
+			"duty": "supporter",
+			"id": "12104313",
+			"name": "royson3"
+		},
+		{
+			"duty": "translator",
+			"id": "12166",
+			"name": "murko"
+		},
+		{
+			"duty": "supporter",
+			"id": "12220830",
+			"name": "<Alienjake>"
+		},
+		{
+			"duty": "supporter",
+			"id": "1230839",
+			"name": "hetekroket"
+		},
+		{
+			"duty": "translator",
+			"id": "12326398",
+			"name": "LA-Jalal"
+		},
+		{
+			"duty": "supporter",
+			"id": "12341439",
+			"name": "<azulinvicto>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12352696",
+			"name": "Cancel_sky"
+		},
+		{
+			"duty": "translator",
+			"id": "12378459",
+			"name": "ASTND"
+		},
+		{
+			"duty": "translator",
+			"id": "12387677",
+			"name": "<gomago>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12408163",
+			"name": "broda210"
+		},
+		{
+			"duty": "supporter",
+			"id": "12438824",
+			"name": "SarandonReturns"
+		},
+		{
+			"duty": "translator",
+			"id": "12449946",
+			"name": "AJensvoll"
+		},
+		{
+			"duty": "supporter",
+			"id": "12467052",
+			"name": "Asterix71"
+		},
+		{
+			"duty": "supporter",
+			"id": "12508540",
+			"name": "Oppa-JoMar"
+		},
+		{
+			"duty": "supporter",
+			"id": "12511204",
+			"name": "<Domek_69>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12521069",
+			"name": "EiCeKju"
+		},
+		{
+			"duty": "supporter",
+			"id": "12529571",
+			"name": "ChrischnCool"
+		},
+		{
+			"duty": "translator",
+			"id": "12533508",
+			"name": "RoLitoral"
+		},
+		{
+			"duty": "supporter",
+			"id": "12538647",
+			"name": "Red-J0hn"
+		},
+		{
+			"duty": "supporter",
+			"id": "1254141",
+			"name": "timone"
+		},
+		{
+			"duty": "translator",
+			"id": "12593452",
+			"name": "coluccia94"
+		},
+		{
+			"duty": "supporter",
+			"id": "12605339",
+			"name": "<PhileasFogg>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12605732",
+			"name": "<MaxCman>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12608460",
+			"name": "<Jarly>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12620856",
+			"name": "<jad933>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12685619",
+			"name": "DoeMaarNormaal"
+		},
+		{
+			"duty": "developer",
+			"id": "1270528",
+			"name": "<larsw84>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12788724",
+			"name": "<jkers>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12842434",
+			"name": "<darkrider2>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12903605",
+			"name": "<1910pauli1910>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12952179",
+			"name": "GM-KoeKieBE"
+		},
+		{
+			"duty": "translator",
+			"id": "12960779",
+			"name": "<puttfarken01>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12966867",
+			"name": "ExpatU"
+		},
+		{
+			"duty": "supporter",
+			"id": "12973873",
+			"name": "<Shantiboss>"
+		},
+		{
+			"duty": "translator",
+			"id": "12975827",
+			"name": "<MartinsPF_>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12979172",
+			"name": "<Robin-Bird>"
+		},
+		{
+			"duty": "supporter",
+			"id": "12990065",
+			"name": "<Lion_Holland>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13001247",
+			"name": "blu50_"
+		},
+		{
+			"duty": "supporter",
+			"id": "13035182",
+			"name": "<Feodrov>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13049551",
+			"name": "Novecento_BOT"
+		},
+		{
+			"duty": "supporter",
+			"id": "13059131",
+			"name": "<Harris92>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13062950",
+			"name": "_MrEli8_"
+		},
+		{
+			"duty": "supporter",
+			"id": "13071458",
+			"name": "markul77"
+		},
+		{
+			"duty": "supporter",
+			"id": "13079964",
+			"name": "Bierpatriot1"
+		},
+		{
+			"duty": "supporter",
+			"id": "13087874",
+			"name": "Kelor"
+		},
+		{
+			"duty": "supporter",
+			"id": "13088253",
+			"name": "C-J-9"
+		},
+		{
+			"duty": "supporter",
+			"id": "13099132",
+			"name": "harrylan"
+		},
+		{
+			"duty": "supporter",
+			"id": "13102527",
+			"name": "TomTrader"
+		},
+		{
+			"duty": "supporter",
+			"id": "13111549",
+			"name": "<Baldbeardy>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13113133",
+			"name": "<Quantor>"
+		},
+		{
+			"duty": "translator",
+			"id": "13121281",
+			"name": "<DrDrunkenstein>"
+		},
+		{
+			"duty": "translator",
+			"id": "13142222",
+			"name": "<karlinhos>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13204824",
+			"name": "<ReeeN>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13209572",
+			"name": "-Pecu-"
+		},
+		{
+			"duty": "supporter",
+			"id": "13342405",
+			"name": "<angel-ito>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13351914",
+			"name": "karelant"
+		},
+		{
+			"duty": "supporter",
+			"id": "13359636",
+			"name": "<Latic_>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13381702",
+			"name": "falchenr"
+		},
+		{
+			"duty": "supporter",
+			"id": "13446273",
+			"name": "<il_Diavolo_>"
+		},
+		{
+			"duty": "supporter",
+			"id": "13495368",
+			"name": "<Mr_Eaton>"
+		},
+		{
+			"duty": "supporter",
+			"id": "1349786",
+			"name": "benem"
+		},
+		{
+			"duty": "supporter",
+			"id": "13517350",
+			"name": "Iorda9"
+		},
+		{
+			"duty": "supporter",
+			"id": "13552149",
+			"name": "Daniel_Gringo"
+		},
+		{
+			"duty": "supporter",
+			"id": "1360148",
+			"name": "Stipe_GAK"
+		},
+		{
+			"duty": "supporter",
+			"id": "13607267",
+			"name": "MrMessina"
+		},
+		{
+			"duty": "supporter",
+			"id": "13700240",
+			"name": "JoeMacarra"
+		},
+		{
+			"duty": "translator",
+			"id": "1370102",
+			"name": "Iltios"
+		},
+		{
+			"duty": "supporter",
+			"id": "13720067",
+			"name": "LucyJordan"
+		},
+		{
+			"duty": "supporter",
+			"id": "13724902",
+			"name": "Achilles_"
+		},
+		{
+			"duty": "supporter",
+			"id": "13774488",
+			"name": "Uglerimosen"
+		},
+		{
+			"duty": "supporter",
+			"id": "13802910",
+			"name": "Puccinello"
+		},
+		{
+			"duty": "supporter",
+			"id": "13827209",
+			"name": "Justin_Yang"
+		},
+		{
+			"duty": "supporter",
+			"id": "13928189",
+			"name": "Mod-mfaulkie"
+		},
+		{
+			"duty": "supporter",
+			"id": "13955025",
+			"name": "xep624"
+		},
+		{
+			"duty": "supporter",
+			"id": "1397713",
+			"name": "<VvJ-Beckham>"
+		},
+		{
+			"duty": "translator",
+			"id": "1425439",
+			"name": "<playMaker->"
+		},
+		{
+			"duty": "supporter",
+			"id": "1458532",
+			"name": "<Moonlight->"
+		},
+		{
+			"duty": "translator",
+			"id": "1494131",
+			"name": "<a_cardoso>"
+		},
+		{
+			"duty": "translator",
+			"id": "1512628",
+			"name": "Stolik"
+		},
+		{
+			"duty": "supporter",
+			"id": "1528065",
+			"name": "kupteri"
+		},
+		{
+			"duty": "translator",
+			"id": "1641271",
+			"name": "<jaymz69>"
+		},
+		{
+			"duty": "supporter",
+			"id": "1675627",
+			"name": "Luckeh"
+		},
+		{
+			"duty": "translator",
+			"id": "1693272",
+			"name": "Max_Schreck"
+		},
+		{
+			"duty": "supporter",
+			"id": "1742563",
+			"name": "SebGui"
+		},
+		{
+			"duty": "supporter",
+			"id": "1748351",
+			"name": "Achim81"
+		},
+		{
+			"duty": "supporter",
+			"id": "1761014",
+			"name": "fepo1"
+		},
+		{
+			"duty": "supporter",
+			"id": "1806088",
+			"name": "GeissbockHennes"
+		},
+		{
+			"duty": "supporter",
+			"id": "1811094",
+			"name": "Efstratios"
+		},
+		{
+			"duty": "supporter",
+			"id": "1883959",
+			"name": "Kundiman"
+		},
+		{
+			"duty": "supporter",
+			"id": "191061",
+			"name": "MHawk"
+		},
+		{
+			"duty": "supporter",
+			"id": "192461",
+			"name": "dedo_uluk"
+		},
+		{
+			"duty": "translator",
+			"id": "1957756",
+			"name": "llramone"
+		},
+		{
+			"duty": "translator",
+			"id": "1966508",
+			"name": "<SLV-Ferovejecs>"
+		},
+		{
+			"duty": "supporter",
+			"id": "2029812",
+			"name": "Presida"
+		},
+		{
+			"duty": "supporter",
+			"id": "2068162",
+			"name": "-koen-"
+		},
+		{
+			"duty": "translator",
+			"id": "2090503",
+			"name": "<--Eagle-->"
+		},
+		{
+			"duty": "supporter",
+			"id": "2093541",
+			"name": "<borgirk>"
+		},
+		{
+			"duty": "supporter",
+			"id": "2117265",
+			"name": "<Regador>"
+		},
+		{
+			"duty": "translator",
+			"id": "2172516",
+			"name": "csajszi"
+		},
+		{
+			"duty": "supporter",
+			"id": "2178948",
+			"name": "stuhlgang"
+		},
+		{
+			"duty": "supporter",
+			"id": "2247",
+			"name": "carlerik"
+		},
+		{
+			"duty": "supporter",
+			"id": "2293778",
+			"name": "alessioalex"
+		},
+		{
+			"duty": "developer",
+			"id": "2336766",
+			"name": "<spambot>"
+		},
+		{
+			"duty": "supporter",
+			"id": "235470",
+			"name": "Kalle0708"
+		},
+		{
+			"duty": "translator",
+			"id": "2363296",
+			"name": "LA-OReiDasSachadas"
+		},
+		{
+			"duty": "translator",
+			"id": "2391052",
+			"name": "<eyanez>"
+		},
+		{
+			"duty": "supporter",
+			"id": "2398346",
+			"name": "<CarlesWhisper>"
+		},
+		{
+			"duty": "supporter",
+			"id": "245173",
+			"name": "Dikkiedick"
+		},
+		{
+			"duty": "supporter",
+			"id": "2552246",
+			"name": "bigos11"
+		},
+		{
+			"duty": "translator",
+			"id": "2689296",
+			"name": "<Pyntsa>"
+		},
+		{
+			"duty": "supporter",
+			"id": "2724749",
+			"name": "CarryOn"
+		},
+		{
+			"duty": "supporter",
+			"id": "2726644",
+			"name": "Giveman"
+		},
+		{
+			"duty": "translator",
+			"id": "2765378",
+			"name": "summercloud"
+		},
+		{
+			"duty": "supporter",
+			"id": "2787409",
+			"name": "gia73"
+		},
+		{
+			"duty": "translator",
+			"id": "2809993",
+			"name": "<damyr>"
+		},
+		{
+			"duty": "translator",
+			"id": "2884072",
+			"name": "<Karlthegreat>"
+		},
+		{
+			"duty": "translator",
+			"id": "2902659",
+			"name": "caracca"
+		},
+		{
+			"duty": "translator",
+			"id": "2915990",
+			"name": "GZ-grobas"
+		},
+		{
+			"duty": "supporter",
+			"id": "3013185",
+			"name": "<AfroSeb>"
+		},
+		{
+			"duty": "supporter",
+			"id": "3061886",
+			"name": "HappyPlayer"
+		},
+		{
+			"duty": "supporter",
+			"id": "3080979",
+			"name": "Manuz"
+		},
+		{
+			"duty": "supporter",
+			"id": "3150937",
+			"name": "<Hidetoschi>"
+		},
+		{
+			"duty": "supporter",
+			"id": "322381",
+			"name": "Maik-2000"
+		},
+		{
+			"duty": "supporter",
+			"id": "32722",
+			"name": "FaderMerrin"
+		},
+		{
+			"duty": "supporter",
+			"id": "3347535",
+			"name": "brezel74"
+		},
+		{
+			"duty": "translator",
+			"id": "335181",
+			"name": "Mod-Baler0"
+		},
+		{
+			"duty": "supporter",
+			"id": "339156",
+			"name": "GM-Crosswind"
+		},
+		{
+			"duty": "developer",
+			"id": "3410980",
+			"name": "<Aimo_Kanuuna>"
+		},
+		{
+			"duty": "supporter",
+			"id": "3417036",
+			"name": "Chemii"
+		},
+		{
+			"duty": "supporter",
+			"id": "343470",
+			"name": "another"
+		},
+		{
+			"duty": "supporter",
+			"id": "344036",
+			"name": "ADoherty"
+		},
+		{
+			"duty": "supporter",
+			"id": "3499253",
+			"name": "Gambit"
+		},
+		{
+			"duty": "supporter",
+			"id": "3508192",
+			"name": "<jonny91>"
+		},
+		{
+			"duty": "developer",
+			"id": "3542943",
+			"name": "<Jestar>"
+		},
+		{
+			"duty": "translator",
+			"id": "3613658",
+			"name": "GM-Iuve-"
+		},
+		{
+			"duty": "supporter",
+			"id": "3639672",
+			"name": "Balkankoenig"
+		},
+		{
+			"duty": "supporter",
+			"id": "364858932",
+			"name": "<plmbr>"
+		},
+		{
+			"duty": "supporter",
+			"id": "3682430",
+			"name": "canari29"
+		},
+		{
+			"duty": "translator",
+			"id": "368411",
+			"name": "--Robin--"
+		},
+		{
+			"duty": "developer",
+			"id": "3737795",
+			"name": "OBarros"
+		},
+		{
+			"duty": "supporter",
+			"id": "3742073",
+			"name": "Kaell"
+		},
+		{
+			"duty": "supporter",
+			"id": "3745622",
+			"name": "<kikinhtev>"
+		},
+		{
+			"duty": "supporter",
+			"id": "3765816",
+			"name": "bgillam"
+		},
+		{
+			"duty": "supporter",
+			"id": "379687",
+			"name": "DeschainRoland"
+		},
+		{
+			"duty": "supporter",
+			"id": "381349",
+			"name": "eranzw"
+		},
+		{
+			"duty": "translator",
+			"id": "3885942",
+			"name": "---Nacho---"
+		},
+		{
+			"duty": "supporter",
+			"id": "389027",
+			"name": "Kramp"
+		},
+		{
+			"duty": "translator",
+			"id": "3911874",
+			"name": "mr_freeze_"
+		},
+		{
+			"duty": "supporter",
+			"id": "3954594",
+			"name": "<Il_Gim>"
+		},
+		{
+			"duty": "translator",
+			"id": "3955847",
+			"name": "Unknown_Guy"
+		},
+		{
+			"duty": "translator",
+			"id": "3961483",
+			"name": "_recluso_"
+		},
+		{
+			"duty": "supporter",
+			"id": "3967774",
+			"name": "tmace85"
+		},
+		{
+			"duty": "supporter",
+			"id": "3981682",
+			"name": "jurandraczej"
+		},
+		{
+			"duty": "supporter",
+			"id": "410541",
+			"name": "ice21sui"
+		},
+		{
+			"duty": "supporter",
+			"id": "4116867",
+			"name": "BoTTH-Blaz"
+		},
+		{
+			"duty": "translator",
+			"id": "4149232",
+			"name": "<saviour26>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4149601",
+			"name": "<Triplex1963>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4253318",
+			"name": "<cschz>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4337779",
+			"name": "<VekaP>"
+		},
+		{
+			"duty": "developer",
+			"id": "4342858",
+			"name": "ljushaff"
+		},
+		{
+			"duty": "translator",
+			"id": "4387847",
+			"name": "<Krasher>"
+		},
+		{
+			"duty": "translator",
+			"id": "440454",
+			"name": "<-Foppe->"
+		},
+		{
+			"duty": "supporter",
+			"id": "4416087",
+			"name": "ratsrats"
+		},
+		{
+			"duty": "helper",
+			"id": "4416087",
+			"name": "ratsrats"
+		},
+		{
+			"duty": "translator",
+			"id": "4417979",
+			"name": "<Aze-maestro>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4418737",
+			"name": "Che-Gi"
+		},
+		{
+			"duty": "supporter",
+			"id": "4451958",
+			"name": "Fangio"
+		},
+		{
+			"duty": "supporter",
+			"id": "4476273",
+			"name": "fbog31"
+		},
+		{
+			"duty": "supporter",
+			"id": "4504069",
+			"name": "-leenders-"
+		},
+		{
+			"duty": "translator",
+			"id": "4577648",
+			"name": "<ampulka>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4622749",
+			"name": "SirRagnar"
+		},
+		{
+			"duty": "supporter",
+			"id": "4666835",
+			"name": "Ermezzo"
+		},
+		{
+			"duty": "supporter",
+			"id": "4718062",
+			"name": "czork"
+		},
+		{
+			"duty": "translator",
+			"id": "4718113",
+			"name": "<Werder0405>"
+		},
+		{
+			"duty": "translator",
+			"id": "4727906",
+			"name": "<Grif_07>"
+		},
+		{
+			"duty": "supporter",
+			"id": "4736512",
+			"name": "Korrigan"
+		},
+		{
+			"duty": "translator",
+			"id": "48207",
+			"name": "stefkor"
+		},
+		{
+			"duty": "supporter",
+			"id": "486061",
+			"name": "<lanuscero>"
+		},
+		{
+			"duty": "translator",
+			"id": "4917179",
+			"name": "mygenfordt"
+		},
+		{
+			"duty": "supporter",
+			"id": "4963483",
+			"name": "<Maske>"
+		},
+		{
+			"duty": "supporter",
+			"id": "50011",
+			"name": "Wilbor"
+		},
+		{
+			"duty": "translator",
+			"id": "5055092",
+			"name": "<GTTWINS>"
+		},
+		{
+			"duty": "translator",
+			"id": "5193223",
+			"name": "ironm-DETISTE"
+		},
+		{
+			"duty": "supporter",
+			"id": "5216334",
+			"name": "konny"
+		},
+		{
+			"duty": "translator",
+			"id": "524111",
+			"name": "<piper_101>"
+		},
+		{
+			"duty": "translator",
+			"id": "5345125",
+			"name": "--Marin--"
+		},
+		{
+			"duty": "supporter",
+			"id": "5358688",
+			"name": "Graben53"
+		},
+		{
+			"duty": "supporter",
+			"id": "536514",
+			"name": "Piero00"
+		},
+		{
+			"duty": "supporter",
+			"id": "5379012",
+			"name": "<celedon>"
+		},
+		{
+			"duty": "supporter",
+			"id": "5394629",
+			"name": "Speedy-T"
+		},
+		{
+			"duty": "translator",
+			"id": "540775",
+			"name": "slartibartfast_aq"
+		},
+		{
+			"duty": "translator",
+			"id": "5412818",
+			"name": "gkon13"
+		},
+		{
+			"duty": "supporter",
+			"id": "5413446",
+			"name": "<tjahe>"
+		},
+		{
+			"duty": "supporter",
+			"id": "54496",
+			"name": "Svennisson"
+		},
+		{
+			"duty": "supporter",
+			"id": "5489151",
+			"name": "legerutengenser"
+		},
+		{
+			"duty": "translator",
+			"id": "552640",
+			"name": "slader"
+		},
+		{
+			"duty": "translator",
+			"id": "5547377",
+			"name": "Guaipeca"
+		},
+		{
+			"duty": "supporter",
+			"id": "555",
+			"name": "<>"
+		},
+		{
+			"duty": "translator",
+			"id": "5577946",
+			"name": "<eekels>"
+		},
+		{
+			"duty": "supporter",
+			"id": "569551",
+			"name": "Bentstein-V_UA"
+		},
+		{
+			"duty": "supporter",
+			"id": "5717080",
+			"name": "<kondeswoasei>"
+		},
+		{
+			"duty": "supporter",
+			"id": "5740182",
+			"name": "mendrugo_"
+		},
+		{
+			"duty": "supporter",
+			"id": "575455",
+			"name": "<Bephep>"
+		},
+		{
+			"duty": "translator",
+			"id": "578992",
+			"name": "dm001"
+		},
+		{
+			"duty": "supporter",
+			"id": "589379",
+			"name": "BaDWiCk"
+		},
+		{
+			"duty": "supporter",
+			"id": "5932699",
+			"name": "mm2007"
+		},
+		{
+			"duty": "translator",
+			"id": "621456",
+			"name": "_KOHb_"
+		},
+		{
+			"duty": "developer",
+			"id": "6228713",
+			"name": "smates"
+		},
+		{
+			"duty": "supporter",
+			"id": "6234131",
+			"name": "Dagger-"
+		},
+		{
+			"duty": "translator",
+			"id": "6263697",
+			"name": "<Ron_Riverboat>"
+		},
+		{
+			"duty": "translator",
+			"id": "6307374",
+			"name": "<meneses_pt>"
+		},
+		{
+			"duty": "translator",
+			"id": "6345528",
+			"name": "<franory>"
+		},
+		{
+			"duty": "translator",
+			"id": "6350285",
+			"name": "<Skoglund>"
+		},
+		{
+			"duty": "developer",
+			"id": "637644",
+			"name": "<baumanns>"
+		},
+		{
+			"duty": "translator",
+			"id": "6489521",
+			"name": "<-JENDA->"
+		},
+		{
+			"duty": "developer",
+			"id": "653581",
+			"name": "CHPP-teles"
+		},
+		{
+			"duty": "supporter",
+			"id": "6559512",
+			"name": "_112_"
+		},
+		{
+			"duty": "translator",
+			"id": "6595557",
+			"name": "<edzus>"
+		},
+		{
+			"duty": "translator",
+			"id": "6680572",
+			"name": "<Nanouk>"
+		},
+		{
+			"duty": "supporter",
+			"id": "6691835",
+			"name": "XURDE"
+		},
+		{
+			"duty": "supporter",
+			"id": "6723161",
+			"name": "Le-Chat-Potte"
+		},
+		{
+			"duty": "translator",
+			"id": "6779565",
+			"name": "<LasseSvendsen>"
+		},
+		{
+			"duty": "translator",
+			"id": "6801903",
+			"name": "<Homzik>"
+		},
+		{
+			"duty": "supporter",
+			"id": "6895080",
+			"name": "<sardinablu>"
+		},
+		{
+			"duty": "translator",
+			"id": "6927256",
+			"name": "<ElChiquitin>"
+		},
+		{
+			"duty": "supporter",
+			"id": "6940726",
+			"name": "__Tim"
+		},
+		{
+			"duty": "supporter",
+			"id": "6944439",
+			"name": "N-Kobayashi"
+		},
+		{
+			"duty": "supporter",
+			"id": "6944890",
+			"name": "guttusangolo"
+		},
+		{
+			"duty": "supporter",
+			"id": "6977975",
+			"name": "cicix-GIGA"
+		},
+		{
+			"duty": "supporter",
+			"id": "7068855",
+			"name": "Saarfubberino"
+		},
+		{
+			"duty": "translator",
+			"id": "7126492",
+			"name": "<CoRrRan>"
+		},
+		{
+			"duty": "translator",
+			"id": "7135171",
+			"name": "McTripas"
+		},
+		{
+			"duty": "translator",
+			"id": "7137875",
+			"name": "LA-IpEFiX"
+		},
+		{
+			"duty": "translator",
+			"id": "716201",
+			"name": "Mod-Transy"
+		},
+		{
+			"duty": "supporter",
+			"id": "7197589",
+			"name": "il-padrone"
+		},
+		{
+			"duty": "translator",
+			"id": "7230071",
+			"name": "TheCaptainClaw"
+		},
+		{
+			"duty": "translator",
+			"id": "7249130",
+			"name": "Mod-kirjakas"
+		},
+		{
+			"duty": "supporter",
+			"id": "7269920",
+			"name": "DehChef"
+		},
+		{
+			"duty": "supporter",
+			"id": "7353465",
+			"name": "Wasted_Penguin"
+		},
+		{
+			"duty": "developer",
+			"id": "7409095",
+			"name": "<stephan57>"
+		},
+		{
+			"duty": "translator",
+			"id": "7439277",
+			"name": "<white_eagle>"
+		},
+		{
+			"duty": "supporter",
+			"id": "7445196",
+			"name": "<Franz-Kremer>"
+		},
+		{
+			"duty": "supporter",
+			"id": "7455307",
+			"name": "Vendragon"
+		},
+		{
+			"duty": "supporter",
+			"id": "7486920",
+			"name": "Kira_Luke"
+		},
+		{
+			"duty": "supporter",
+			"id": "7517447",
+			"name": "LeBridge-PDM"
+		},
+		{
+			"duty": "translator",
+			"id": "753905",
+			"name": "<carlesmu>"
+		},
+		{
+			"duty": "translator",
+			"id": "7564618",
+			"name": "GM-Shamil"
+		},
+		{
+			"duty": "supporter",
+			"id": "7611458",
+			"name": "geboren1948"
+		},
+		{
+			"duty": "supporter",
+			"id": "763947",
+			"name": "Schumi-47"
+		},
+		{
+			"duty": "developer",
+			"id": "765274",
+			"name": "taised"
+		},
+		{
+			"duty": "supporter",
+			"id": "7730271",
+			"name": "<wildgoose>"
+		},
+		{
+			"duty": "developer",
+			"id": "7776339",
+			"name": "<convincedd>"
+		},
+		{
+			"duty": "supporter",
+			"id": "777893",
+			"name": "Hocke"
+		},
+		{
+			"duty": "supporter",
+			"id": "7861087",
+			"name": "Benedictus_DE"
+		},
+		{
+			"duty": "supporter",
+			"id": "7865524",
+			"name": "Dovco_HandF"
+		},
+		{
+			"duty": "translator",
+			"id": "7873605",
+			"name": "<JAM3SoN>"
+		},
+		{
+			"duty": "translator",
+			"id": "7873658",
+			"name": "<apatka>"
+		},
+		{
+			"duty": "supporter",
+			"id": "7944716",
+			"name": "<Gts-twojstary>"
+		},
+		{
+			"duty": "translator",
+			"id": "7967145",
+			"name": "bigpapy"
+		},
+		{
+			"duty": "supporter",
+			"id": "7972975",
+			"name": "Wolverino"
+		},
+		{
+			"duty": "supporter",
+			"id": "7973946",
+			"name": "<Steo1968>"
+		},
+		{
+			"duty": "supporter",
+			"id": "80899",
+			"name": "steelbow"
+		},
+		{
+			"duty": "developer",
+			"id": "8107197",
+			"name": "<Greblys>"
+		},
+		{
+			"duty": "supporter",
+			"id": "8131534",
+			"name": "necrospettro"
+		},
+		{
+			"duty": "supporter",
+			"id": "8168001",
+			"name": "Hantelfix"
+		},
+		{
+			"duty": "supporter",
+			"id": "8179870",
+			"name": "Ad_Bos"
+		},
+		{
+			"duty": "supporter",
+			"id": "8190906",
+			"name": "DxHT-pawpol"
+		},
+		{
+			"duty": "supporter",
+			"id": "8209901",
+			"name": "fitzstudio"
+		},
+		{
+			"duty": "supporter",
+			"id": "8216321",
+			"name": "pucciozzo"
+		},
+		{
+			"duty": "translator",
+			"id": "8277378",
+			"name": "MarceloFBrandao"
+		},
+		{
+			"duty": "supporter",
+			"id": "8329542",
+			"name": "Aristodemos"
+		},
+		{
+			"duty": "developer",
+			"id": "8342420",
+			"name": "ryanli"
+		},
+		{
+			"duty": "developer",
+			"id": "8366392",
+			"name": "--MJ--"
+		},
+		{
+			"duty": "developer",
+			"id": "8378622",
+			"name": "bummerland"
+		},
+		{
+			"duty": "translator",
+			"id": "8553822",
+			"name": "<armball>"
+		},
+		{
+			"duty": "supporter",
+			"id": "8554797",
+			"name": "Bokko_"
+		},
+		{
+			"duty": "supporter",
+			"id": "8640745",
+			"name": "redbcn"
+		},
+		{
+			"duty": "translator",
+			"id": "8656808",
+			"name": "HHTim"
+		},
+		{
+			"duty": "supporter",
+			"id": "8782191",
+			"name": "Rustyjack"
+		},
+		{
+			"duty": "translator",
+			"id": "8795088",
+			"name": "crta13"
+		},
+		{
+			"duty": "translator",
+			"id": "8816281",
+			"name": "<margaale>"
+		},
+		{
+			"duty": "supporter",
+			"id": "8882188",
+			"name": "Turbo-Tobi"
+		},
+		{
+			"duty": "supporter",
+			"id": "8919275",
+			"name": "<Leymi>"
+		},
+		{
+			"duty": "translator",
+			"id": "8988135",
+			"name": "Vital_top7"
+		},
+		{
+			"duty": "supporter",
+			"id": "8997758",
+			"name": "Irpana"
+		},
+		{
+			"duty": "supporter",
+			"id": "9052209",
+			"name": "Everthon"
+		},
+		{
+			"duty": "supporter",
+			"id": "9063412",
+			"name": "<MagicRoFoX>"
+		},
+		{
+			"duty": "translator",
+			"id": "9100817",
+			"name": "<DavidatorusF>"
+		},
+		{
+			"duty": "supporter",
+			"id": "916222",
+			"name": "_Domingo"
+		},
+		{
+			"duty": "translator",
+			"id": "9253610",
+			"name": "bloemetje"
+		},
+		{
+			"duty": "translator",
+			"id": "9311330",
+			"name": "<OmaniMilani>"
+		},
+		{
+			"duty": "translator",
+			"id": "9367491",
+			"name": "Domburg86"
+		},
+		{
+			"duty": "translator",
+			"id": "9372637",
+			"name": "<Murtagsh>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9466227",
+			"name": "Mod-thom_raindog"
+		},
+		{
+			"duty": "translator",
+			"id": "9469076",
+			"name": "MEO_Comandante"
+		},
+		{
+			"duty": "supporter",
+			"id": "9474452",
+			"name": "<Zami1981>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9491867",
+			"name": "McHoudini"
+		},
+		{
+			"duty": "translator",
+			"id": "9511330",
+			"name": "<Vosco>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9531623",
+			"name": "<J_Bax>"
+		},
+		{
+			"duty": "translator",
+			"id": "9559302",
+			"name": "<Sam-Latitante>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9577400",
+			"name": "HighJahMan"
+		},
+		{
+			"duty": "translator",
+			"id": "9607801",
+			"name": "-Kostitsyn46-"
+		},
+		{
+			"duty": "translator",
+			"id": "9630939",
+			"name": "<Slash-L>"
+		},
+		{
+			"duty": "translator",
+			"id": "9668661",
+			"name": "<dzsoo>"
+		},
+		{
+			"duty": "supporter",
+			"id": "970104",
+			"name": "machlas"
+		},
+		{
+			"duty": "supporter",
+			"id": "9720897",
+			"name": "NEOS1"
+		},
+		{
+			"duty": "translator",
+			"id": "9724171",
+			"name": "<LuizGreg>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9779968",
+			"name": "K_Madig"
+		},
+		{
+			"duty": "supporter",
+			"id": "9786585",
+			"name": "<OneCore>"
+		},
+		{
+			"duty": "translator",
+			"id": "9793408",
+			"name": "LA-keebak"
+		},
+		{
+			"duty": "supporter",
+			"id": "9816045",
+			"name": "_kuna_"
+		},
+		{
+			"duty": "supporter",
+			"id": "9818296",
+			"name": "<relon>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9825452",
+			"name": "NicoNico92"
+		},
+		{
+			"duty": "supporter",
+			"id": "9832269",
+			"name": "bigbird"
+		},
+		{
+			"duty": "translator",
+			"id": "9845514",
+			"name": "LA-SI-CH"
+		},
+		{
+			"duty": "translator",
+			"id": "9855688",
+			"name": "Dzigo"
+		},
+		{
+			"duty": "supporter",
+			"id": "98655",
+			"name": "Petrovitsj"
+		},
+		{
+			"duty": "translator",
+			"id": "9926153",
+			"name": "<Ali_Mal_Tipo>"
+		},
+		{
+			"duty": "translator",
+			"id": "9930684",
+			"name": "<LordBastard>"
+		},
+		{
+			"duty": "supporter",
+			"id": "9999999",
+			"name": "<kickoff98>"
+		}
+	],
+	"type": "foxtrick",
+	"url": "https://www.foxtrick.org/download"
+}

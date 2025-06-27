@@ -1,0 +1,107 @@
+{
+    "type": "ho",
+    "url": "https://ho-dev.github.io/HattrickOrganizer/",
+    "duties": {
+        "developer": {
+            "alt": "HO developer"
+        },
+        "translator": {
+            "alt": "HO translator"
+        },
+        "helper": {
+            "alt": "HO helper"
+        }
+    },
+    "list": [
+        {
+            "id": "9100817",
+            "name": "DavidatorusF",
+            "duty": "translator"
+        },
+        {
+            "id": "335181",
+            "name": "Baler0",
+            "duty": "translator"
+        },
+        {
+            "id": "13497666",
+            "name": "aaasteins",
+            "duty": "translator"
+        },
+        {
+            "id": "12465562",
+            "name": "zigmondm",
+            "duty": "translator"
+        },
+        {
+            "id": "9845514",
+            "name": "LA-SI-CH",
+            "duty": "translator"
+        },
+        {
+            "id": "13351914",
+            "name": "karelant",
+            "duty": "translator"
+        },
+        {
+            "id": "13584779",
+            "name": "Hogtownie",
+            "duty": "translator"
+        },
+        {
+            "id": "11542276",
+            "name": "Sebas90",
+            "duty": "translator"
+        },
+        {
+            "id": "778515",
+            "name": "fEnIo",
+            "duty": "translator"
+        },
+        {
+            "id": "9651101",
+            "name": "andrejol",
+            "duty": "translator"
+        },
+        {
+            "id": "9862223",
+            "name": "Motavali",
+            "duty": "translator"
+        },
+        {
+            "id": "9100817",
+            "name": "DavidatorusF",
+            "duty": "helper"
+        },
+        {
+            "id": "13458976",
+            "name": "Mistermax80",
+            "duty": "developer"
+        },
+        {
+            "id": "10764047",
+            "name": "brokenelevator",
+            "duty": "developer"
+        },
+        {
+            "id": "6992417",
+            "name": "tychobrailleur",
+            "duty": "developer"
+        },
+        {
+            "id": "1757369",
+            "name": "wsbrenk",
+            "duty": "developer"
+        },
+        {
+            "id": "5199830",
+            "name": "xxPhAIxx",
+            "duty": "developer"
+        },
+        {
+            "id": "13609150",
+            "name": "stefats",
+            "duty": "developer"
+        }
+    ]
+}
