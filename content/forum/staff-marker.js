@@ -178,7 +178,6 @@ Foxtrick.modules.StaffMarker = {
 			var flagLink = Foxtrick.util.id.createFlagFromLeagueId(doc, nt.leagueId, url, title);
 
 			Foxtrick.addClass(flagLink, 'ft-no-popup');
-			flagLink.target = '_blank';
 
 			return flagLink;
 		},
