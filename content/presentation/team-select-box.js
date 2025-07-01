@@ -6,7 +6,7 @@
  */
 
 /**
- * @typedef {'selectbox' | 'list'} State
+ * @typedef {'selectbox'|'list'|null} State
  */
 
 Foxtrick.modules['TeamSelectBox'] = {
@@ -15,7 +15,7 @@ Foxtrick.modules['TeamSelectBox'] = {
 
 	OPTIONS: ['RememberState'],
 
-	run: async function(doc) {
+	run: function(doc) {
 		var listBox; // sidebarBox containing player list
 		var sidebarBoxes = doc.getElementsByClassName('sidebarBox');
 
@@ -111,22 +111,23 @@ Foxtrick.modules['TeamSelectBox'] = {
 		var setState = function(state) {
 			if (!Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
 				return;
-			Foxtrick.storage.set('TeamSelectBox.state', state);
+			Foxtrick.Prefs.setString('TeamSelectBox.state', state);
 		}
 
 		/**
 		 * Gets global state of the select box
-		 * @returns {Promise<State>} state
+		 * @returns {State} state
 		 */
 		var getState = function() {
 			if (!Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
 				return;
-			return Foxtrick.storage.get('TeamSelectBox.state');
+			return /** @type {State} */ (Foxtrick.Prefs.getString('TeamSelectBox.state'));
 		}
 
+		/** @type {State} */
 		let state;
 		if (Foxtrick.Prefs.isModuleOptionEnabled('TeamSelectBox', 'RememberState'))
-			state = await getState();
+			state = getState();
 
 		switch (state) {
 			case 'selectbox':
