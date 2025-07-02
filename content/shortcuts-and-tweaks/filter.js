@@ -374,7 +374,7 @@ Foxtrick.modules.Filter = {
 
 					/** @type {Record<string, boolean>} */
 					let categories = {};
-					for (let i = toBeFiltered.rowStartIdx; i < list.length; ++i) {
+					for (let i = toBeFiltered.rowStartIdx; i < list.length-1; ++i) {
 						let cell = list[i].querySelectorAll(toBeFiltered.cellType);
 						if (cell[idx].textContent)
 							categories[cell[idx].textContent] = true;
@@ -458,7 +458,7 @@ Foxtrick.modules.Filter = {
 				if (!rows)
 					return;
 
-				for (let i = toBeFiltered.rowStartIdx; i < rows.length; ++i) {
+				for (let i = toBeFiltered.rowStartIdx; i < rows.length-1; ++i) {
 					let row = rows[i];
 					Foxtrick.removeClass(row, 'hidden');
 
