@@ -128,6 +128,7 @@ Foxtrick.modules.Filter = {
 					{ key: 'stamina',	filtertype: 'minmax', min: null, max: null,	type: 'number'},
 					{ key: 'Form', 		filtertype: 'minmax', min: null, max: null,	type: 'number'},
 					{ key: 'XP', 		filtertype: 'minmax', min: null, max: null,	type: 'number'},
+					{ key: 'leadership',	filtertype: 'minmax', min: null, max: null,	type: 'number'},
 					{ key: 'specialty',	filtertype: 'category', category: null, 	type: 'text'},
 					{
 						key: 'stars',
