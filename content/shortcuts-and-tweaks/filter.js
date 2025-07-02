@@ -191,8 +191,9 @@ Foxtrick.modules.Filter = {
 			return async function() {
 				// eslint-disable-next-line no-invalid-this
 				var doc = this.ownerDocument;
+				var filters = await getFilters(page);
 
-				for (let filter of await getFilters(page)) {
+				for (let filter of filters) {
 					if (!filter.filtertype)
 						continue;
 
@@ -238,6 +239,7 @@ Foxtrick.modules.Filter = {
 							Foxtrick.log(new Error('not implemented'));
 					}
 				}
+				saveFilters(page, filters);
 			};
 		};
 
