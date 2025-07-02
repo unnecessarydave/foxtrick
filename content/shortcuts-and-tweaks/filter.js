@@ -461,9 +461,13 @@ Foxtrick.modules.Filter = {
 				if (!rows)
 					return;
 
+				let shownRowIndex = 0;
 				for (let i = toBeFiltered.rowStartIdx; i < rows.length-1; ++i) {
 					let row = rows[i];
+					let hidden = false;
 					Foxtrick.removeClass(row, 'hidden');
+					Foxtrick.removeClass(row, 'odd');
+					Foxtrick.removeClass(row, 'even');
 
 					let cells = row.querySelectorAll(toBeFiltered.cellType);
 					let hide = false;
@@ -528,8 +532,14 @@ Foxtrick.modules.Filter = {
 
 						if (hide) {
 							Foxtrick.addClass(row, 'hidden');
+							hidden = true;
 							break;
 						}
+					}
+
+					if (!hidden) {
+						++shownRowIndex;
+						Foxtrick.addClass(row, (shownRowIndex%2 == 0) ? 'even' : 'odd');
 					}
 				}
 			}
