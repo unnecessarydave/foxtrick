@@ -491,8 +491,12 @@ Foxtrick.modules.Filter = {
 						else if (filter.type == 'stars') {
 							val = 0;
 
-							let stars = cell.querySelector('.stars');
-							if (stars) {
+							/** @type {Element} */
+							let stars;
+							if (stars = cell.querySelector('hattrick-rating')) {
+								val = parseFloat(stars.getAttribute('rating'));
+							}
+							else if (stars = cell.querySelector('.stars')) {
 								val = parseFloat(stars.textContent.trim()) || 0;
 							}
 							else {
