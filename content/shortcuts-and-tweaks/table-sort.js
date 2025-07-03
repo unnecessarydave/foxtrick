@@ -220,6 +220,15 @@ Foxtrick.modules.TableSort = {
 				// sort them
 				rows.sort(cmp);
 
+				// reset odd/even styles
+				if (Foxtrick.hasClass(rows[0], 'odd') || Foxtrick.hasClass(rows[0], 'even')) {
+					rows.forEach((el, index) => {
+						Foxtrick.removeClass(el, 'odd');
+						Foxtrick.removeClass(el, 'even');
+						Foxtrick.addClass(el, index % 2 == 0 ? 'odd' : 'even');
+					});
+				}
+
 				// insert sorted rows
 				rows[0].parentNode.append(...rows);
 			}
