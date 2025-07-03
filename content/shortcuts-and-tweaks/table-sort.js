@@ -216,10 +216,8 @@ Foxtrick.modules.TableSort = {
 				// sort them
 				rows.sort(cmp);
 
-				// insert sorted rows after table header
-				// no need to remove existing rows, inserting a Node removes it from its previous position
-				/** @type  {HTMLElement} */
-				(table.rows[sortStart].parentNode).after(...rows);
+				// insert sorted rows
+				rows[0].parentNode.append(...rows);
 			}
 			catch (e) {
 				Foxtrick.log(e);
