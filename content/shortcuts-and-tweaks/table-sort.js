@@ -130,6 +130,10 @@ Foxtrick.modules.TableSort = {
 				for (let i = sortStart + 1; i < sortEnd; ++i)
 					rows.push(table.rows[i]);
 
+				// don't sort single rows
+				if (rows.length <= 1)
+					return
+
 				/**
 				 * @param  {HTMLTableRowElement} a
 				 * @param  {HTMLTableRowElement} b
