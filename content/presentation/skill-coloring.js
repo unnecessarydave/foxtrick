@@ -535,6 +535,14 @@ Foxtrick.modules.SkillColoring = {
 					{ childList: true, subtree: true }
 				);
 			}
+
+			if (Foxtrick.isPage(doc, 'playerDetails')) {
+				let playerTabs = doc.querySelector(`#${Foxtrick.getMainIDPrefix()}updPlayerTabs`);
+				playerTabs && Foxtrick.onChange(
+					playerTabs, transformSkill,
+					{ childList: true, subtree: true }
+				);
+			}
 		}
 	},
 };
