@@ -130,6 +130,10 @@ Foxtrick.modules.TableSort = {
 				for (let i = sortStart + 1; i < sortEnd; ++i)
 					rows.push(table.rows[i]);
 
+				// don't sort single rows
+				if (rows.length <= 1)
+					return
+
 				/**
 				 * @param  {HTMLTableRowElement} a
 				 * @param  {HTMLTableRowElement} b
@@ -216,10 +220,17 @@ Foxtrick.modules.TableSort = {
 				// sort them
 				rows.sort(cmp);
 
-				// insert sorted rows after table header
-				// no need to remove existing rows, inserting a Node removes it from its previous position
-				/** @type  {HTMLElement} */
-				(table.rows[sortStart].parentNode).after(...rows);
+				// reset odd/even styles
+				if (Foxtrick.hasClass(rows[0], 'odd') || Foxtrick.hasClass(rows[0], 'even')) {
+					rows.forEach((el, index) => {
+						Foxtrick.removeClass(el, 'odd');
+						Foxtrick.removeClass(el, 'even');
+						Foxtrick.addClass(el, index % 2 == 0 ? 'odd' : 'even');
+					});
+				}
+
+				// insert sorted rows
+				rows[0].parentNode.append(...rows);
 			}
 			catch (e) {
 				Foxtrick.log(e);
