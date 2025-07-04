@@ -271,7 +271,7 @@ Foxtrick.modules.SkillColoring = {
 			skillNumber = false;
 		}
 
-		if (!(skillNumber || skillTranslated)) {
+		if (!(skillNumber || skillTranslated) || el.querySelector('.ft-skill')) {
 			// nothing else to do here
 			return;
 		}
