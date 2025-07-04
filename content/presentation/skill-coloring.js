@@ -494,11 +494,17 @@ Foxtrick.modules.SkillColoring = {
 			Foxtrick.onChange(doc.getElementById('details'), playerDetailsChange);
 		}
 
-		if (skillNumber || skillTranslated) {
+		/**
+		 * Apply SkillNumber and SkillTranslated transformations
+		 *
+		 * @param {Document} doc
+		 * @param {Element} [el] element containing skills to be transformed
+		 */
+		let transformSkill = function(doc, el) {
 			// too little space on these pages
 			let isProblemPage = Foxtrick.isPage(doc, ['ownPlayers', 'transferSearchResult']);
 
-			let links = doc.querySelectorAll('a');
+			let links = el ? el.querySelectorAll('a') : doc.querySelectorAll('a');
 
 			let e = /\/Help\/Rules\/AppDenominations\.aspx\?.*&(?:ll|labellevel)=(\d+)#(\w+)/;
 			for (let link of links) {
@@ -517,7 +523,18 @@ Foxtrick.modules.SkillColoring = {
 
 				module.addSkill(doc, link, type, htIndex, flags);
 			}
+		};
+
+		if (skillNumber || skillTranslated) {
+			transformSkill(doc);
+
+			if (Foxtrick.isPage(doc, 'training')) {
+				let trainingReport = doc.querySelector('.tr-report');
+				trainingReport && Foxtrick.onChange(
+					trainingReport, transformSkill,
+					{ childList: true, subtree: true }
+				);
+			}
 		}
 	},
-
 };
