@@ -28,17 +28,17 @@ Foxtrick.modules['SeniorTeamShortCuts'] = {
 			return;
 
 		// queryselector excludes any ft boxes
-		var blHeaders = [...boxLeft.querySelectorAll('.subMenuBox:not([class^="ft-"]):not([class*=" ft-"]) li')];
-		var blLinks = [...boxLeft.querySelectorAll('.subMenuBox:not([class^="ft-"]):not([class*=" ft-"]) a')];
+		var blHeaders = [...boxLeft.querySelectorAll('.subMenuBox:not([id^="ft-"]) li')];
+		var blLinks = [...boxLeft.querySelectorAll('.subMenuBox:not([id^="ft-"]) a')];
 
 		var pos1 = -1, pos2 = -1;
 		for (let [idx, blLink] of blLinks.entries()) {
 			if (pos1 == -1) {
-				//@ts-ignore
+				//@ts-ignore-error
 				if (/\/Club\/(Players\/\?TeamID|NationalTeam\/NTPlayers)/i.test(blLink.href))
 					pos1 = idx;
 			}
-			//@ts-ignore
+			//@ts-ignore-error
 			if (pos2 == -1 && /\/Club\/Matches\/\?TeamID/i.test(blLink.href))
 				pos2 = idx;
 		}
