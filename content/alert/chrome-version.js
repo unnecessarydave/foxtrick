@@ -136,9 +136,15 @@ Foxtrick.modules['NotifyChromeVersion'] = {
                 /** @ts-ignore - if jsonText is not a string, FetchError will be caught in try/catch above */
                 const json = JSON.parse(jsonText);
                 updates = json.addons?.[MODULE.GUID]?.updates;
-                if (!updates) throw new TypeError(`json.addons.[${MODULE.GUID}].updates not found`);
+                if (!updates || !Array.isArray(updates))
+                    throw new TypeError(`addons.[${MODULE.GUID}].updates invalid or not found`);
             } catch (e) {
                 log(`Error parsing updates: ${e}`);
+                return;
+            }
+
+            if (updates.length == 0) {
+                log(`${MODULE.GUID}.updates empty in update.json`);
                 return;
             }
 
@@ -149,7 +155,11 @@ Foxtrick.modules['NotifyChromeVersion'] = {
             // Display note if update available.
             if (versionCompare(Foxtrick.version, latestVersion) < 0) {
                 showUpdateNote(doc, latestVersion, NOW);
+                log(`Displayed update note: ${Foxtrick.version} => ${latestVersion}`)
+            } else {
+                log(`No update note: current: ${Foxtrick.version} - release: ${latestVersion}`)
             }
+
         } catch (e) {
             log(`Unexpected error: ${e}`);
         }
