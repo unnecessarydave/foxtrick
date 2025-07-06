@@ -52,6 +52,25 @@ Foxtrick.modules['NotifyChromeVersion'] = {
          */
         const NOW = Foxtrick.modules.Core.HT_TIME || Date.now();
 
+        /**
+         * Compare two version strings in the format x.x.x.x
+         * @param {string} version1 - First version string
+         * @param {string} version2 - Second version string
+         * @returns {number} -1 if version1 < version2, 1 if version1 > version2, 0 if equal
+         */
+        const versionCompare = function (version1, version2) {
+            const v1 = version1.split('.').map(Number);
+            const v2 = version2.split('.').map(Number);
+            const len = Math.max(v1.length, v2.length);
+            for (let i = 0; i < len; i++) {
+                const num1 = v1[i] || 0;
+                const num2 = v2[i] || 0;
+                if (num1 < num2) return -1;
+                if (num1 > num2) return 1;
+            }
+            return 0;
+        }
+
         try {
             // Only show note once per session.
             const seenNoteTs = await Foxtrick.session.get(MODULE.SEEN_NOTE_KEY);
@@ -92,10 +111,10 @@ Foxtrick.modules['NotifyChromeVersion'] = {
 
             // Find latest version.
             let latestVersion = updates.reduce((maxVer, v) =>
-                v.version && v.version.localeCompare(maxVer) > 0 ? v.version : maxVer, '0');
+                v.version && versionCompare(v.version, maxVer) > 0 ? v.version : maxVer, '0');
 
             // Display note if update available.
-            if (Foxtrick.version.localeCompare(latestVersion) < 0) {
+            if (versionCompare(Foxtrick.version, latestVersion) < 0) {
                 MODULE.showUpdateNote(doc, latestVersion, NOW);
             }
         } catch (e) {
