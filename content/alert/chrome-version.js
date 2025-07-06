@@ -16,7 +16,7 @@ Foxtrick.modules['NotifyChromeVersion'] = {
      * - Chrome and Firefox version numbers are in sync.
      */
     UPDATE_JSON_URL: 'https://foxtrick-ng.github.io/download/release/firefox/update.json',
-    
+
     /** Extension GUID */
     GUID: '{bcfe9090-dfc6-41d6-a49c-127432ec04ea}', // release branch
 
@@ -44,7 +44,6 @@ Foxtrick.modules['NotifyChromeVersion'] = {
             return;
 
         const MODULE = this;
-        const log = MODULE.log.bind(MODULE);
 
         /**
          * Timestamp representing the current time
@@ -70,6 +69,40 @@ Foxtrick.modules['NotifyChromeVersion'] = {
             }
             return 0;
         }
+
+        /**
+         * Show update notification note in the UI.
+         * @param {Document} doc - The document to modify.
+         * @param {string} latestVersion - The latest version string.
+         * @param {number} now - The current timestamp.
+         */
+        const showUpdateNote = function(doc, latestVersion, now) {
+            const container = doc.createElement('div');
+            const p = doc.createElement('p');
+            container.appendChild(p);
+
+            const a = doc.createElement('a');
+            a.href = MODULE.CHROME_UPDATE_URL;
+            a.textContent = 'here';
+            a.target = '_blank';
+
+            p.innerHTML =
+                `A new version of Foxtrick is available: ${latestVersion}` +
+                doc.createElement('br').outerHTML +
+                ` - Click ${a.outerHTML} for update instructions.`;
+
+            Foxtrick.util.note.add(doc, container, 'ft-notify-chrome-version');
+            Foxtrick.session.set(MODULE.SEEN_NOTE_KEY, now);
+        };
+
+        /**
+         * Logging helper function
+         * - Uses Foxtrick.log() to log messages with the module name as prefix.
+         * @param {String} text - The message to log.
+         */
+        const log = function(text) {
+            Foxtrick.log(`${MODULE.MODULE_NAME || 'NotifyChromeVersion'}: ${text}`);
+        };
 
         try {
             // Only show note once per session.
@@ -110,46 +143,15 @@ Foxtrick.modules['NotifyChromeVersion'] = {
             }
 
             // Find latest version.
-            let latestVersion = updates.reduce((maxVer, v) =>
+            const latestVersion = updates.reduce((maxVer, v) =>
                 v.version && versionCompare(v.version, maxVer) > 0 ? v.version : maxVer, '0');
 
             // Display note if update available.
             if (versionCompare(Foxtrick.version, latestVersion) < 0) {
-                MODULE.showUpdateNote(doc, latestVersion, NOW);
+                showUpdateNote(doc, latestVersion, NOW);
             }
         } catch (e) {
             log(`Unexpected error: ${e}`);
         }
     },
-
-    // TODO: Internationalise once we can add new l10n keys.
-    showUpdateNote: function(doc, latestVersion, now) {
-        const MODULE = this;
-
-        const container = doc.createElement('div');
-        const p = doc.createElement('p');
-        container.appendChild(p);
-
-        const a = doc.createElement('a');
-        a.href = MODULE.CHROME_UPDATE_URL;
-        a.textContent = 'here';
-        a.target = '_blank';
-
-        p.innerHTML =
-            `A new version of Foxtrick is available: ${latestVersion}` +
-            doc.createElement('br').outerHTML +
-            ` - Click ${a.outerHTML} for update instructions.`;
-
-        Foxtrick.util.note.add(doc, container, 'ft-notify-chrome-version');
-        Foxtrick.session.set(MODULE.SEEN_NOTE_KEY, now);
-    },
-
-    /**
-     * Logging helper function
-     * - Uses Foxtrick.log() to log messages with the module name as prefix.
-     * @param {String} text - The message to log.
-     */
-    log: function(text) {
-        Foxtrick.log(`${this.MODULE_NAME || 'NotifyChromeVersion'}: ${text}`);
-    }
 };
