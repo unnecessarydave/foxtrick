@@ -105,6 +105,12 @@ Foxtrick.modules['NotifyChromeVersion'] = {
         };
 
         try {
+            // Exit if Foxtrick.version is invalid or not defined.
+            if (typeof Foxtrick.version !== 'string' || !Foxtrick.version.match(/^\\d+(\\.\\d+)*$/)) {
+                log(`Invalid Foxtrick.version: ${Foxtrick.version}`);
+                return;
+            }
+
             // Only show note once per session.
             const seenNoteTs = await Foxtrick.session.get(MODULE.SEEN_NOTE_KEY);
             if (seenNoteTs) {
