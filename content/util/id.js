@@ -451,11 +451,10 @@ Foxtrick.util.id.createFlagFromLeagueId = function(doc, leagueId, href, title) {
 	flag = a;
 
 	let img = doc.createElement('img');
-	img.className = 'flag' + leagueId;
 	img.alt = img.title = title ? title : leagueName;
-	img.src = '/Img/Icons/transparent.gif';
+	img.src = `/Img/flags/${leagueId}.png`;
 
-	flag.className = 'flag inner';
+	flag.className = 'flag inner ft-flag';
 	flag.appendChild(img);
 	return flag;
 };

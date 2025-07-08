@@ -1,5 +1,5 @@
 {
-	"type": "coach",
+	"type": "nt",
 	"list": [
 		{ "LeagueId": 1, "TeamId": 3000, "TeamName": "Sverige", "id": 1467033, "name": "emerton" },
 		{ "LeagueId": 2, "TeamId": 3001, "TeamName": "England", "id": 13059769, "name": "Bissy9" },
