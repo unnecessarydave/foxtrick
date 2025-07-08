@@ -3,18 +3,18 @@ name: Update NT/U21 coaches in CDN
 on:
   workflow_dispatch:
 
-  schedule:
-    - cron: "0 0 * * 0" # run every Sunday at midnight
+  workflow_call:
 
 permissions:
   contents: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: update-cdn
+  cancel-in-progress: false
 
 jobs:
   update-coaches:
+    if: github.repository == 'foxtrick-ng/foxtrick'
     environment:
       name: CHPP
     runs-on: ubuntu-latest
