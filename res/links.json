@@ -10,7 +10,7 @@
 			"url": "http://htlivesight.sourceforge.net/"
 		},
 		"title": "htlivesight match viewer (based on livefox)",
-		"img": "https://www.foxtrick.org/res/linkicons/htlivesight.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlivesight.png"
 	},
 	"htstats_all": {
 		"playedmatchlink": {
@@ -20,7 +20,7 @@
 			"url": "http://www.htstats.com/matchinfoy-[matchid]&setlang=[lang]"
 		},
 		"title": "htstats (played match)",
-		"img": "https://www.foxtrick.org/res/linkicons/htstats_all.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htstats_all.ico"
 	},
 	"htms_matchanalyzer": {
 		"playedmatchlink": {
@@ -30,14 +30,14 @@
 			"url": "https://www.fantamondi.it/HTMS/index.php?page=matchanalyze&youth=on&matchid=[matchid]&lang=[lang]"
 		},
 		"title": "htms match analyzer",
-		"img": "https://www.foxtrick.org/res/linkicons/htms_matchanalyzer.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htms_matchanalyzer.ico"
 	},
 	"htms_stats": {
 		"nextmatchlink": {
 			"url": "https://www.fantamondi.it/HTMS/index.php?page=predictor&lang=[lang]"
 		},
 		"title": "htms predictor",
-		"img": "https://www.foxtrick.org/res/linkicons/htms_stats.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htms_stats.ico"
 	},
 	"htstats": {
 		"serieslink": {
@@ -54,7 +54,7 @@
 		},
 		"leagueidranges": [[36, 36]],
 		"title": "Peaso Hattrick Stats",
-		"img": "https://www.foxtrick.org/res/linkicons/htstats.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htstats.ico"
 	},
 	"flagtools": {
 		"challengeslink": {
@@ -70,7 +70,7 @@
 			"url": "http://www.ht-flagtools.org/profile.php?teamId=[teamid]"
 		},
 		"title": "HT Flagtools",
-		"img": "https://www.foxtrick.org/res/linkicons/flagtools.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/flagtools.ico"
 	},
 	"funwithflags": {
 		"challengeslink": {
@@ -90,7 +90,7 @@
 			"url": "http://fcclogo.kaoztribe.net/Countries.php?teamid=[teamid]"
 		},
 		"title": "FCC Logo",
-		"img": "https://www.foxtrick.org/res/linkicons/fcc_logo_coolness.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/fcc_logo_coolness.png"
 	},
 	"ht-dog": {
 		"teamlink": {
@@ -100,28 +100,28 @@
 			"url": "http://ht-dog.net/?otherTeamID=[opponentid]"
 		},
 		"title": "HT-Dog",
-		"img": "https://www.foxtrick.org/res/linkicons/ht-dog.gif"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ht-dog.gif"
 	},
 	"staminia": {
 		"playerlink": {
 			"url": "http://lizardopoli.altervista.org/staminia/"
 		},
 		"title": "Substitutions calculator tool",
-		"img": "https://www.foxtrick.org/res/linkicons/staminia.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/staminia.png"
 	},
 	"htlinks_trainingspeedchecker": {
 		"traininglink": {
 			"url": "https://www.ht-links.de/Hattrick/TrainingsSpeedCheckerE.html?Trainer=[Coach]&TI=[TI]&KO=[STA]&TrainingType=[TrainingType]"
 		},
 		"title": "HT-Links.de TrainingSpeedChecker",
-		"img": "https://www.foxtrick.org/res/linkicons/htlinks_trainingspeedchecker.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlinks_trainingspeedchecker.ico"
 	},
 	"htlinks_Goalkeeper_Checker": {
 		"keeperlink": {
 			"url": "https://www.ht-links.de/Hattrick/Goalkeeper-Checker.html?TSI=[tsi]&Form=[form]&Age=[age]"
 		},
 		"title": "HT-Links.de - Goalkeeper-Checker",
-		"img": "https://www.foxtrick.org/res/linkicons/htlinks_Goalkeeper_Checker.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlinks_Goalkeeper_Checker.ico"
 	},
 	"htlinks_ti_schrauber": {
 		"traininglink": {
@@ -130,21 +130,21 @@
 		},
 		"ownleagueidranges": [[3, 3]],
 		"title": "HT-Links.de - TISchrauber",
-		"img": "https://www.foxtrick.org/res/linkicons/htlinks_ti_schrauber.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlinks_ti_schrauber.ico"
 	},
 	"htlinks_price_money": {
 		"teamlink": {
 			"url": "https://www.ht-links.de/Hattrick/PraemiephpE.html?Fan=[fans]&Platz=[seriespos]&Liga=[levelnum]"
 		},
 		"title": "HT-Links.de - price_money",
-		"img": "https://www.foxtrick.org/res/linkicons/htlinks_price_money.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlinks_price_money.ico"
 	},
 	"htlinks_arena": {
 		"arenalink": {
 			"url": "https://www.ht-links.de/Hattrick/ArenaCalculator2E.html?&t=[terraces]&b=[basic]&r=[roof]&v=[vip]"
 		},
 		"title": "HT-Links.de - ArenaCalculator2",
-		"img": "https://www.foxtrick.org/res/linkicons/htlinks_arena.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htlinks_arena.ico"
 	},
 	"htradiopodbean": {
 		"worldlink": {
@@ -156,28 +156,28 @@
 		},
 		"leagueidranges": [[85, 85]],
 		"title": "The Hattrick Radio’s Podcast",
-		"img": "https://www.foxtrick.org/res/linkicons/htradiopodbean.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/htradiopodbean.ico"
 	},
 	"nrg_eco": {
 		"arenalink": {
 			"url": "http://nrgjack.altervista.org/eco.php?t=[terraces]&b=[basic]&r=[roof]&v=[vip]"
 		},
 		"title": "NRG ECO",
-		"img": "https://www.foxtrick.org/res/linkicons/nrg_eco.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/nrg_eco.ico"
 	},
 	"nrg_eco2": {
 		"arenalink": {
 			"url": "https://nrgjack.altervista.org/tools/eco?t=[terraces]&b=[basic]&r=[roof]&v=[vip]"
 		},
 		"title": "NRG ECO rev.II",
-		"img": "https://www.foxtrick.org/res/linkicons/eco2.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/eco2.png"
 	},
 	"nrg_fc": {
 		"coachlink": {
 			"url": "http://nrgjack.altervista.org/fc.php"
 		},
 		"title": "NRG FC",
-		"img": "https://www.foxtrick.org/res/linkicons/nrg_fc.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/nrg_fc.png"
 	},
 	"finntracker": {
 		"img": "https://www.hattrick.org/Img/flags/12.png",
@@ -270,14 +270,14 @@
 		},
 		"ageranges": [[28, 99]],
 		"title": "Wage Reduction Calculator",
-		"img": "https://www.foxtrick.org/res/linkicons/Wage_Reduction_Calculator.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/Wage_Reduction_Calculator.png"
 	},
 	"nrg_deffor": {
 		"playerlink": {
 			"url": "http://nrgjack.altervista.org/trequartista.php?pm=[playmaking]&pa=[passing]&wi=[winger]&df=[defending]&sc=[scoring]&gk=[goalkeeping]"
 		},
 		"title": "NRG The Perfect Defensive Forward",
-		"img": "https://www.foxtrick.org/res/linkicons/nrg_deffor.gif",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/nrg_deffor.gif",
 		"SUM": {
 			"sum_deffor_skills": [
 				"passing",
@@ -299,7 +299,7 @@
 	},
 	"hattrickportal": {
 		"title": "Hattrick Portal NT/U20 tracker",
-		"img": "https://www.foxtrick.org/res/linkicons/hattrickportal.ico",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/hattrickportal.ico",
 		"playerslink": {
 			"url": "https://hattrickportal.online/Tracker"
 		},
@@ -371,10 +371,10 @@
 			]
 		],
 		"title": "Hattrick Youthclub",
-		"img": "https://www.foxtrick.org/res/linkicons/hattrick-youthclub.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/hattrick-youthclub.ico"
 	},
 	"mercattrick": {
-		"img": "https://www.foxtrick.org/res/linkicons/mercattrick.ico",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/mercattrick.ico",
 		"title": "Better transfers with Mercattrick",
 		"playerlink": {
 			"url": "https://mercattrick.com/"
@@ -410,7 +410,7 @@
 			"ntteamid"
 		],
 		"title": "Hattid",
-		"img": "https://www.foxtrick.org/res/linkicons/hattid.png"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/hattid.png"
 	},
 	"ratemyacademy": {
 		"youthlink": {
@@ -423,7 +423,7 @@
 			"url": "https://www.rate-my.academy/browse/player/[playerid]"
 		},
 		"title": "Rate My Academy",
-		"img": "https://www.foxtrick.org/res/linkicons/ratemyacademy.ico"
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ratemyacademy.ico"
 	},
 	"hattrickorganizer": {
 		"title": "Hattrick Organizer",
