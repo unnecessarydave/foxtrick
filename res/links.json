@@ -507,6 +507,9 @@
 		"teamlink": {
 			"url": "https://hattid.com/team/teamOverview?teamId=[teamid]"
 		},
+		"playerslink": {
+			"url": "https://hattid.com/team/[teamid]?pageName=playerRatings&pageSize=64"
+		},
 		"leaguelink": {
 			"url": "https://hattid.com/league?leagueId=[leagueid]"
 		},
@@ -516,6 +519,10 @@
 		"playerlink": {
 			"url": "https://hattid.com/player/[playerid]"
 		},
+		"allow": [
+			"NOTEXISTS",
+			"ntteamid"
+		],
 		"title": "Hattid",
 		"img": "https://www.foxtrick.org/res/linkicons/hattid.png"
 	},
