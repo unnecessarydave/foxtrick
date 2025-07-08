@@ -1,0 +1,35 @@
+name: Merge master branch into CDN
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - "master"
+    paths:
+      - "res/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  merge:
+    if: github.repository == 'foxtrick-ng/foxtrick'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: cdn
+          fetch-depth: 0
+          token: ${{ secrets.FOXTRICK_ACTIONS }}
+      - name: Merge master into CDN
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git merge -Xtheirs origin/master
+          git push origin cdn

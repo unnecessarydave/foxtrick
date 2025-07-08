@@ -1,0 +1,42 @@
+name: Update Foxtrick staff in CDN
+
+on:
+  workflow_dispatch:
+
+  workflow_call:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-cdn
+  cancel-in-progress: false
+
+jobs:
+  update-staff:
+    if: github.repository == 'foxtrick-ng/foxtrick'
+    environment:
+      name: CHPP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: cdn
+          token: ${{ secrets.FOXTRICK_ACTIONS }}
+      - name: Install Python dependencies
+        run: |
+          pip install rauth
+      - name: Pull data via CHPP
+        env:
+          CHPP_CONSUMER_KEY: ${{ secrets.CHPP_CONSUMER_KEY }}
+          CHPP_CONSUMER_SECRET: ${{ secrets.CHPP_CONSUMER_SECRET }}
+          CHPP_ACCESS_TOKEN_KEY: ${{ secrets.CHPP_ACCESS_TOKEN_KEY }}
+          CHPP_ACCESS_TOKEN_SECRET: ${{ secrets.CHPP_ACCESS_TOKEN_SECRET }}
+        run: |
+          python maintainer/locale/updateFTStaff.py res/staff/foxtrick.json
+      - name: Push changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          if git commit -am 'automated staff update'; then git push; fi

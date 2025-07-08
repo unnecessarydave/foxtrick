@@ -1,0 +1,26 @@
+# Master workflow to update CDN with latest data
+name: Update CDN
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 0 * * 3" # run every Wed at midnight
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  staff:
+    if: github.repository == 'foxtrick-ng/foxtrick' && always()
+    uses: foxtrick-ng/foxtrick/.github/workflows/update-staff.yml@master
+    secrets: inherit
+  coaches:
+    if: github.repository == 'foxtrick-ng/foxtrick' && always()
+    uses: foxtrick-ng/foxtrick/.github/workflows/update-coaches.yml@master
+    needs: staff
+    secrets: inherit

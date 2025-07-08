@@ -414,15 +414,34 @@
 	"hattrickportal": {
 		"title": "Hattrick Portal NT/U20 tracker",
 		"img": "https://www.foxtrick.org/res/linkicons/hattrickportal.ico",
+		"playerslink": {
+			"url": "https://hattrickportal.online/Tracker"
+		},
 		"trackerleaguelink": {
-			"url": "https://hattrickportal.pro/Tracker"
+			"url": "https://hattrickportal.online/Tracker"
 		},
 		"trackernationalteamlink": {
-			"url": "https://hattrickportal.pro/Tracker"
+			"url": "https://hattrickportal.online/Tracker"
 		},
 		"trackerplayerlink": {
-			"url": "https://hattrickportal.pro/Tracker"
-		}
+			"url": "https://hattrickportal.online/Tracker/Player.aspx?playerID=[playerid]"
+		},
+		"allow": [
+			"OR",
+			[
+				"EQUAL",
+				"ownteamid",
+				"teamid"
+			],
+			[
+				"EXISTS",
+				"leagueid"
+			],
+			[
+				"EXISTS",
+				"playerid"
+			]
+		]
 	},
 	"hattrick-youthclub": {
 		"youthlink": {
@@ -492,16 +511,19 @@
 			"url": "https://hattid.com/team/[teamid]?pageName=playerRatings&pageSize=64"
 		},
 		"leaguelink": {
-			"url": "https://hattid.com/league?leagueId=[leagueid]]"
+			"url": "https://hattid.com/league?leagueId=[leagueid]"
 		},
 		"worldlink": {
 			"url": "https://hattid.com/worldOverview"
+		},
+		"playerlink": {
+			"url": "https://hattid.com/player/[playerid]"
 		},
 		"allow": [
 			"NOTEXISTS",
 			"ntteamid"
 		],
-		"title": "Hattid (AlltidLike)",
+		"title": "Hattid",
 		"img": "https://www.foxtrick.org/res/linkicons/hattid.png"
 	},
 	"ratemyacademy": {

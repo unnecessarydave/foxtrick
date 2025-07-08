@@ -3,8 +3,6 @@ from __future__ import print_function
 
 from Hattrick.Parsers import XMLParser
 from Hattrick.CHPP import Client
-from Hattrick.CHPP import Credentials
-from Hattrick.CHPP import AccessToken
 
 import sys
 import os
@@ -17,56 +15,35 @@ if sys.version > '3':
 else:
     import urllib2 as urllib
 
-
 if len(sys.argv) > 1:
     FT_JSON = sys.argv[1]
 else:
-    FT_JSON = os.path.expanduser('~/repos/master/res/staff/foxtrick.json')
+    FT_JSON = os.path.expanduser('res/staff/foxtrick.json')
 
-CONSUMER_KEY = Credentials.KEY
-CONSUMER_SECRET = Credentials.SECRET
-ACCESS_TOKEN_KEY = AccessToken.KEY
-ACCESS_TOKEN_SECRET = AccessToken.SECRET
+if os.environ.get('GITHUB_ACTIONS'):
+    CONSUMER_KEY = os.environ.get('CHPP_CONSUMER_KEY')
+    CONSUMER_SECRET = os.environ.get('CHPP_CONSUMER_SECRET')
+    ACCESS_TOKEN_KEY = os.environ.get('CHPP_ACCESS_TOKEN_KEY')
+    ACCESS_TOKEN_SECRET = os.environ.get('CHPP_ACCESS_TOKEN_SECRET')
+else:
+    from Hattrick.CHPP import Credentials
+    from Hattrick.CHPP import AccessToken
+    CONSUMER_KEY = Credentials.KEY
+    CONSUMER_SECRET = Credentials.SECRET
+    ACCESS_TOKEN_KEY = AccessToken.KEY
+    ACCESS_TOKEN_SECRET = AccessToken.SECRET
+
 chpp = Client.ChppClient(CONSUMER_KEY, CONSUMER_SECRET)
-chpp.setAccessToken((AccessToken.KEY, AccessToken.SECRET))
+chpp.setAccessToken((ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET))
 session = chpp.getSession()
-
-# get supporter list
-SUPPORTER_JSON = 'https://www.foxtrick.org/paypal/list.php'
-with urllib.urlopen(SUPPORTER_JSON) as sup_json:
-    if sys.version > '3':
-        sup_json_str = sup_json.read().decode()
-    else:
-        sup_json_str = sup_json.read()
-
-supporters = json.loads(sup_json_str)
 
 # parse existing staff
 with codecs.open(FT_JSON, mode='rb', encoding='utf-8') as ft_json:
     ft = json.load(ft_json)
 
-# create new staff list
-old_staff = ft['list']
-staff = list()
-
-for person in old_staff:
-    ht_id = int(person['id'])
-    if ht_id in supporters:
-        # remove already existing ID
-        supporters.remove(ht_id)
-    elif person['duty'] == 'supporter':
-        # skip no longer valid supporters
-        continue
-
-    # add valid staff
-    staff.append(person)
-
-# add new supporters
-for new_id in supporters:
-    new_person = {'id': str(new_id), 'name': '', 'duty': 'supporter'}
-    staff.append(new_person)
-
 # update manager names from CHPP
+staff = ft['list']
+
 for person in staff:
     ht_id = person['id']
     resp = chpp.getFile('search', params={'searchType': 2, 'searchID': ht_id})
