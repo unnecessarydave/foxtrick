@@ -20,11 +20,6 @@
 	"internal": "true",
 	"list": [
 		{
-			"duty": "developer",
-			"id": "13992846",
-			"name": "UnnecessaryDave"
-		},
-		{
 			"duty": "translator",
 			"id": "10038631",
 			"name": "Mohammad-SE"
@@ -783,6 +778,11 @@
 			"duty": "supporter",
 			"id": "1397713",
 			"name": "<VvJ-Beckham>"
+		},
+		{
+			"duty": "developer",
+			"id": "13992846",
+			"name": "UnnecessaryDave"
 		},
 		{
 			"duty": "translator",
