@@ -427,8 +427,7 @@
 	},
 	"hattrickorganizer": {
 		"title": "Hattrick Organizer",
-		"img_cdn": "https://foxtrick-ng.github.io/foxtrick/linkicons/ho.png",
-		"img": "https://cdn.jsdelivr.net/gh/ho-dev/hattrickOrganizer@master/utils/buildResources/Logo_stable.png",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ho.png",
 		"teamlink": {
 			"url": "https://ho-dev.github.io/HattrickOrganizer/"
 		},
