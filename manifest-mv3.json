@@ -20,7 +20,8 @@
 		}
 	],
 	"background": {
-        "service_worker": "content/worker.js"
+        "service_worker": "background/worker.js",
+		"type": "module"
     },
 	"content_scripts": [ {
 		"js": [
