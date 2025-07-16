@@ -7,7 +7,7 @@
 'use strict';
 
 (function() {
-	if (Foxtrick.platform == 'Android')
+	if (Foxtrick.platform == 'Android' || Foxtrick.Manifest.manifest_version == 3)
 		return;
 
 	// option: corresponding to OPTIONS

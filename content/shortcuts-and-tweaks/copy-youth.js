@@ -370,7 +370,8 @@ Foxtrick.modules.CopyYouth = {
 			}
 
 			// setting the cookie in case of pull
-			Foxtrick.onClick(acceptButton, () => Foxtrick.cookies.set('for_hty', { pull: true }));
+			if (Foxtrick.Manifest.manifest_version == 2)
+				Foxtrick.onClick(acceptButton, () => Foxtrick.cookies.set('for_hty', { pull: true }));
 
 			// DEBUG
 			// let fakeAccept = doc.createElement('a');

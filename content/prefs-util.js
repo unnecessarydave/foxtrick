@@ -579,7 +579,9 @@ Foxtrick.Prefs.restore = function() {
 				if (i.indexOf('localStore.') !== 0 && this.isPrefSetting(i))
 					localStorage.removeItem(i);
 			}
-			chrome.storage.local.clear();
+			if (Foxtrick.Manifest.manifest_version == 2) {
+				chrome.storage.local.clear();
+			}
 		}
 		else {
 			Foxtrick.SB.ext.sendRequest({ req: 'clearPrefs' });
@@ -954,7 +956,9 @@ Foxtrick.Prefs.translationKeys = function(sender) {
 						Foxtrick.log(e);
 					}
 
-					this.initAsync(prefs._prefsChromeUser);
+					if (Foxtrick.Manifest.manifest_version == 2) {
+						this.initAsync(prefs._prefsChromeUser);
+					}
 				},
 
 				initAsync: function(syncStore) {
@@ -981,11 +985,13 @@ Foxtrick.Prefs.translationKeys = function(sender) {
 							var o = {
 								[key]: value,
 							};
-							chrome.storage.local.set(o, function() {
-								let e = chrome.runtime.lastError;
-								if (e)
-									Foxtrick.log('chrome.storage failed', e);
-							});
+							if (Foxtrick.Manifest.manifest_version == 2) {
+								chrome.storage.local.set(o, function() {
+									let e = chrome.runtime.lastError;
+									if (e)
+										Foxtrick.log('chrome.storage failed', e);
+								});
+							}
 						}
 					}
 					catch (e) {}
@@ -999,7 +1005,9 @@ Foxtrick.Prefs.translationKeys = function(sender) {
 				deleteValue: function(key) {
 					delete prefs._prefsChromeUser[key];
 					localStorage.removeItem(key);
-					chrome.storage.local.remove(key);
+					if (Foxtrick.Manifest.manifest_version == 2) {
+						chrome.storage.local.remove(key);
+					}
 				},
 
 			};
