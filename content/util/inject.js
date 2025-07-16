@@ -97,6 +97,7 @@ Foxtrick.util.inject.jsLink = function(doc, url) {
 		Services.scriptloader.loadSubScript(url, doc.defaultView, 'UTF-8');
 	}
 	else {
+		/*
 		var inject = function(doc, js, id) {
 			var sourceName = 'ft.' + id + '.js';
 			var head = doc.getElementsByTagName('head')[0];
@@ -124,5 +125,16 @@ Foxtrick.util.inject.jsLink = function(doc, url) {
 		Foxtrick.load(url).then(function(text) {
 			inject(doc, text, id);
 		}).catch(Foxtrick.catch('jsLink'));
+		*/
+
+		var id = url.match(/([^\/]+)\.js$/)[1];
+		var head = doc.getElementsByTagName('head')[0];
+		var script = doc['createElement']('script');
+		script.setAttribute('type', 'text/javascript');
+		script.id = id;
+		//script.textContent = js + '\n\n//# sourceURL=' + sourceName + '\n';
+		script.src = url;
+		head.appendChild(script);
+		return script;
 	}
 };

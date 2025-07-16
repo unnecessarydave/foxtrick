@@ -9,6 +9,7 @@
 
 'use strict';
 
+//@ts-expect-error
 if (!this.Foxtrick)
 	var Foxtrick = {};
 
@@ -33,7 +34,8 @@ Foxtrick.loader.background.contentRequestsListener = function(request, sender, s
 		let reqHandlers = Foxtrick.loader.background.requests;
 		let handler = reqHandlers[request.req];
 
-		return handler.call(reqHandlers, request, sender, sendResponse) || false;
+		if (handler)
+			return handler.call(reqHandlers, request, sender, sendResponse) || false;
 	}
 	catch (e) {
 		Foxtrick.log('Foxtrick - background onRequest error:', request.req, e);
@@ -251,33 +253,37 @@ Foxtrick.loader.background.browserLoad = function() {
 			Foxtrick.playSound(url);
 		};
 
-		// from misc.js: tabs
-		this.requests.newTab = function({ url }) {
-			// @param url - the URL of new tab to create
-			Foxtrick.SB.tabs.create({ url });
-		};
-		this.requests.reuseTab = function({ url }) { // eslint-disable-line
-			// @param url - the URL of new tab to create
-			// if (Foxtrick.platform == 'Android') {
-			// 	// TODO
-			// 	// XUL Code:
-			// 	for (let [idx, browser] of Browser.browsers.entries()) {
-			// 		if (sender.tab.id == browser.tid) {
-			// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
-			// 			browser.loadURI(url);
-			// 		}
-			// 	}
-			// }
-		};
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			// from misc.js: tabs
+			this.requests.newTab = function({ url }) {
+				// @param url - the URL of new tab to create
+				Foxtrick.SB.tabs.create({ url });
+			};
+			this.requests.reuseTab = function({ url }) { // eslint-disable-line
+				// @param url - the URL of new tab to create
+				// if (Foxtrick.platform == 'Android') {
+				// 	// TODO
+				// 	// XUL Code:
+				// 	for (let [idx, browser] of Browser.browsers.entries()) {
+				// 		if (sender.tab.id == browser.tid) {
+				// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
+				// 			browser.loadURI(url);
+				// 		}
+				// 	}
+				// }
+			};
+		}
 
 		// from notify.js
-		this.requests.notify = function(request, sender, sendResponse) {
-			Foxtrick.util.notify.create(request.msg, sender, request)
-				.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
-				.catch(Foxtrick.catch(sender));
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			this.requests.notify = function(request, sender, sendResponse) {
+				Foxtrick.util.notify.create(request.msg, sender, request)
+					.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
+				return true; // async
+			};
+		}
 
 		// from context-menu.js: dummy. request handled in there
 		this.requests.updateContextMenu = function() {};
