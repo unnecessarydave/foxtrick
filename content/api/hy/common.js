@@ -145,9 +145,7 @@ Foxtrick.api.hy._fetchViaCache = async (api, fetch, cacheDays, teamId) => {
 		}
 	};
 
-	let cookiePromise;
-	// if (Foxtrick.Manifest.manifest_version == 2)
-		cookiePromise = Foxtrick.cookies.get('from_hty');
+	let cookiePromise = Foxtrick.cookies.get('from_hty');
 
 	/** @type {Promise<string>} */
 	let dataPromise = Foxtrick.storage.get(dataKey);
@@ -168,9 +166,7 @@ Foxtrick.api.hy._fetchViaCache = async (api, fetch, cacheDays, teamId) => {
 		return doFetch(data);
 	}
 
-	let cookie;
-	// if (Foxtrick.Manifest.manifest_version == 2)
-		cookie = await cookiePromise;
+	const cookie = await cookiePromise;
 	Foxtrick.log(logKey, 'HY Cookie:', cookie);
 	if (cookie && cookie.api && cookie.api[api] &&
 		cookie.api[api].timestamp * MSEC > fetchTime) {
