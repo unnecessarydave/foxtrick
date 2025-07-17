@@ -1,5 +1,6 @@
 import {Notify} from './util/notify.js';
 import {UI} from './ui.js';
+import { Foxtrick as Cookies} from './util/cookies.js';
 
 'use strict';
 
@@ -44,14 +45,29 @@ setupOffscreenDocument();
 chrome.runtime.onInstalled.addListener(UI.actionListener.bind(UI));
 
 // Listeners for code that cannot be run in offscreen document context.
-chrome.runtime.onMessage.addListener(async (msg, sender, responseCallback) => {
+chrome.runtime.onMessage.addListener((msg, sender, responseCallback) => {
 	switch (msg.req) {
+		case 'cookiesGet':
+			Cookies.cookies.get(msg.key, msg.name) // never rejects
+				.then(responseCallback);
+			return true;
+
+		case 'cookiesSet':
+			Cookies.cookies.set(msg.key, msg.value, msg.name) // never rejects
+				.then(responseCallback);
+			return true;
+
 		case 'newTab':
-			await setupOffscreenDocument();
-			chrome.tabs.create({ url: msg.url });
-			break;
+			setupOffscreenDocument().then(() => {
+				chrome.tabs.create({ url: msg.url })
+					.then(responseCallback);
+			});
+			return true;
+
 		case 'notify':
-			Notify.create(msg.msg, sender, msg);
-			break;
+			Notify.create(msg.msg, sender, msg)
+				.then(responseCallback);
+			return true;
 	}
+	return false;
 });

@@ -365,21 +365,22 @@ Foxtrick.loader.background.browserLoad = function() {
 		this.requests.cacheClear = () => Foxtrick.cache.clear();
 
 		// from misc.js
-		this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
-			Foxtrick.cookies.get(key, name) // never rejects
-				.then(sendResponse)
-				.catch(Foxtrick.catch(sender));
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
+				Foxtrick.cookies.get(key, name) // never rejects
+					.then(sendResponse)
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
-		this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
-			Foxtrick.cookies.set(key, value, name) // never rejects
-				.then(sendResponse)
-				.catch(Foxtrick.catch(sender));
+				return true; // async
+			};
+			this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
+				Foxtrick.cookies.set(key, value, name) // never rejects
+					.then(sendResponse)
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
-
+				return true; // async
+			};
+		}
 		// from permissions.js
 		this.requests.containsPermission = ({ types }, sender, sendResponse) => {
 			// @param origin - permission origin to check
