@@ -290,7 +290,7 @@ Foxtrick.modules.SkillColoring = {
 			if (Foxtrick.hasClass(el.nextElementSibling, 'denominationNumber')) {
 				Foxtrick.addClass(el.nextElementSibling, 'hidden');
 			} else
-			if (el.parentElement.tagName === 'HT-SKILL-LINK') {
+			if (el.parentElement?.tagName === 'HT-SKILL-LINK') {
 				let next = el.parentElement.nextElementSibling;
 				Foxtrick.hasClass(next, 'denominationNumber') && Foxtrick.addClass(next, 'hidden');
 			}
