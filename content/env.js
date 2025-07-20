@@ -540,4 +540,4 @@ if (Foxtrick.platform !== 'Android') {
 
 /** @typedef {(response?: any) => void} ResponseCb */
 // eslint-disable-next-line max-len
-/** @typedef {(message: any, sender: chrome.runtime.MessageSender, sendResponse: ResponseCb) => boolean|void} OnMessageListener */
+/** @typedef {(message: any, sender: chrome.runtime.MessageSender, sendResponse: ResponseCb) => Promise<boolean>|boolean|void} OnMessageListener */

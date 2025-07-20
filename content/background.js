@@ -56,7 +56,7 @@ Foxtrick.loader.background.browserUnload = function() {
 
 
 // background script starter load function
-Foxtrick.loader.background.browserLoad = function() {
+Foxtrick.loader.background.browserLoad = async function() {
 	try {
 
 		Foxtrick.log('Foxtrick.loader.background.browserLoad');
@@ -67,9 +67,9 @@ Foxtrick.loader.background.browserLoad = function() {
 		/** @type {Record<string, string>} */
 		var htLanguagesJSONText;
 
-		let updateResources = function(reInit) {
+		let updateResources = async function(reInit) {
 			// init resources
-			Foxtrick.entry.init(reInit);
+			await Foxtrick.entry.init(reInit);
 
 			// prepare resources for later transmission to content script
 			currencyJSON = JSON.stringify(Foxtrick.XMLData.htCurrencyJSON);
@@ -81,12 +81,12 @@ Foxtrick.loader.background.browserLoad = function() {
 			for (let [lang, obj] of Object.entries(Foxtrick.L10n.htLanguagesJSON))
 				htLanguagesJSONText[lang] = JSON.stringify(obj);
 
-			cssTextCollection = Foxtrick.util.css.getCssTextCollection();
+			cssTextCollection = await Foxtrick.util.css.getCssTextCollection();
 
 			Foxtrick.Prefs.deleteValue('preferences.updated');
 		};
 
-		updateResources();
+		await updateResources();
 		Foxtrick.Prefs.setBool('featureHighlight', false);
 		Foxtrick.Prefs.setBool('translationKeys', false);
 
@@ -122,41 +122,54 @@ Foxtrick.loader.background.browserLoad = function() {
 				Foxtrick.Prefs._prefs_gecko.getBoolPref('preferences.updated')) {
 
 				// reInit
-				updateResources(true);
+				updateResources(true).then(() => {
+					sendResponse(buildResource());
+				});
+				return true;
+			} else {
+				sendResponse(buildResource());
+				return false;
 			}
 
-			let [prefsChromeDefault, prefsChromeUser] = Foxtrick.Prefs.clone();
+			/**
+			 * Build the resource object to send to the content script.
+			 *
+			 * @return {FT.ResourceDict} Resource dictionary for content script
+			 */
+			function buildResource() {
+				let [prefsChromeDefault, prefsChromeUser] = Foxtrick.Prefs.clone();
 
-			/** @type {FT.ResourceDict} */
-			let resource = {
-				prefsChromeUser,
-				prefsChromeDefault,
+				/** @type {FT.ResourceDict} */
+				let resource = {
+					prefsChromeUser,
+					prefsChromeDefault,
 
-				htLangJSON: htLanguagesJSONText,
+					htLangJSON: htLanguagesJSONText,
 
-				propertiesDefault: Foxtrick.L10n.propertiesDefault,
-				properties: Foxtrick.L10n.properties,
-				screenshotsDefault: Foxtrick.L10n.screenshotsDefault,
-				screenshots: Foxtrick.L10n.screenshots,
+					propertiesDefault: Foxtrick.L10n.propertiesDefault,
+					properties: Foxtrick.L10n.properties,
+					screenshotsDefault: Foxtrick.L10n.screenshotsDefault,
+					screenshots: Foxtrick.L10n.screenshots,
 
-				plForm: Foxtrick.L10n.plForm,
-				plFormDefault: Foxtrick.L10n.plFormDefault,
+					plForm: Foxtrick.L10n.plForm,
+					plFormDefault: Foxtrick.L10n.plFormDefault,
 
-				currencyJSON,
-				aboutJSON,
-				worldDetailsJSON,
-				nationalTeamsJSON,
+					currencyJSON,
+					aboutJSON,
+					worldDetailsJSON,
+					nationalTeamsJSON,
 
-				league: Foxtrick.XMLData.League,
-				countryToLeague: Foxtrick.XMLData.countryToLeague,
-			};
+					league: Foxtrick.XMLData.League,
+					countryToLeague: Foxtrick.XMLData.countryToLeague,
+				};
 
-			if (request.req == 'pageLoad') {
-				Foxtrick.modules.UI.update(sender.tab);
-				resource.cssText = cssTextCollection;
+				if (request.req == 'pageLoad') {
+					Foxtrick.modules.UI.update(sender.tab);
+					resource.cssText = cssTextCollection;
+				}
+
+				return resource;
 			}
-
-			sendResponse(resource);
 		};
 
 		// Fennec tab child processes
@@ -203,8 +216,9 @@ Foxtrick.loader.background.browserLoad = function() {
 		// from misc.js. getting files, convert text
 		this.requests.getCss = function({ files }, sender, sendResponse) {
 			// @param files - an array of files to be loaded into string
-			let cssText = Foxtrick.util.css.getCssFileArrayToString(files);
-			sendResponse({ cssText });
+			Foxtrick.util.css.getCssFileArrayToString(files).then(cssText => {
+				sendResponse({ cssText })});
+			return true; //async
 		};
 
 		// TODO
@@ -290,7 +304,7 @@ Foxtrick.loader.background.browserLoad = function() {
 
 		// from load.js
 		this.requests.fetch = function({ url, params }, sender, sendResponse) {
-			// @param url - the URL of resource to fetch with window.XMLHttpRequest
+			// @param url - the URL of resource to fetch
 			// @param params - params != null makes it and used for a POST request
 			// @callback_param data - response text
 			// @callback_param status - HTTP status of request
