@@ -9956,7 +9956,9 @@ jQuery.expr.pseudos.visible = function( elem ) {
 
 jQuery.ajaxSettings.xhr = function() {
 	try {
-		return new window.XMLHttpRequest();
+		// not supported in MV3 and Foxtrick doesn't use it.
+		return;
+		// return new window.XMLHttpRequest();
 	} catch ( e ) {}
 };
 
