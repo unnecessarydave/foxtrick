@@ -13,12 +13,15 @@ var BackgroundPage, isChrome = false, Foxtrick;
 if (Foxtrick && Foxtrick.Manifest.manifest_version == 3) {
 	if (typeof window.chrome == 'object')
 		isChrome = true;
-	Foxtrick.entry.init(false);
+		Foxtrick.entry.init(false).then(() => {
+			init();
+	});
 } else {
 	if (typeof window.chrome == 'object') {
 		BackgroundPage = chrome.extension.getBackgroundPage();
 		isChrome = true;
 		Foxtrick = BackgroundPage.Foxtrick;
+		init();
 	}
 }
 
@@ -113,8 +116,4 @@ function init() {
 	label.textContent = Foxtrick.L10n.getString('api.clearCache');
 	label.title = Foxtrick.L10n.getString('api.clearCache.title');
 	label.addEventListener('click', clearCache);
-}
-
-if (Foxtrick) {
-	init();
 }

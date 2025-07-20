@@ -188,88 +188,45 @@ Foxtrick.fetch = function(url, params) {
 
 	return new Promise(function(fulfill, reject) {
 		const HTTP_OK = 200, HTTP_REDIR = 300;
-		try {
-			let type = params ? 'POST' : 'GET';
-
-			let req = new window.XMLHttpRequest();
-			req.open(type, pUrl, true);
-
-			if (typeof req.overrideMimeType === 'function')
-				req.overrideMimeType('text/plain');
-
-			// Send the proper header information along with the request
-			if (type == 'POST' && typeof req.setRequestHeader === 'function')
-				req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-			req.onload = function() {
-				// README: safari returns chrome resources with status=0
-				if (this.status >= HTTP_OK && this.status < HTTP_REDIR ||
-				    this.status === 0 && this.responseText) {
-
-					fulfill(this.responseText);
-					return;
-				}
-
-				/** @type {FetchError} */
-				let error = {
-					url: pUrl,
-					status: this.status,
-					text: this.responseText,
-					params,
-					_cls: Foxtrick.FETCH_ERROR,
-				};
-
-				// eslint-disable-next-line prefer-promise-reject-errors
-				reject(error);
-			};
-
-			req.onerror = function() {
-				/** @type {FetchError} */
-				let error = {
-					url: pUrl,
-					status: this.status,
-					text: this.responseText,
-					params,
-					_cls: Foxtrick.FETCH_ERROR,
-				};
-
-				// eslint-disable-next-line prefer-promise-reject-errors
-				reject(error);
-			};
-
-			req.onabort = function() {
+		let type = params ? 'POST' : 'GET';
+		let fetchOptions = {
+			method: type,
+			headers: {},
+		};
+		if (type === 'POST') {
+			fetchOptions.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+			fetchOptions.body = params;
+		}
+		fetch(pUrl, fetchOptions)
+			.then(response => {
+				return response.text().then(text =>  {
+					if ((response.status >= HTTP_OK && response.status < HTTP_REDIR)) {
+						fulfill(text);
+						return;
+					}
+					/** @type {FetchError} */
+					let error = {
+						url: pUrl,
+						status: response.status,
+						text,
+						params,
+						_cls: Foxtrick.FETCH_ERROR,
+					};
+					reject(error);
+				});
+			})
+			.catch(function(e) {
+				Foxtrick.log(ERROR_XHR_FATAL, e);
 				/** @type {FetchError} */
 				let error = {
 					url: pUrl,
 					status: -1,
-					text: this.responseText,
+					text: ERROR_XHR_FATAL + e.message,
 					params,
 					_cls: Foxtrick.FETCH_ERROR,
 				};
-
-				// eslint-disable-next-line prefer-promise-reject-errors
 				reject(error);
-			};
-
-			req.send(params);
-
-		}
-		catch (e) {
-			// handle fatal errors here
-			Foxtrick.log(ERROR_XHR_FATAL, e);
-
-			/** @type {FetchError} */
-			let error = {
-				url: pUrl,
-				status: -1,
-				text: ERROR_XHR_FATAL + e.message,
-				params,
-				_cls: Foxtrick.FETCH_ERROR,
-			};
-
-			// eslint-disable-next-line prefer-promise-reject-errors
-			reject(error);
-		}
+			});
 	});
 
 };
@@ -556,38 +513,27 @@ if (!Foxtrick.util)
 Foxtrick.util.load = {};
 
 /**
- * Load an internal URL synchronously
- *
- * TODO: consider going full async
+ * Load an internal URL asynchronously using Foxtrick.fetch
  *
  * @param  {string} url
- * @return {string}
+ * @return {Promise<string|null>} resolves to response text or null on error
  */
-Foxtrick.util.load.sync = function(url) {
+Foxtrick.util.load.internal = async function(url) {
 	if (url.replace(/^\s+/, '').indexOf(Foxtrick.InternalPath) !== 0) {
 		Foxtrick.log('loadSync only for internal resources.', url, "isn't , only",
-		             Foxtrick.InternalPath, 'is');
-
+					 Foxtrick.InternalPath, 'is');
 		return null;
 	}
-
-	// load
-	let req = new window.XMLHttpRequest();
-
-	req.open('GET', url, false); // sync load of a chrome resource
-
-	if (typeof req.overrideMimeType === 'function')
-		req.overrideMimeType('text/plain');
-
 	try {
-		req.send(null);
-
-		return req.responseText;
-	}
-	catch (e) {
-		// catch non-existing
-		Foxtrick.log('loadSync: cannot find or load:', url);
-
+		const result = await Foxtrick.fetch(url);
+		if (typeof result === 'string') {
+			return result;
+		} else {
+			Foxtrick.log('fetch failed:', url, result);
+			return null;
+		}
+	} catch (e) {
+		Foxtrick.log('fetch error:', url, e);
 		return null;
 	}
 };

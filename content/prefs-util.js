@@ -907,7 +907,7 @@ Foxtrick.Prefs.translationKeys = function(sender) {
 		if (Foxtrick.context == 'background') {
 
 			var prefsBG = {
-				init: function() {
+				init: async function() {
 					// get preferences
 					// this is used when loading from options page, not valid
 					// in content script since access to localStorage is forbidden
@@ -937,19 +937,19 @@ Foxtrick.Prefs.translationKeys = function(sender) {
 
 						prefs._prefsChromeDefault = {};
 
-						var parsePrefsFile = (url) => {
-							let string = Foxtrick.util.load.sync(Foxtrick.InternalPath + url);
+						var parsePrefsFile = async (url) => {
+							let string = await Foxtrick.util.load.internal(Foxtrick.InternalPath + url);
 
 							Foxtrick.Prefs.parsePrefs(string, (key, value) => {
 								this._prefsChromeDefault[key] = value;
 							});
 						};
 
-						parsePrefsFile('../defaults/preferences/foxtrick.js');
+						await parsePrefsFile('../defaults/preferences/foxtrick.js');
 						if (Foxtrick.platform == 'Chrome')
-							parsePrefsFile('../defaults/preferences/foxtrick.chrome');
+							await parsePrefsFile('../defaults/preferences/foxtrick.chrome');
 						else if (Foxtrick.platform == 'Safari')
-							parsePrefsFile('../defaults/preferences/foxtrick.safari');
+							await parsePrefsFile('../defaults/preferences/foxtrick.safari');
 
 					}
 					catch (e) {

@@ -735,17 +735,21 @@ function addNote(note, parent, links) {
 
 /**
  * Run core module init functions
+ *
+ * @param {boolean} reInit
+ * @return {Promise<any[]>} Resolves when all core modules are initialized
  */
-function initCoreModules() {
+async function initCoreModules(reInit) {
 	// add MODULE_NAME to modules
 	for (var m in Foxtrick.modules)
 		Foxtrick.modules[m].MODULE_NAME = m;
 
 	// core functions needed for preferences, localization, etc.
 	var coreModules = [Foxtrick.Prefs, Foxtrick.L10n, Foxtrick.XMLData];
-	for (var module of coreModules)
-		if (typeof module.init == 'function')
-			module.init();
+	let corePromises = coreModules.map(core => {
+			return core.init(reInit);
+	});
+	return Promise.all(corePromises);
 }
 
 /**
@@ -1828,26 +1832,25 @@ function initTextAndValues() {
 /**
  * Main pref logic sequence
  */
-function init() {
+async function init() {
 	try {
-		initCoreModules();
+		await initCoreModules(false);
 		getPageIds();
 
-		initTabs().then(function() {
+		await initTabs();
 
-			initSearch();
-			initListeners();
-			initTextAndValues();
+		initSearch();
+		initListeners();
+		initTextAndValues();
 
-			locateFragment(window.location.href);
+		locateFragment(window.location.href);
 
-			testPermissions();
+		testPermissions();
 
-			$('#spinner').addClass('hidden');
-			$('#subheader').removeClass('hidden');
-			$('#content').removeClass('hidden');
+		$('#spinner').addClass('hidden');
+		$('#subheader').removeClass('hidden');
+		$('#content').removeClass('hidden');
 
-		}).catch(Foxtrick.catch('Preferences init'));
 
 		// if (Foxtrick.Prefs.isModuleEnabled('MobileEnhancements')) {
 		// 	// mobile

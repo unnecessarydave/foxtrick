@@ -866,7 +866,7 @@ Foxtrick.L10n.getCountryNameLocal = function(leagueId, lang) {
 			screenshotsDefault: null,
 			screenshots: null,
 
-			init: function() {
+			init: async function() {
 				var L10N_BUNDLE_PATH = Foxtrick.InternalPath + 'foxtrick.properties';
 
 				// var SS_BUNDLE_PATH = Foxtrick.InternalPath + 'foxtrick.screenshots';
@@ -878,12 +878,12 @@ Foxtrick.L10n.getCountryNameLocal = function(leagueId, lang) {
 					// unnecessary and hurts performance
 					for (let locale of Foxtrick.L10n.locales) {
 						let url = L10N_PATH + locale + '/htlang.json';
-						let text = Foxtrick.util.load.sync(url);
+						let text = await Foxtrick.util.load.internal(url);
 						this.htLanguagesJSON[locale] = JSON.parse(text);
 					}
 				}
 
-				var propsDefault = Foxtrick.util.load.sync(L10N_BUNDLE_PATH);
+				var propsDefault = await Foxtrick.util.load.internal(L10N_BUNDLE_PATH);
 				this.propertiesDefault = this.__parse(propsDefault);
 
 				// this.screenshotsDefault = Foxtrick.util.load.sync(SS_BUNDLE_PATH);
@@ -897,7 +897,7 @@ Foxtrick.L10n.getCountryNameLocal = function(leagueId, lang) {
 
 				var l10nBundlePath = L10N_PATH + localeCode + '/foxtrick.properties';
 				try {
-					let props = Foxtrick.util.load.sync(l10nBundlePath);
+					let props = await Foxtrick.util.load.internal(l10nBundlePath);
 					if (props === null) {
 						Foxtrick.log('Use default properties for locale', localeCode);
 						this.properties = this.propertiesDefault;

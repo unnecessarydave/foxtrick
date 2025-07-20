@@ -235,18 +235,18 @@ Foxtrick.util.css.reloadModuleCSS = function(doc) {
 
 
 /**
- * loads css file from local resource
+ * Loads a CSS file from a local resource asynchronously.
  *
- * @param  {string} cssUrl
- * @return {string}        string with the content for injection into page
+ * @param  {string} cssUrl The URL or inline CSS string.
+ * @return {Promise<string>} Resolves to the CSS content for injection into the page.
  */
-Foxtrick.util.css.getCssTextFromFile = function(cssUrl) {
+Foxtrick.util.css.getCssTextFromFile = async function(cssUrl) {
 	// @callback_param cssText - string of CSS content
 	var cssText = '';
 	if (cssUrl && !/{/.test(cssUrl)) { // has no class, probably file
 		try {
 			// a resource file, get css file content
-			cssText = Foxtrick.util.load.sync(cssUrl);
+			cssText = await Foxtrick.util.load.internal(cssUrl);
 			if (cssText == null)
 				throw new Error(`Cannot load CSS: ${cssUrl}`);
 		}
@@ -263,22 +263,22 @@ Foxtrick.util.css.getCssTextFromFile = function(cssUrl) {
 };
 
 /**
- * gets all css from modules.CSS settings
+ * Gets all CSS from modules.CSS settings asynchronously.
  *
  * @param  {string[]} cssUrls
- * @return {string}
+ * @return {Promise<string>} Resolves to concatenated CSS content.
  */
-Foxtrick.util.css.getCssFileArrayToString = function(cssUrls) {
-	let coll = cssUrls.map(Foxtrick.util.css.getCssTextFromFile);
+Foxtrick.util.css.getCssFileArrayToString = async function(cssUrls) {
+	const coll = await Promise.all(cssUrls.map(Foxtrick.util.css.getCssTextFromFile));
 	return coll.join('');
 };
 
 /**
- * gets all css from modules.CSS settings
+ * Gets all CSS from modules.CSS settings asynchronously.
  *
- * @return {string}
+ * @return {Promise<string>} Resolves to concatenated CSS content.
  */
-Foxtrick.util.css.getCssTextCollection = function() {
+Foxtrick.util.css.getCssTextCollection = async function() {
 	let theme = Foxtrick.Prefs.getString('theme');
 	let dir = Foxtrick.Prefs.getString('dir');
 	Foxtrick.log('getCssTextCollection', theme, '-', dir);
