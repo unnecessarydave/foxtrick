@@ -414,13 +414,13 @@
 	},
 	"ratemyacademy": {
 		"youthlink": {
-			"url": "https://www.rate-my.academy/browse/team/[youthteamid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"youthplayerlistlink": {
-			"url": "https://www.rate-my.academy/browse/team/[youthteamid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"youthplayerdetaillink": {
-			"url": "https://www.rate-my.academy/browse/player/[playerid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"title": "Rate My Academy",
 		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ratemyacademy.ico"
