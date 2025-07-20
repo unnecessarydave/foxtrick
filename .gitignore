@@ -14,6 +14,7 @@ maintainer/locale/crowdinKey.py
 maintainer/locale/Hattrick/CHPP/Credentials.py
 maintainer/locale/Hattrick/CHPP/AccessToken.py
 build/
+build-dev/
 content/locale/af/
 node_modules
 /eslint.config.js
