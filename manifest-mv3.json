@@ -38,7 +38,6 @@
 			"content/lib/PluralForm.js",
 			"content/lib/psico.js",
 			"content/lib/gauge.js",
-			"content/lib/exceptionless.universal.js",
 			// <!-- end ext-lib -->
 
 			"content/lib/integration.js",
@@ -291,7 +290,6 @@
 		"*://chpp.hattrick.org/*",
 		"*://*.foxtrick.org/*",
 		"https://www.fantamondi.it/*",
-		"https://api.exceptionless.io/*",
 		"https://*.hattrick-youthclub.org/*",
 		"http://no9-online.de/*",
 		"http://www.latehome.de/*",

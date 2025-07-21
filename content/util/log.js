@@ -136,24 +136,27 @@ Foxtrick.log.header = function(doc) {
 Foxtrick.log.cache = '';
 
 Foxtrick.log.client = null;
-Foxtrick.lazyProp(Foxtrick.log, 'client', () => {
-	var client = new Foxtrick.exceptionless.ExceptionlessClient('grAEJTrH20BcgqO3sF4bIlnXhgZfMCqCuE9gUsLG', 'https://api.exceptionless.io');
-	client.config.updateSettingsWhenIdleInterval = 0;
-	client.config.useReferenceIds(); // Foxtrick.log.client.getLastReferenceId();
-	client.config.includeMachineName = false;
-	client.config.includeIpAddress = false;
-	client.config.includeCookies = false;
-	client.config.includePostData = false;
-	client.config.moduleCollector = false;
+// Disabled for mv3 port - exceptionless uses XMLHttpRequest
+if (Foxtrick.Manifest.manifest_version == 2) {
+	Foxtrick.lazyProp(Foxtrick.log, 'client', () => {
+		var client = new Foxtrick.exceptionless.ExceptionlessClient('grAEJTrH20BcgqO3sF4bIlnXhgZfMCqCuE9gUsLG', 'https://api.exceptionless.io');
+		client.config.updateSettingsWhenIdleInterval = 0;
+		client.config.useReferenceIds(); // Foxtrick.log.client.getLastReferenceId();
+		client.config.includeMachineName = false;
+		client.config.includeIpAddress = false;
+		client.config.includeCookies = false;
+		client.config.includePostData = false;
+		client.config.moduleCollector = false;
 
-	let versionRe = /^\d+\.\d+(\.\d+)?/;
-	let version = Foxtrick.version;
-	let vMajor = version.match(versionRe)[0];
-	if (vMajor != version)
-		version = version.slice(0, vMajor.length) + '-' + version.slice(vMajor.length + 1);
-	client.config.setVersion(version);
-	return client;
-});
+		let versionRe = /^\d+\.\d+(\.\d+)?/;
+		let version = Foxtrick.version;
+		let vMajor = version.match(versionRe)[0];
+		if (vMajor != version)
+			version = version.slice(0, vMajor.length) + '-' + version.slice(vMajor.length + 1);
+		client.config.setVersion(version);
+		return client;
+	});
+}
 
 
 /**
@@ -260,6 +263,9 @@ Foxtrick.dump = function(content) {
  */
 Foxtrick.reportBug = (header, bug, prefs, refIdCb) => {
 	let client = Foxtrick.log.client;
+	if (!client)
+		return; // mv3
+
 	let { teamId, teamName } = Foxtrick.modules.Core.TEAM;
 	client.config.setUserIdentity(String(teamId), String(teamName));
 
@@ -291,6 +297,9 @@ Foxtrick.reportBug = (header, bug, prefs, refIdCb) => {
 Foxtrick.reportError = (err) => {
 	var report = () => {
 		let client = Foxtrick.log.client;
+		if (!client)
+			return; // mv3
+
 		let { teamId, teamName } = Foxtrick.modules.Core.TEAM;
 		client.config.setUserIdentity(String(teamId), String(teamName));
 
