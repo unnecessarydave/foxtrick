@@ -388,7 +388,10 @@ Foxtrick.modules.Core = {
 			Foxtrick.util.note.add(doc, info, NOTE_ID, { closable: true, focus: true });
 		});
 
-		bottom.insertBefore(reportBugSpan, bottom.firstChild);
+		// Disabled for mv3 port - exceptionless uses XMLHttpRequest
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			bottom.insertBefore(reportBugSpan, bottom.firstChild);
+		}
 	},
 
 	/**
@@ -514,15 +517,18 @@ Foxtrick.modules.Core = {
 			// });
 			// agree.appendChild(always);
 
-			let report = doc.createElement('button');
-			report.type = 'button';
-			report.textContent = Foxtrick.L10n.getString('reportBug.now');
-			Foxtrick.onClick(report, function() {
-				let doc = note.ownerDocument;
-				hideNote();
-				Foxtrick.modules.Core.reportBug(doc);
-			});
-			agree.appendChild(report);
+			if (Foxtrick.Manifest.manifest_version == 2) {
+				// disabled in mv3 Exceptionless uses XMLHttpRequest
+				let report = doc.createElement('button');
+				report.type = 'button';
+				report.textContent = Foxtrick.L10n.getString('reportBug.now');
+				Foxtrick.onClick(report, function() {
+					let doc = note.ownerDocument;
+					hideNote();
+					Foxtrick.modules.Core.reportBug(doc);
+				});
+				agree.appendChild(report);
+			}
 
 			let ignore = doc.createElement('button');
 			ignore.type = 'button';
