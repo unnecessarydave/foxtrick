@@ -136,10 +136,6 @@ endif
 	# - do make clean-firefox and restart mozilla web-ext
 	[ -f $(BUILD_DIR)/manifest.json ] || cp $(MANIFEST_FIREFOX) $(BUILD_DIR)/manifest.json
 
-	# strip manifest comments
-	cd $(BUILD_DIR); \
-	sed -i -r '/\/\/ <!--/d' manifest.json
-
 	# content/
 	[ -d $(BUILD_DIR)/content ] || mkdir $(BUILD_DIR)/content
 	cd content/; \
@@ -189,6 +185,10 @@ endif
 	cat foxtrick.js foxtrick.android > foxtrick.android.js; \
 	rm foxtrick.android
 
+	# strip manifest comments
+	cd $(BUILD_DIR); \
+	sed -i -r '/\/\/ <!--/d' manifest.json
+
 ifeq ($(BRANCH),dev)
 
 else
@@ -226,10 +226,6 @@ endif
 	cd $(BUILD_DIR); \
 	sed -i '/<!-- gecko-specific -->/,/<!-- end gecko-specific -->/d' manifest.json
 
-	# strip manifest comments
-	cd $(BUILD_DIR); \
-	sed -i -r '/\/\/ <!--/d' manifest.json
-
 	# content/
 	[ -d $(BUILD_DIR)/content ] || mkdir $(BUILD_DIR)/content
 	cd content/; \
@@ -262,6 +258,10 @@ else
 	cd $(BUILD_DIR); \
 	sed -i -r 's|("name": ").+(")|\1Foxtrick ($(BRANCH))\2|' manifest.json
 endif
+
+	# strip manifest comments
+	cd $(BUILD_DIR); \
+	sed -i -r '/\/\/ <!--/d' manifest.json
 
 ifeq ($(DIST_TYPE),repo)
 	# make crx
