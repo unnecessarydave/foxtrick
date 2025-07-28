@@ -215,6 +215,36 @@
 		"leagueidranges": [[5, 5]],
 		"nationalityranges": [[5, 5]]
 	},
+	"mexicotracker": {
+		"img": "https://www.hattrick.org/Img/flags/6.png",
+		"title": "Sistema Integral de la Seleccion Mexicana (SISMex)",
+		"trackernationalteamlink": {
+			"url": "https://sismex-ht.com/",
+			"filters": ["leagueid"]
+		},
+		"trackerleaguelink": {
+			"url": "https://sismex-ht.com/",
+			"filters": ["leagueid"]
+		},
+		"trackerplayerlink": {
+			"url": "https://sismex-ht.com/EditarJugadorSenior.aspx?playerId=[playerid]",
+			"filters": ["nationality"]
+		},
+		"trackeryouthlink": {
+			"url": "https://sismex-ht.com/",
+			"filters": ["leagueid"]
+		},
+		"trackeryouthplayerlistlink": {
+			"url": "https://sismex-ht.com/",
+			"filters": ["leagueid"]
+		},
+		"trackeryouthplayerlink": {
+			"url": "https://sismex-ht.com/EditarJugadorNuevaCantera.aspx?playerId=[playerid]",
+			"filters": ["nationality"]
+		},
+		"leagueidranges": [[6, 6]],
+		"nationalityranges": [[6, 6]]
+	},
 	"turkiyetracker": {
 		"img": "https://www.hattrick.org/Img/flags/32.png",
 		"title": "TÜRKIYE NT/U-21 Tracker",
@@ -237,7 +267,7 @@
 		"img": "https://www.hattrick.org/Img/flags/28.png",
 		"title": "Sistema Integral de la Seleccion Uruguaya (SISU)",
 		"trackernationalteamlink": {
-			"url": "https://sisu-ht.com/VerEspirituSeleccion.aspx?teamId=[ntteamid]",
+			"url": "https://sisu-ht.com/",
 			"filters": ["leagueid"]
 		},
 		"trackerleaguelink": {
@@ -414,21 +444,20 @@
 	},
 	"ratemyacademy": {
 		"youthlink": {
-			"url": "https://www.rate-my.academy/browse/team/[youthteamid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"youthplayerlistlink": {
-			"url": "https://www.rate-my.academy/browse/team/[youthteamid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"youthplayerdetaillink": {
-			"url": "https://www.rate-my.academy/browse/player/[playerid]"
+			"url": "https://www.rate-my.academy/"
 		},
 		"title": "Rate My Academy",
 		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ratemyacademy.ico"
 	},
 	"hattrickorganizer": {
 		"title": "Hattrick Organizer",
-		"img_cdn": "https://foxtrick-ng.github.io/foxtrick/linkicons/ho.png",
-		"img": "https://cdn.jsdelivr.net/gh/ho-dev/hattrickOrganizer@master/utils/buildResources/Logo_stable.png",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/ho.png",
 		"teamlink": {
 			"url": "https://ho-dev.github.io/HattrickOrganizer/"
 		},
@@ -459,5 +488,12 @@
 		"playedyouthmatchlink": {
 			"url": "https://ho-dev.github.io/HattrickOrganizer/"
 		}
+	},
+	"tppc": {
+		"serieslink": {
+			"url": "https://www.adrianomoutinho.com/hattrick/index.php?LeagueId=[seriesid]"
+		},
+		"title": "Team Position Probability Calculator",
+		"img": "https://foxtrick-ng.github.io/foxtrick/linkicons/tppc.ico"
 	}
 }
