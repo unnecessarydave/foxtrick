@@ -106,7 +106,7 @@ Foxtrick.modules['NotifyChromeVersion'] = {
 
         try {
             // Exit if Foxtrick.version is invalid or not defined.
-            if (typeof Foxtrick.version !== 'string' || !Foxtrick.version.match(/^\\d+(\\.\\d+)*$/)) {
+            if (typeof Foxtrick.version !== 'string' || !Foxtrick.version.match(/^\d+(\.\d+)*$/)) {
                 log(`Invalid Foxtrick.version: ${Foxtrick.version}`);
                 return;
             }

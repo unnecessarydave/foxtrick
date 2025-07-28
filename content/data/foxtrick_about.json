@@ -11,16 +11,8 @@
 	],
 	"maintainers": [
 		{
-			"id": "8342420",
-			"name": "ryanli"
-		},
-		{
-			"id": "7776339",
-			"name": "convincedd"
-		},
-		{
-			"id": "8366392",
-			"name": "LA-MJ"
+			"id": "13992846",
+			"name": "UnnecessaryDave"
 		}
 	],
 	"developers": [
@@ -82,7 +74,7 @@
 		},
 		{
 			"id": "8366392",
-			"name": "LA-MJ"
+			"name": "--MJ--"
 		},
 		{
 			"id": "653581",
@@ -95,6 +87,10 @@
 		{
 			"id": "8107197",
 			"name": "Greblys"
+		},
+		{
+			"id": "13992846",
+			"name": "UnnecessaryDave"
 		}
 	],
 	"translations": [
