@@ -6,13 +6,10 @@
 
 'use strict';
 
-/* eslint-disable */
+//@ts-expect-error
 if (!this.Foxtrick)
 	// @ts-ignore
 	var Foxtrick = {};
-/* eslint-enable */
-
-/* globals safari */
 
 /**
  * Browser architecture: Sandboxed|Gecko.
@@ -409,6 +406,13 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 			return ret;
 		});
 
+		// default mv3 because offline document doesn't have chrome.runtime.getManifest
+		Foxtrick.Manifest = { manifest_version: 3 };
+		if (chrome.runtime.getManifest)
+			Foxtrick.Manifest = chrome.runtime.getManifest();
+		console.log('manifest version: ' + Foxtrick.Manifest.manifest_version);
+		console.log('context: ' + Foxtrick.context);
+
 		var ACTIVE_TABS = new Set();
 
 		Foxtrick.SB.tabs.getId = function(tab) {
@@ -496,9 +500,11 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 					ACTIVE_TABS.clear();
 					ACTIVE_TABS.add(senderId);
 
-					for (let i of tabListOld) {
-						let msg = { req: 'checkAlive', id: i };
-						chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
+					if (Foxtrick.Manifest.manifest_version == 2) {
+						for (let i of tabListOld) {
+							let msg = { req: 'checkAlive', id: i };
+							chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
+						}
 					}
 				};
 
@@ -534,4 +540,4 @@ if (Foxtrick.platform !== 'Android') {
 
 /** @typedef {(response?: any) => void} ResponseCb */
 // eslint-disable-next-line max-len
-/** @typedef {(message: any, sender: chrome.runtime.MessageSender, sendResponse: ResponseCb) => boolean|void} OnMessageListener */
+/** @typedef {(message: any, sender: chrome.runtime.MessageSender, sendResponse: ResponseCb) => Promise<boolean>|boolean|void} OnMessageListener */

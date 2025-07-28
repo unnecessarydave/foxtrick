@@ -160,7 +160,11 @@ if (Foxtrick.platform == 'Firefox') {
 if (Foxtrick.platform == 'Chrome') {
 
 	Foxtrick.modules.UI.onLoad = function() {
-		chrome.pageAction.onClicked.addListener(function(tab) {
+		if (Foxtrick.Manifest.manifest_version == 3 && Foxtrick.context == 'background')
+			return; // don't run in offscreen document
+		
+		let actionApi = Foxtrick.Manifest.manifest_version == 2 ? chrome.pageAction : chrome.action;
+		actionApi.onClicked.addListener(function(tab) {
 			Foxtrick.Prefs.disable(tab); // in case pop-up is disabled
 		});
 	};
@@ -177,6 +181,9 @@ if (Foxtrick.platform == 'Chrome') {
 	Foxtrick.modules.UI.updateIcon = function(tab) {
 		if (!tab || !tab.id)
 			return;
+
+		if (Foxtrick.Manifest.manifest_version == 3)
+			return; // partial mv3 code in service worker
 
 		chrome.pageAction.show(tab.id);
 		var iconUrl = '', statusText = '';
