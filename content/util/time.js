@@ -293,19 +293,8 @@ Foxtrick.util.time.isDST = function(utcHTDate) {
  * @return {Date}         {?Date}
  */
 Foxtrick.util.time.getUTCDate = function(doc) {
-	let dateEl = doc.getElementById('hattrickTime');
-	if (!dateEl)
-		dateEl = doc.getElementById('time');
-
-	if (!dateEl)
-		return null;
-
-	let d = this.parse(dateEl.textContent);
-	if (!d)
-		return null;
-
-	let utcHTDate = new Date(Date.UTC(d.year, d.month - 1, d.day, d.hour, d.minute));
-	return utcHTDate;
+	let htDate = this.getHTDate(doc);
+	return new Date(Date.UTC(htDate.getFullYear(), htDate.getMonth(), htDate.getDate(), htDate.getHours(), htDate.getMinutes()));
 };
 
 /**
@@ -321,28 +310,19 @@ Foxtrick.util.time.getUTCTimeStamp = function(doc) {
 };
 
 /**
- * Get a ?Date representing HT time
+ * Get a Date representing HT time
  * @param  {document} doc
- * @return {Date}         {?Date}
+ * @returns {Date}
  */
 Foxtrick.util.time.getHTDate = function(doc) {
-	let dateEl = doc.getElementById('hattrickTime');
-	if (!dateEl)
-		dateEl = doc.getElementById('time');
-
-	if (!dateEl)
-		return null;
-
-	return this.getDateFromText(dateEl.textContent);
+	return this.getOffsetDate('Europe/Stockholm');
 };
 
 /**
  * Get a number representing HT time.
  *
- * Throws if HT time was not found.
  * @param  {document}  doc
- * @throw  {TypeError}     HT time not found
- * @return {number}
+ * @returns {number}
  */
 Foxtrick.util.time.getHTTimeStamp = function(doc) {
 	let date = this.getHTDate(doc);
@@ -350,17 +330,239 @@ Foxtrick.util.time.getHTTimeStamp = function(doc) {
 };
 
 /**
- * Get a ?Date representing user time
+ * Get a Date representing user time in hattrick
  * @param  {document} doc
- * @return {Date}         {?Date}
+ * @returns {Date}
  */
 Foxtrick.util.time.getDate = function(doc) {
 	let dateEl = doc.getElementById('time');
-	if (!dateEl)
-		return null;
+	let dateText = dateEl && typeof dateEl.textContent === 'string' ? dateEl.textContent.trim() : '';
+	if (dateEl && dateText.length > 0) {
+		return this.getDateFromText(dateEl.textContent);
+	} else {
+		// Fallback: get user ht time zone setting from <html> and synthesize user time from local time
+		const html = doc.documentElement || doc.getElementsByTagName('html')[0];
+		const timezone = html && html.getAttribute('user-time-zone');
+		if (timezone) {
+			const userDate = this.getOffsetDate(timezone);
+			if (userDate)
+				return userDate;
+		}
+	}
+	// Final fallback: user's local time
+	return new Date();
+};
 
-	let date = this.getDateFromText(dateEl.textContent);
-	return date;
+/**
+ * Get a Date object representing the current time in the specified time zone.
+ *
+ * Computes the current time in the given Windows or IANA time zone, adjusting for DST.
+ *
+ * @param {string} timezone - Windows or IANA time zone string (e.g. 'Europe/Stockholm', 'Pacific Standard Time').
+ * @returns {Date|null} The current date/time in the specified time zone, or null if the time zone is invalid.
+ */
+Foxtrick.util.time.getOffsetDate = function(timezone) {
+	const now = new Date();
+	const offset = this.getUtcOffset(timezone, now);
+	if (offset !== null) {
+		let ts = now.getTime() + offset + (now.getTimezoneOffset() * this.MSECS_IN_MIN);
+		return new Date(Math.floor(ts / 60000) * 60000);
+	} else {
+		return null;
+	}
+};
+
+/**
+ * Get the UTC offset in msecs for a Windows or IANA time zone string.
+ * Handles DST automatically.
+ * @param {string} timezone - Windows or IANA time zone string (e.g. 'Europe/Stockholm', 'Pacific Standard Time')
+ * @param {Date} date - The date to check (defaults to now)
+ * @returns {number|null} Offset in msecs (e.g. 60000 for GMT+01)
+ */
+Foxtrick.util.time.getUtcOffset = function(timezone, date = new Date()) {
+	const iana = Foxtrick.util.time.winTztoIana(timezone) || timezone;
+
+	try {
+		// Format the date in the target time zone
+		const dtf = new Intl.DateTimeFormat('en-US', {
+			timeZone: iana,
+			hour12: false,
+			year: 'numeric', month: '2-digit', day: '2-digit',
+			hour: '2-digit', minute: '2-digit', second: '2-digit'
+		});
+		const parts = dtf.formatToParts(date);
+		const [year, month, day, hour, minute, second] = [
+			parseInt(parts.find(p => p.type === 'year').value, 10),
+			parseInt(parts.find(p => p.type === 'month').value, 10),
+			parseInt(parts.find(p => p.type === 'day').value, 10),
+			parseInt(parts.find(p => p.type === 'hour').value, 10),
+			parseInt(parts.find(p => p.type === 'minute').value, 10),
+			parseInt(parts.find(p => p.type === 'second').value, 10)
+		];
+		// Get the UTC timestamp for the same local time in the target zone
+		const tzUTC = Date.UTC(year, month - 1, day, hour, minute, second);
+		// Remove msecs from date
+		const dateRounded = Math.floor(date.getTime() / 1000) * 1000;
+
+		return (tzUTC - dateRounded);
+	} catch (e) {
+		Foxtrick.log(`Error calculating time offset for: ${timezone}`, e);
+		return null;
+	}
+};
+
+/**
+ * Map a Windows time zone string to its IANA time zone equivalent.
+ *
+ * @param {string} tzString - Windows time zone string (e.g. 'Pacific Standard Time').
+ * @returns {string|undefined} The corresponding IANA time zone string, or undefined if not found.
+ */
+Foxtrick.util.time.winTztoIana = function(tzString) {
+	// Windows to IANA time zone mapping (common subset)
+	const windowsToIana = {
+		'Dateline Standard Time': 'Etc/GMT+12',
+		'UTC-11': 'Etc/GMT+11',
+		'Aleutian Standard Time': 'America/Adak',
+		'Hawaiian Standard Time': 'Pacific/Honolulu',
+		'Marquesas Standard Time': 'Pacific/Marquesas',
+		'Alaskan Standard Time': 'America/Anchorage',
+		'UTC-09': 'Etc/GMT+9',
+		'Pacific Standard Time (Mexico)': 'America/Tijuana',
+		'UTC-08': 'Etc/GMT+8',
+		'Pacific Standard Time': 'America/Los_Angeles',
+		'US Mountain Standard Time': 'America/Phoenix',
+		'Mountain Standard Time (Mexico)': 'America/Chihuahua',
+		'Mountain Standard Time': 'America/Denver',
+		'Yukon Standard Time': 'America/Whitehorse',
+		'Central America Standard Time': 'America/Guatemala',
+		'Central Standard Time': 'America/Chicago',
+		'Easter Island Standard Time': 'Pacific/Easter',
+		'Central Standard Time (Mexico)': 'America/Mexico_City',
+		'Canada Central Standard Time': 'America/Regina',
+		'SA Pacific Standard Time': 'America/Bogota',
+		'Eastern Standard Time (Mexico)': 'America/Cancun',
+		'Eastern Standard Time': 'America/New_York',
+		'Haiti Standard Time': 'America/Port-au-Prince',
+		'Cuba Standard Time': 'America/Havana',
+		'US Eastern Standard Time': 'America/Indianapolis',
+		'Turks And Caicos Standard Time': 'America/Grand_Turk',
+		'Atlantic Standard Time': 'America/Halifax',
+		'Venezuela Standard Time': 'America/Caracas',
+		'Central Brazilian Standard Time': 'America/Cuiaba',
+		'SA Western Standard Time': 'America/La_Paz',
+		'Pacific SA Standard Time': 'America/Santiago',
+		'Newfoundland Standard Time': 'America/St_Johns',
+		'Tocantins Standard Time': 'America/Araguaina',
+		'Paraguay Standard Time': 'America/Asuncion',
+		'E. South America Standard Time': 'America/Sao_Paulo',
+		'SA Eastern Standard Time': 'America/Cayenne',
+		'Argentina Standard Time': 'America/Buenos_Aires',
+		'Montevideo Standard Time': 'America/Montevideo',
+		'Magallanes Standard Time': 'America/Punta_Arenas',
+		'Saint Pierre Standard Time': 'America/Miquelon',
+		'Bahia Standard Time': 'America/Bahia',
+		'UTC-02': 'Etc/GMT+2',
+		'Greenland Standard Time': 'America/Nuuk',
+		'Mid-Atlantic Standard Time': 'Etc/GMT+2', // ??
+		'Azores Standard Time': 'Atlantic/Azores',
+		'Cape Verde Standard Time': 'Atlantic/Cape_Verde',
+		'UTC': 'Etc/UTC',
+		'GMT Standard Time': 'Europe/London',
+		'Greenwich Standard Time': 'Atlantic/Reykjavik',
+		'Sao Tome Standard Time': 'Africa/Sao_Tome',
+		'Morocco Standard Time': 'Africa/Casablanca',
+		'W. Europe Standard Time': 'Europe/Berlin',
+		'Central Europe Standard Time': 'Europe/Budapest',
+		'Romance Standard Time': 'Europe/Paris',
+		'Central European Standard Time': 'Europe/Warsaw',
+		'W. Central Africa Standard Time': 'Africa/Lagos',
+		'GTB Standard Time': 'Europe/Bucharest',
+		'Middle East Standard Time': 'Asia/Beirut',
+		'Egypt Standard Time': 'Africa/Cairo',
+		'E. Europe Standard Time': 'Europe/Chisinau',
+		'West Bank Standard Time': 'Asia/Hebron',
+		'South Africa Standard Time': 'Africa/Johannesburg',
+		'FLE Standard Time': 'Europe/Kiev',
+		'Israel Standard Time': 'Asia/Jerusalem',
+		'South Sudan Standard Time': 'Africa/Juba',
+		'Kaliningrad Standard Time': 'Europe/Kaliningrad',
+		'Sudan Standard Time': 'Africa/Khartoum',
+		'Libya Standard Time': 'Africa/Tripoli',
+		'Namibia Standard Time': 'Africa/Windhoek',
+		'Jordan Standard Time': 'Asia/Amman',
+		'Arabic Standard Time': 'Asia/Baghdad',
+		'Syria Standard Time': 'Asia/Damascus',
+		'Turkey Standard Time': 'Europe/Istanbul',
+		'Arab Standard Time': 'Asia/Riyadh',
+		'Belarus Standard Time': 'Europe/Minsk',
+		'Russian Standard Time': 'Europe/Moscow',
+		'E. Africa Standard Time': 'Africa/Nairobi',
+		'Volgograd Standard Time': 'Europe/Volgograd',
+		'Iran Standard Time': 'Asia/Tehran',
+		'Arabian Standard Time': 'Asia/Dubai',
+		'Astrakhan Standard Time': 'Europe/Astrakhan',
+		'Azerbaijan Standard Time': 'Asia/Baku',
+		'Russia Time Zone 3': 'Europe/Samara',
+		'Mauritius Standard Time': 'Indian/Mauritius',
+		'Saratov Standard Time': 'Europe/Saratov',
+		'Georgian Standard Time': 'Asia/Tbilisi',
+		'Caucasus Standard Time': 'Asia/Yerevan',
+		'Afghanistan Standard Time': 'Asia/Kabul',
+		'West Asia Standard Time': 'Asia/Tashkent',
+		'Qyzylorda Standard Time': 'Asia/Qyzylorda',
+		'Ekaterinburg Standard Time': 'Asia/Yekaterinburg',
+		'Pakistan Standard Time': 'Asia/Karachi',
+		'India Standard Time': 'Asia/Kolkata',
+		'Sri Lanka Standard Time': 'Asia/Colombo',
+		'Nepal Standard Time': 'Asia/Kathmandu',
+		'Central Asia Standard Time': 'Asia/Almaty',
+		'Bangladesh Standard Time': 'Asia/Dhaka',
+		'Omsk Standard Time': 'Asia/Omsk',
+		'Myanmar Standard Time': 'Asia/Yangon',
+		'SE Asia Standard Time': 'Asia/Bangkok',
+		'Altai Standard Time': 'Asia/Barnaul',
+		'W. Mongolia Standard Time': 'Asia/Hovd',
+		'North Asia Standard Time': 'Asia/Krasnoyarsk',
+		'N. Central Asia Standard Time': 'Asia/Novosibirsk',
+		'Tomsk Standard Time': 'Asia/Tomsk',
+		'China Standard Time': 'Asia/Shanghai',
+		'North Asia East Standard Time': 'Asia/Irkutsk',
+		'Singapore Standard Time': 'Asia/Singapore',
+		'W. Australia Standard Time': 'Australia/Perth',
+		'Taipei Standard Time': 'Asia/Taipei',
+		'Ulaanbaatar Standard Time': 'Asia/Ulaanbaatar',
+		'Aus Central W. Standard Time': 'Australia/Eucla',
+		'Transbaikal Standard Time': 'Asia/Chita',
+		'Tokyo Standard Time': 'Asia/Tokyo',
+		'North Korea Standard Time': 'Asia/Pyongyang',
+		'Korea Standard Time': 'Asia/Seoul',
+		'Yakutsk Standard Time': 'Asia/Yakutsk',
+		'Cen. Australia Standard Time': 'Australia/Adelaide',
+		'AUS Central Standard Time': 'Australia/Darwin',
+		'E. Australia Standard Time': 'Australia/Brisbane',
+		'AUS Eastern Standard Time': 'Australia/Sydney',
+		'West Pacific Standard Time': 'Pacific/Port_Moresby',
+		'Tasmania Standard Time': 'Australia/Hobart',
+		'Vladivostok Standard Time': 'Asia/Vladivostok',
+		'Lord Howe Standard Time': 'Australia/Lord_Howe',
+		'Bougainville Standard Time': 'Pacific/Bougainville',
+		'Russia Time Zone 10': 'Asia/Srednekolymsk',
+		'Magadan Standard Time': 'Asia/Magadan',
+		'Norfolk Standard Time': 'Pacific/Norfolk',
+		'Sakhalin Standard Time': 'Asia/Sakhalin',
+		'Central Pacific Standard Time': 'Pacific/Guadalcanal',
+		'Russia Time Zone 11': 'Asia/Kamchatka',
+		'New Zealand Standard Time': 'Pacific/Auckland',
+		'UTC+12': 'Etc/GMT-12',
+		'Fiji Standard Time': 'Pacific/Fiji',
+		'Kamchatka Standard Time': 'Asia/Kamchatka',
+		'Chatham Islands Standard Time': 'Pacific/Chatham',
+		'UTC+13': 'Etc/GMT-13',
+		'Tonga Standard Time': 'Pacific/Tongatapu',
+		'Samoa Standard Time': 'Pacific/Apia',
+		'Line Islands Standard Time': 'Pacific/Kiritimati',
+	};
+	return windowsToIana[tzString];
 };
 
 /**
