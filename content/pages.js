@@ -98,6 +98,7 @@ Foxtrick.htPages = {
 	'allPlayers'                : '/Club/Players/(Default.aspx|?|$)|' +
 	                              '/Club/Players/(Default.Classic.aspx|?|$)|' +
 	                              '/Club/Players/KeyPlayers(.|.Classic.)aspx|' +
+	                              '/Club/NationalTeam/NTPlayers(.|.Classic.)aspx|' +
 	                              '/Club/Players/Oldies(.|.Classic.)aspx|' +
 	                              '/Club/Players/Coaches(.|.Classic.)aspx',
 
@@ -154,8 +155,7 @@ Foxtrick.htPages = {
 	'newsLetter'                : '/Community/Federations/SendMessage.aspx',
 	'mailNewsLetter'            : '/MyHattrick/Inbox/(Default.aspx?|?)actionType=newsLetter',
 	'ntNewsLetter'              : '/Club/NationalTeam/NTNotice.aspx',
-	'national'                  : '/Club/NationalTeam/NationalTeam.aspx|' +
-	                              '/Club/NationalTeam/NTPlayers(.|.Classic.)aspx',
+	'national'                  : '/Club/NationalTeam/NationalTeam.aspx',
 	'guestbook'                 : '/Club/Manager/Guestbook.aspx',
 	'announcementsView'         : '/Club/Announcements/(Default.aspx?|?)',
 	'announcementsWrite'        : '/Club/Announcements/(New|Edit).aspx',
