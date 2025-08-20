@@ -341,23 +341,7 @@
 		},
 		"trackerplayerlink": {
 			"url": "https://hattrickportal.online/Tracker/Player.aspx?playerID=[playerid]"
-		},
-		"allow": [
-			"OR",
-			[
-				"EQUAL",
-				"ownteamid",
-				"teamid"
-			],
-			[
-				"EXISTS",
-				"leagueid"
-			],
-			[
-				"EXISTS",
-				"playerid"
-			]
-		]
+		}
 	},
 	"hattrick-youthclub": {
 		"youthlink": {
