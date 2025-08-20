@@ -18,22 +18,34 @@ Foxtrick.modules['LiveAlert'] = {
 	store: {},
 
 	run: function(doc) {
-		let isNewLive = Foxtrick.Pages.Match.isNewLive(doc);
-		let results = isNewLive ?
-			doc.querySelector('#ngLive .ht-tabs') :
-			Foxtrick.getMBElement(doc, 'UpdatePanelPopupMessages');
-
-		if (!results)
+		let bodyDiv = doc.querySelector('#mainBody');
+		if (!bodyDiv)
 			return;
 
-		let opts = { childList: true, characterData: true, subtree: true };
-		Foxtrick.onChange(results, this.runTabs.bind(this), opts);
+		let pageLoadListener = function(doc) {
+			let isNewLive = Foxtrick.Pages.Match.isNewLive(doc);
 
-		if (!isNewLive)
-			return;
+			let results = isNewLive ?
+				doc.querySelector('#ngLive .ht-tabs') :
+				Foxtrick.getMBElement(doc, 'UpdatePanelPopupMessages');
 
-		// call runTabs after page load to set initial stored values for scores
-		this.runTabs(doc, results);
+			if (results) {
+				let opts = { childList: true, characterData: true, subtree: true };
+				Foxtrick.onChange(results, Foxtrick.modules.LiveAlert.runTabs, opts);
+
+				if (!isNewLive)
+					return;
+
+				// call runTabs after page load to set initial stored values for scores
+				Foxtrick.modules.LiveAlert.runTabs(doc, results);
+
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		Foxtrick.onChange(bodyDiv, pageLoadListener, { childList: true, subtree: true });
 
 		/*
 		 * The score tabs in the Live scores banner now update immediately,
@@ -144,13 +156,13 @@ Foxtrick.modules['LiveAlert'] = {
 			if (!tab.childElementCount)
 				continue;
 
-			var score = this.getScoreFromTab(tab);
+			var score = Foxtrick.modules.LiveAlert.getScoreFromTab(tab);
 			if (score === null)
 				continue;
 
-			var teams = this.getTeamsFromTab(tab);
+			var teams = Foxtrick.modules.LiveAlert.getTeamsFromTab(tab);
 
-			this.alert(doc, teams, score);
+			Foxtrick.modules.LiveAlert.alert(doc, teams, score);
 		}
 	},
 
