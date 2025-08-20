@@ -127,11 +127,20 @@ Foxtrick.modules.MatchOrderNew = {
 			};
 		})();
 
-		let wizard = doc.querySelector('.ht-tabs-wizard');
-		if (!wizard)
+		let ngContainer = doc.querySelector('ng-app');
+		if (!ngContainer)
 			return;
 
-		Foxtrick.onClick(wizard, addUpdateListener);
-		addUpdateListener();
+		let pageLoadListener = function(doc) {
+			let wizard = doc.querySelector('.ht-tabs-wizard');
+			if (!wizard)
+				return false;
+
+			Foxtrick.onClick(wizard, addUpdateListener);
+			addUpdateListener();
+			return true;
+		};
+
+		Foxtrick.onChange(ngContainer, pageLoadListener, { childList: true, subtree: true });
 	},
 };
