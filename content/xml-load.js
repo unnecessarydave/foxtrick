@@ -29,7 +29,7 @@ Foxtrick.XMLData = {
 
 	/** @type {Partial<WorldDetailsSchema>} */
 	worldDetailsJSON: {},
-	
+
 	/** @type {Partial<NationalTeamsSchema>} */
 	nationalTeamsJSON: {},
 
@@ -37,16 +37,16 @@ Foxtrick.XMLData = {
 	 * @param {boolean} _ reInit
 	 */
 	/* eslint-disable-next-line no-unused-vars */
-	init: function(_) {
+	init: async function(_) {
 		var module = this;
 
-		var currency = Foxtrick.util.load.sync(Foxtrick.InternalPath + 'data/htcurrency.json');
+		var currency = await Foxtrick.util.load.internal(Foxtrick.InternalPath + 'data/htcurrency.json');
 		module.htCurrencyJSON = JSON.parse(currency);
-		var about = Foxtrick.util.load.sync(Foxtrick.InternalPath + 'data/foxtrick_about.json');
+		var about = await Foxtrick.util.load.internal(Foxtrick.InternalPath + 'data/foxtrick_about.json');
 		module.aboutJSON = JSON.parse(about);
-		var world = Foxtrick.util.load.sync(Foxtrick.InternalPath + 'data/worlddetails.json');
+		var world = await Foxtrick.util.load.internal(Foxtrick.InternalPath + 'data/worlddetails.json');
 		module.worldDetailsJSON = JSON.parse(world);
-		var nationalTeams = Foxtrick.util.load.sync(Foxtrick.InternalPath + 'data/nationalteams.json');
+		var nationalTeams = await Foxtrick.util.load.internal(Foxtrick.InternalPath + 'data/nationalteams.json');
 		module.nationalTeamsJSON = JSON.parse(nationalTeams);
 
 		if (!module.worldDetailsJSON) {

@@ -9,6 +9,7 @@
 
 'use strict';
 
+//@ts-expect-error
 if (!this.Foxtrick)
 	var Foxtrick = {};
 
@@ -33,7 +34,8 @@ Foxtrick.loader.background.contentRequestsListener = function(request, sender, s
 		let reqHandlers = Foxtrick.loader.background.requests;
 		let handler = reqHandlers[request.req];
 
-		return handler.call(reqHandlers, request, sender, sendResponse) || false;
+		if (handler)
+			return handler.call(reqHandlers, request, sender, sendResponse) || false;
 	}
 	catch (e) {
 		Foxtrick.log('Foxtrick - background onRequest error:', request.req, e);
@@ -54,7 +56,7 @@ Foxtrick.loader.background.browserUnload = function() {
 
 
 // background script starter load function
-Foxtrick.loader.background.browserLoad = function() {
+Foxtrick.loader.background.browserLoad = async function() {
 	try {
 
 		Foxtrick.log('Foxtrick.loader.background.browserLoad');
@@ -65,9 +67,9 @@ Foxtrick.loader.background.browserLoad = function() {
 		/** @type {Record<string, string>} */
 		var htLanguagesJSONText;
 
-		let updateResources = function(reInit) {
+		let updateResources = async function(reInit) {
 			// init resources
-			Foxtrick.entry.init(reInit);
+			await Foxtrick.entry.init(reInit);
 
 			// prepare resources for later transmission to content script
 			currencyJSON = JSON.stringify(Foxtrick.XMLData.htCurrencyJSON);
@@ -79,12 +81,12 @@ Foxtrick.loader.background.browserLoad = function() {
 			for (let [lang, obj] of Object.entries(Foxtrick.L10n.htLanguagesJSON))
 				htLanguagesJSONText[lang] = JSON.stringify(obj);
 
-			cssTextCollection = Foxtrick.util.css.getCssTextCollection();
+			cssTextCollection = await Foxtrick.util.css.getCssTextCollection();
 
 			Foxtrick.Prefs.deleteValue('preferences.updated');
 		};
 
-		updateResources();
+		await updateResources();
 		Foxtrick.Prefs.setBool('featureHighlight', false);
 		Foxtrick.Prefs.setBool('translationKeys', false);
 
@@ -120,41 +122,54 @@ Foxtrick.loader.background.browserLoad = function() {
 				Foxtrick.Prefs._prefs_gecko.getBoolPref('preferences.updated')) {
 
 				// reInit
-				updateResources(true);
+				updateResources(true).then(() => {
+					sendResponse(buildResource());
+				});
+				return true;
+			} else {
+				sendResponse(buildResource());
+				return false;
 			}
 
-			let [prefsChromeDefault, prefsChromeUser] = Foxtrick.Prefs.clone();
+			/**
+			 * Build the resource object to send to the content script.
+			 *
+			 * @return {FT.ResourceDict} Resource dictionary for content script
+			 */
+			function buildResource() {
+				let [prefsChromeDefault, prefsChromeUser] = Foxtrick.Prefs.clone();
 
-			/** @type {FT.ResourceDict} */
-			let resource = {
-				prefsChromeUser,
-				prefsChromeDefault,
+				/** @type {FT.ResourceDict} */
+				let resource = {
+					prefsChromeUser,
+					prefsChromeDefault,
 
-				htLangJSON: htLanguagesJSONText,
+					htLangJSON: htLanguagesJSONText,
 
-				propertiesDefault: Foxtrick.L10n.propertiesDefault,
-				properties: Foxtrick.L10n.properties,
-				screenshotsDefault: Foxtrick.L10n.screenshotsDefault,
-				screenshots: Foxtrick.L10n.screenshots,
+					propertiesDefault: Foxtrick.L10n.propertiesDefault,
+					properties: Foxtrick.L10n.properties,
+					screenshotsDefault: Foxtrick.L10n.screenshotsDefault,
+					screenshots: Foxtrick.L10n.screenshots,
 
-				plForm: Foxtrick.L10n.plForm,
-				plFormDefault: Foxtrick.L10n.plFormDefault,
+					plForm: Foxtrick.L10n.plForm,
+					plFormDefault: Foxtrick.L10n.plFormDefault,
 
-				currencyJSON,
-				aboutJSON,
-				worldDetailsJSON,
-				nationalTeamsJSON,
+					currencyJSON,
+					aboutJSON,
+					worldDetailsJSON,
+					nationalTeamsJSON,
 
-				league: Foxtrick.XMLData.League,
-				countryToLeague: Foxtrick.XMLData.countryToLeague,
-			};
+					league: Foxtrick.XMLData.League,
+					countryToLeague: Foxtrick.XMLData.countryToLeague,
+				};
 
-			if (request.req == 'pageLoad') {
-				Foxtrick.modules.UI.update(sender.tab);
-				resource.cssText = cssTextCollection;
+				if (request.req == 'pageLoad') {
+					Foxtrick.modules.UI.update(sender.tab);
+					resource.cssText = cssTextCollection;
+				}
+
+				return resource;
 			}
-
-			sendResponse(resource);
 		};
 
 		// Fennec tab child processes
@@ -201,8 +216,9 @@ Foxtrick.loader.background.browserLoad = function() {
 		// from misc.js. getting files, convert text
 		this.requests.getCss = function({ files }, sender, sendResponse) {
 			// @param files - an array of files to be loaded into string
-			let cssText = Foxtrick.util.css.getCssFileArrayToString(files);
-			sendResponse({ cssText });
+			Foxtrick.util.css.getCssFileArrayToString(files).then(cssText => {
+				sendResponse({ cssText })});
+			return true; //async
 		};
 
 		// TODO
@@ -251,40 +267,44 @@ Foxtrick.loader.background.browserLoad = function() {
 			Foxtrick.playSound(url);
 		};
 
-		// from misc.js: tabs
-		this.requests.newTab = function({ url }) {
-			// @param url - the URL of new tab to create
-			Foxtrick.SB.tabs.create({ url });
-		};
-		this.requests.reuseTab = function({ url }) { // eslint-disable-line
-			// @param url - the URL of new tab to create
-			// if (Foxtrick.platform == 'Android') {
-			// 	// TODO
-			// 	// XUL Code:
-			// 	for (let [idx, browser] of Browser.browsers.entries()) {
-			// 		if (sender.tab.id == browser.tid) {
-			// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
-			// 			browser.loadURI(url);
-			// 		}
-			// 	}
-			// }
-		};
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			// from misc.js: tabs
+			this.requests.newTab = function({ url }) {
+				// @param url - the URL of new tab to create
+				Foxtrick.SB.tabs.create({ url });
+			};
+			this.requests.reuseTab = function({ url }) { // eslint-disable-line
+				// @param url - the URL of new tab to create
+				// if (Foxtrick.platform == 'Android') {
+				// 	// TODO
+				// 	// XUL Code:
+				// 	for (let [idx, browser] of Browser.browsers.entries()) {
+				// 		if (sender.tab.id == browser.tid) {
+				// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
+				// 			browser.loadURI(url);
+				// 		}
+				// 	}
+				// }
+			};
+		}
 
 		// from notify.js
-		this.requests.notify = function(request, sender, sendResponse) {
-			Foxtrick.util.notify.create(request.msg, sender, request)
-				.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
-				.catch(Foxtrick.catch(sender));
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			this.requests.notify = function(request, sender, sendResponse) {
+				Foxtrick.util.notify.create(request.msg, sender, request)
+					.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
+				return true; // async
+			};
+		}
 
 		// from context-menu.js: dummy. request handled in there
 		this.requests.updateContextMenu = function() {};
 
 		// from load.js
 		this.requests.fetch = function({ url, params }, sender, sendResponse) {
-			// @param url - the URL of resource to fetch with window.XMLHttpRequest
+			// @param url - the URL of resource to fetch
 			// @param params - params != null makes it and used for a POST request
 			// @callback_param data - response text
 			// @callback_param status - HTTP status of request
@@ -359,21 +379,22 @@ Foxtrick.loader.background.browserLoad = function() {
 		this.requests.cacheClear = () => Foxtrick.cache.clear();
 
 		// from misc.js
-		this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
-			Foxtrick.cookies.get(key, name) // never rejects
-				.then(sendResponse)
-				.catch(Foxtrick.catch(sender));
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
+				Foxtrick.cookies.get(key, name) // never rejects
+					.then(sendResponse)
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
-		this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
-			Foxtrick.cookies.set(key, value, name) // never rejects
-				.then(sendResponse)
-				.catch(Foxtrick.catch(sender));
+				return true; // async
+			};
+			this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
+				Foxtrick.cookies.set(key, value, name) // never rejects
+					.then(sendResponse)
+					.catch(Foxtrick.catch(sender));
 
-			return true; // async
-		};
-
+				return true; // async
+			};
+		}
 		// from permissions.js
 		this.requests.containsPermission = ({ types }, sender, sendResponse) => {
 			// @param origin - permission origin to check

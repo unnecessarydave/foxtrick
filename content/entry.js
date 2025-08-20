@@ -116,6 +116,7 @@ Foxtrick.entry.contentScriptInit = function(data) {
  * (background side for sandboxed)
  *
  * @param  {boolean} reInit
+ * @return {Promise<void>} Resolves when all core modules and active modules are initialized.
  */
 Foxtrick.entry.init = function(reInit) {
 	// Foxtrick.log('Initializing Foxtrick... reInit:', reInit);
@@ -126,21 +127,21 @@ Foxtrick.entry.init = function(reInit) {
 
 	/** @type {FTBackgroundModuleMixin[]} */
 	let coreModules = [Foxtrick.Prefs, Foxtrick.L10n, Foxtrick.XMLData];
-	for (let core of coreModules) {
-		if (typeof core.init === 'function')
-			core.init(reInit);
-	}
-
-	let modules = Foxtrick.util.modules.getActive();
-
-	Foxtrick.entry.niceRun(modules, function(m) {
-		if (typeof m.init == 'function')
-			return () => m.init(reInit);
-
-		return null;
+	let corePromises = coreModules.map(core => {
+			return core.init(reInit);
 	});
 
-	// Foxtrick.log('Foxtrick initialization completed.');
+	return Promise.all(corePromises).then(() => {
+		let modules = Foxtrick.util.modules.getActive();
+
+		Foxtrick.entry.niceRun(modules, function(m) {
+			if (typeof m.init == 'function')
+				return () => m.init(reInit);
+
+			return null;
+		});
+		// Foxtrick.log('Foxtrick initialization completed.');
+	});
 };
 
 /**

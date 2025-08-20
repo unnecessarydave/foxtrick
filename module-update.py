@@ -19,6 +19,16 @@ targets = [
         "suffix": "\",\n"
     },
     {
+        "file": "manifest-mv2.json",
+        "prefix": "\t\t\t\"content/",
+        "suffix": "\",\n"
+    },
+    {
+        "file": "manifest-mv3.json",
+        "prefix": "\t\t\t\"content/",
+        "suffix": "\",\n"
+    },
+    {
         "file": "Info.plist",
         "prefix": "\t\t\t\t<string>content/",
         "suffix": "</string>\n"
@@ -237,7 +247,7 @@ def rm_util(args):
             continue
 
         # open the file and copy the content to a list variable
-        with codecs.open(pathfile, mode='w', encoding='utf-8') as fh:
+        with codecs.open(pathfile, mode='r', encoding='utf-8') as fh:
             # keep \n
             lines = fh.read().splitlines(True)
 

@@ -1,73 +1,69 @@
 APP_NAME = foxtrick
 
-# branch type (used for build logic):
-# nightly, release, light, hosting
-DIST_TYPE = nightly
+# distribution type (used for build logic):
+# hosted - direct download from foxtrick web server
+# repo - download from mozilla or chrome extension repo
+DIST_TYPE = hosted
 
 # branch name (used in prefs etc):
-# nightly, beta, release, light, hosted
-# nightly is unused ATM
-# hosted is used by CWS only ATM
-BRANCH = nightly
-
-MAJOR_VERSION := $(shell ./version.sh)
-REV_VERSION := $(shell git describe --long | sed -E 's/([^-]+)-g.*/\1/;s/-/./g')
-HASH := $(shell git rev-parse --short HEAD)
-
-# URL prefix of update manifest
-UPDATE_URL = https://www.foxtrick.org/nightly
-
-BUILD_DIR = build
-SAFARI_TARGET = foxtrick.safariextension
-SAFARI_BUILD_DIR = build/$(SAFARI_TARGET)
-
-FF_ADDON_ID = '{9d1f059c-cada-4111-9696-41a62d64e3ba}'
-
-UNSIGNED_CHROME = false
-ifeq ($(DIST_TYPE),$(filter $(DIST_TYPE),nightly hosting)) #OR
-	UNSIGNED_CHROME = true
-endif
-
-MODULES = modules
-IGNORED_MODULES = ignored-modules-$(DIST_TYPE)
-
-ifeq ($(VERSION),)
-	ifeq ($(DIST_TYPE),nightly)
-		VERSION = $(REV_VERSION)
-		BRANCH_FULL = $(BRANCH)-$(HASH)
-	else
-		VERSION = $(MAJOR_VERSION)
-		BRANCH_FULL = $(BRANCH)
-	endif
-endif
+# dev, release, prerelease
+BRANCH = dev
 
 ZIP = zip -q
 
-# cf safari: xar needs to have sign capabilities ie xar --help shows --sign as option.
-# sudo apt-get install gcc libssl-dev libxml2-dev make openssl lftp autoconf build-essential
-# git clone git://github.com/mackyle/xar
-# cd xar/xar
-# ./autogen.sh --noconfigure
-# ./configure
-# make
-# sudo make install
-# see http://code.google.com/p/xar/issues/detail?id=76 for an howto
-XAR = xar
+VERSION := $(shell git describe --long | sed -E 's/([^-]+)-g.*/\1/;s/-/./g')
+HASH := $(shell git rev-parse --short HEAD)
 
-ROOT_FOLDERS_CHROME = defaults/ skin/
-ROOT_FOLDERS_SAFARI = defaults/ skin/
+# URL prefix of update manifest
+UPDATE_URL = https://foxtrick-ng.github.io/download
 
-ROOT_FILES_CHROME = \
+FF_ADDON_ID = '{bcfe9090-dfc6-41d6-a49c-127432ec04ea}'
+ifeq ($(BRANCH),prerelease)
+	FF_ADDON_ID = '{4b64746e-3984-4364-a7de-cd462be9e844}'
+endif
+BRANCH_FULL = $(BRANCH)-$(HASH)
+
+MODULES = modules
+#IGNORED_MODULES = ignored-modules-$(DIST_TYPE)
+# for the moment we use this
+IGNORED_MODULES = ignored-modules-$(BRANCH)
+
+#
+# files section
+#
+
+ifeq ($(BRANCH),dev)
+BUILD_ROOT = build-dev
+else
+BUILD_ROOT = build
+endif
+chrome _ : BUILD_DIR = $(BUILD_ROOT)/chrome
+clean-chrome _ : BUILD_DIR = $(BUILD_ROOT)/chrome
+firefox _ : BUILD_DIR = $(BUILD_ROOT)/firefox
+clean-firefox _ : BUILD_DIR = $(BUILD_ROOT)/firefox
+
+MANIFEST_CHROME = manifest-mv3.json
+MANIFEST_FIREFOX = manifest-mv2.json
+
+ROOT_FILES = \
 	COPYING \
 	HACKING.md \
-	manifest.json \
 
-ROOT_FILES_SAFARI = \
-	COPYING \
-	HACKING.md \
-	Info.plist \
-	Settings.plist \
-	skin/icon.png \
+ifeq ($(BRANCH),dev)
+ROOT_FOLDERS= \
+	defaults/ \
+	skin/ \
+	res/
+else
+ROOT_FOLDERS= \
+	defaults/ \
+	skin/
+endif
+
+ROOT_FOLDERS_CHROME = $(ROOT_FOLDERS) \
+	background/
+
+ROOT_FOLDERS_FIREFOX = $(ROOT_FOLDERS) \
 
 SCRIPT_FOLDERS = \
 	api/ \
@@ -100,8 +96,6 @@ CONTENT_FILES = \
 	redirections.js \
 	ui.js \
 	xml-load.js \
-
-CONTENT_FILES_CHROME = $(CONTENT_FILES) \
 	background.html \
 	background.js \
 	loader-chrome.js \
@@ -110,194 +104,193 @@ CONTENT_FILES_CHROME = $(CONTENT_FILES) \
 	preferences.html \
 	preferences.js \
 
-CONTENT_FILES_SAFARI = $(CONTENT_FILES) \
-	background.html \
-	background.js \
-	loader-chrome.js \
-	preferences.html \
-	preferences.js \
+CONTENT_FILES_CHROME = $(CONTENT_FILES) \
 
+CONTENT_FILES_FIREFOX = $(CONTENT_FILES) \
 
-all: webext-gecko chrome
+#
+# target section
+#
 
-webext-gecko:
+all: firefox chrome
+
+firefox:
 	#
-	############ make firefox-webext ############
+	############ make firefox ############
 	#
-	make clean-firefox clean-build
-	mkdir $(BUILD_DIR)
-	# copy root files
-	cp -r $(ROOT_FILES_CHROME) $(ROOT_FOLDERS_CHROME) $(BUILD_DIR)
-	# content/
-	mkdir $(BUILD_DIR)/content
-	cd content/; \
-	cp -r $(SCRIPT_FOLDERS) $(RESOURCES) $(CONTENT_FILES_CHROME) \
-		../$(BUILD_DIR)/content
-	# modules
-	cd content/; \
-	cat ../$(MODULES) | while read m; do cp --parents "$$m" ../$(BUILD_DIR)/content; done;
-	# remove ignore modules from files
-	python module-update.py build -s $(MODULES) -e $(IGNORED_MODULES) -d $(BUILD_DIR)/
-	# set branch, name and id
-	cd $(BUILD_DIR); \
-	sed -i -r "/extensions\\.foxtrick\\.prefs\\.branch/s|\"dev\"|\"$(BRANCH_FULL) webext\"|" defaults/preferences/foxtrick.js; \
-	sed -i -r 's|("id": ").+(")|\1$(FF_ADDON_ID)\2|' manifest.json; \
-	sed -i -r 's|("name": ").+(")|\1Foxtrick WebExt ($(BRANCH))\2|' manifest.json
+	# $(VERSION) $(BRANCH)
 
-# modify according to dist type
-ifeq ($(DIST_TYPE),nightly)
-	# add minor version
-	cd $(BUILD_DIR); \
-	../version.sh $(VERSION)
+	# create build dir
+ifeq ($(BRANCH),dev)
+	[ -d $(BUILD_DIR) ] || mkdir -p $(BUILD_DIR)
+else
+	make clean-firefox
+	mkdir -p $(BUILD_DIR)
 endif
 
-ifeq ($(DIST_TYPE),hosting)
+	# copy root files
+	cp -ur $(ROOT_FILES) $(ROOT_FOLDERS_FIREFOX) $(BUILD_DIR)
+
+	# copy manifest
+	# - note: this will not propagate manifest changes to build-dev/firefox
+	# - do make clean-firefox and restart mozilla web-ext
+	[ -f $(BUILD_DIR)/manifest.json ] || cp $(MANIFEST_FIREFOX) $(BUILD_DIR)/manifest.json
+
+	# content/
+	[ -d $(BUILD_DIR)/content ] || mkdir $(BUILD_DIR)/content
+	cd content/; \
+	cp -ur $(SCRIPT_FOLDERS) $(RESOURCES) $(CONTENT_FILES_FIREFOX) \
+		../$(BUILD_DIR)/content
+
+	# modules
+	cd content/; \
+	cat ../$(MODULES) | while read m; do cp --parents -u "$$m" ../$(BUILD_DIR)/content; done;
+
+	# remove ignore modules from files
+	python module-update.py build -s $(MODULES) -e $(IGNORED_MODULES) -d $(BUILD_DIR)/
+
+ifneq ($(BRANCH),dev)
+	#set branch
+	cd $(BUILD_DIR); \
+	sed -i -r "/extensions\\.foxtrick\\.prefs\\.branch/s|\"dev\"|\"$(BRANCH_FULL) firefox\"|" defaults/preferences/foxtrick.js;
+endif
+
+	# set id and version
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("id": ").+(")|\1$(FF_ADDON_ID)\2|' manifest.json; \
+	sed -i -r 's|("version": ").+(")|\1$(VERSION)\2|' manifest.json; \
+	sed -i -r "/extensions\\.foxtrick\\.prefs\\.version/s|\"[0-9.]+\"|\"$(VERSION)\"|" defaults/preferences/foxtrick.js;
+
+	# set name
+ifeq ($(BRANCH),release)
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("name": ").+(")|\1Foxtrick (NG)\2|' manifest.json
+else
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("name": ").+(")|\1Foxtrick ($(BRANCH))\2|' manifest.json
+endif
+
+ifeq ($(DIST_TYPE),repo)
 	# remove update_url
 	cd $(BUILD_DIR); \
 	sed -i -r '/update_url/d' manifest.json
 else
 	# set update_url
 	cd $(BUILD_DIR); \
-	sed -i -r 's|("update_url": ").+(")|\1'$(UPDATE_URL)'/update.json\2|' manifest.json
+	sed -i -r 's|("update_url": ").+(")|\1'$(UPDATE_URL)'/'$(BRANCH)'/firefox/update.json\2|' manifest.json
 endif
 
-	# strip comments
-	cd $(BUILD_DIR); \
-	sed -i -r '/\/\/ <!--/d' manifest.json
 	# make android-prefs after all modifications are done
 	cd $(BUILD_DIR)/defaults/preferences; \
 	cat foxtrick.js foxtrick.android > foxtrick.android.js; \
 	rm foxtrick.android
+
+	# strip manifest comments
+	cd $(BUILD_DIR); \
+	sed -i -r '/\/\/ <!--/d' manifest.json
+
+ifeq ($(BRANCH),dev)
+
+else
 	# make xpi
 	cd $(BUILD_DIR); \
-	$(ZIP) -r ../$(APP_NAME).xpi *
+	$(ZIP) -r ../$(APP_NAME)-$(VERSION).xpi *
 	# clean up
-	make clean-build
+	make clean-firefox
+endif
+
+	#
+	# firefox build complete $(VERSION) $(BRANCH)
+	#
 
 chrome:
 	#
 	############ make chrome ############
 	#
-	make clean-chrome clean-build
-	mkdir $(BUILD_DIR)
+	# $(VERSION) $(BRANCH)
+
+ifeq ($(BRANCH),dev)
+	[ -d $(BUILD_DIR) ] || mkdir -p $(BUILD_DIR)
+else
+	make clean-chrome
+	mkdir -p $(BUILD_DIR)
+endif
+
 	# copy root files
-	cp -r $(ROOT_FILES_CHROME) $(ROOT_FOLDERS_CHROME) $(BUILD_DIR)
-	# content/
-	mkdir $(BUILD_DIR)/content
-	cd content/; \
-	cp -r $(SCRIPT_FOLDERS) $(RESOURCES) $(CONTENT_FILES_CHROME) \
-		../$(BUILD_DIR)/content
-	# modules
-	cd content/; \
-	cat ../$(MODULES) | while read m; do cp --parents "$$m" ../$(BUILD_DIR)/content; done;
-	# remove ignore modules from files
-	python module-update.py build -s $(MODULES) -e $(IGNORED_MODULES) -d $(BUILD_DIR)/
-	# set branch
-	cd $(BUILD_DIR); \
-	sed -i -r "/extensions\\.foxtrick\\.prefs\\.branch/s|\"dev\"|\"$(BRANCH_FULL) chrome\"|" defaults/preferences/foxtrick.js
-	# remove gecko info
+	cp -ur $(ROOT_FILES) $(ROOT_FOLDERS_CHROME) $(BUILD_DIR)
+
+	# copy manifest
+	cp $(MANIFEST_CHROME) $(BUILD_DIR)/manifest.json
+
+	# remove manifest gecko info
 	cd $(BUILD_DIR); \
 	sed -i '/<!-- gecko-specific -->/,/<!-- end gecko-specific -->/d' manifest.json
 
-# modify according to dist type
-ifeq ($(DIST_TYPE),nightly)
-	# add minor version and change name
+	# content/
+	[ -d $(BUILD_DIR)/content ] || mkdir $(BUILD_DIR)/content
+	cd content/; \
+	cp -ur $(SCRIPT_FOLDERS) $(RESOURCES) $(CONTENT_FILES_CHROME) \
+		../$(BUILD_DIR)/content
+
+	# modules
+	cd content/; \
+	cat ../$(MODULES) | while read m; do cp --parents -u "$$m" ../$(BUILD_DIR)/content; done;
+
+	# remove ignore modules from files
+	python module-update.py build -s $(MODULES) -e $(IGNORED_MODULES) -d $(BUILD_DIR)/
+
+ifneq ($(BRANCH),dev)
+	# set branch
 	cd $(BUILD_DIR); \
-	../version.sh $(VERSION); \
-	sed -i -r 's|("name": ").+(")|\1Foxtrick (Beta)\2|' manifest.json
-else ifeq ($(DIST_TYPE),light)
-	# change name
-	cd $(BUILD_DIR); \
-	sed -i -r 's|("name": ").+(")|\1Foxtrick (light)\2|' manifest.json
+	sed -i -r "/extensions\\.foxtrick\\.prefs\\.branch/s|\"dev\"|\"$(BRANCH_FULL) chrome\"|" defaults/preferences/foxtrick.js
 endif
 
-ifneq ($(DIST_TYPE),hosting)
+	# add version
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("version": ").+(")|\1$(VERSION)\2|' manifest.json; \
+	sed -i -r "/extensions\\.foxtrick\\.prefs\\.version/s|\"[0-9.]+\"|\"$(VERSION)\"|" defaults/preferences/foxtrick.js;
+
+	# change name
+ifeq ($(BRANCH),release)
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("name": ").+(")|\1Foxtrick (NG)\2|' manifest.json
+else
+	cd $(BUILD_DIR); \
+	sed -i -r 's|("name": ").+(")|\1Foxtrick ($(BRANCH))\2|' manifest.json
+endif
+
+	# strip manifest comments
+	cd $(BUILD_DIR); \
+	sed -i -r '/\/\/ <!--/d' manifest.json
+
+ifeq ($(DIST_TYPE),repo)
 	# make crx
 	cd $(BUILD_DIR); \
 	sed -i -r 's|("update_url": ").+(")|\1'$(UPDATE_URL)'/chrome/update.xml\2|' manifest.json; \
-	sed -i -r '/\/\/ <!--/d' manifest.json
 	./maintainer/crxmake.sh $(BUILD_DIR) maintainer/chrome.pem
 	mv $(BUILD_DIR).crx $(APP_NAME).crx
-endif
+else ifeq ($(BRANCH),dev)
 
-ifeq ($(UNSIGNED_CHROME),true)
+else
 	# make zip
 	cd $(BUILD_DIR); \
 	sed -i -r '/update_url/d' manifest.json; \
-	sed -i -r '/\/\/ <!--/d' manifest.json; \
-	$(ZIP) -r ../$(APP_NAME).zip *
-endif
+	$(ZIP) -r ../$(APP_NAME)-$(VERSION).zip *
 	# clean up
-	make clean-build
-
-safari:
-	#
-	############ make safari ############
-	#
-	make clean-safari clean-build
-	mkdir -p $(SAFARI_BUILD_DIR)
-	# copy root files
-	cp -r $(ROOT_FILES_SAFARI) $(ROOT_FOLDERS_SAFARI) $(SAFARI_BUILD_DIR)
-	# content/
-	mkdir $(SAFARI_BUILD_DIR)/content
-	cd content/; \
-	cp -r $(SCRIPT_FOLDERS) $(RESOURCES) $(CONTENT_FILES_SAFARI) \
-		../$(SAFARI_BUILD_DIR)/content
-	# modules
-	cd content/; \
-	cat ../$(MODULES) | while read m; do cp --parents "$$m" ../$(SAFARI_BUILD_DIR)/content; done;
-	# remove ignore modules from files
-	python module-update.py build -s $(MODULES) -e $(IGNORED_MODULES) -d $(SAFARI_BUILD_DIR)/
-	# set branch
-	cd $(SAFARI_BUILD_DIR); \
-	sed -i -r "/extensions\\.foxtrick\\.prefs\\.branch/s|\"dev\"|\"$(BRANCH_FULL) safari\"|" defaults/preferences/foxtrick.js
-
-# modify according to dist type
-ifeq ($(DIST_TYPE),nightly)
-	# add minor version and change name
-	cd $(SAFARI_BUILD_DIR); \
-	../../version.sh $(VERSION); \
-	sed -i -r 's/>Foxtrick</>Foxtrick (Beta)</' Info.plist
-else ifeq ($(DIST_TYPE),light)
-	# change name
-	cd $(SAFARI_BUILD_DIR); \
-	sed -i -r 's/>Foxtrick</>Foxtrick (light)</' Info.plist
+	make clean-chrome
 endif
 
-	cd $(SAFARI_BUILD_DIR); \
-	sed -i -r 's|(<string>).+(</string><!--updateurl-->)|\1'$(UPDATE_URL)'/safari/update.plist\2|' Info.plist
-	#remove comments
-	cd $(SAFARI_BUILD_DIR); \
-	sed -i -r 's|(.+)(<!.+-->)|\1|' Info.plist
-	# make safariextz
-	cd $(BUILD_DIR); \
-	$(XAR) -cf ../foxtrick.safariextz $(SAFARI_TARGET)
-	# inject signature
-	$(XAR) --sign -f foxtrick.safariextz --data-to-sign sha1-hash.dat \
-		--sig-size `: | openssl dgst -sign maintainer/safari.pem -binary | wc -c` \
-		--cert-loc maintainer/safari.der \
-		--cert-loc maintainer/safari-cert/cert01 \
-		--cert-loc maintainer/safari-cert/cert02 > xar.log
-	(echo "3021300906052B0E03021A05000414" | xxd -r -p; cat sha1-hash.dat) \
-		| openssl rsautl -sign -inkey maintainer/safari.pem > signature.dat
-	$(XAR) --inject-sig signature.dat -f foxtrick.safariextz
-	# clean up
-	make clean-build
+	#
+	# chrome build complete $(VERSION) $(BRANCH)
+	#
 
 clean-firefox:
-	rm -rf *.xpi
+	rm -rf $(BUILD_DIR)
 
 clean-chrome:
-	rm -rf *.crx
-	rm -rf *.zip
-
-clean-safari:
-	rm -rf *.safariextz
-	rm -rf xar.log
+	rm -rf $(BUILD_DIR)
 
 clean-build:
-	rm -rf $(BUILD_DIR)
-	rm -f sha1-hash.dat
-	rm -f signature.dat
+	rm -rf $(BUILD_ROOT)
 
-clean: clean-firefox clean-chrome clean-safari clean-build
+clean: clean-firefox clean-chrome clean-build
