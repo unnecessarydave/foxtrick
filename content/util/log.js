@@ -445,7 +445,13 @@ Foxtrick.log.Reporter = {
 			{ name: 'currency', prefix: 'ft', needsDoc: true,
 				getValue: () => (this._getHtTeam() && Foxtrick.Prefs) ? Foxtrick.Prefs.getString('Currency.Code.' + this._getHtTeam().teamId) : null
 			},
-			{ name: 'htLang', prefix: 'ft', needsDoc: false,
+			{ name: 'htCountry', prefix: 'ft', needsDoc: false,
+				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htCountry') : null
+			},
+			{ name: 'htDateFormat', prefix: 'ft', needsDoc: false,
+				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htDateFormat') : null
+			},
+			{ name: 'htLanguage', prefix: 'ft', needsDoc: false,
 				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htLanguage') : null
 			},
 			{ name: 'platform', prefix: 'ft', needsDoc: false,
