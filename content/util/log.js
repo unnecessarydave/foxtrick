@@ -481,6 +481,9 @@ Foxtrick.log.Reporter = {
 			{ name: 'theme', prefix: 'ht', needsDoc: true,
 				getValue: () => Foxtrick.util?.layout?.isStandard ? (Foxtrick.util.layout.isStandard(document) ? 'standard' : 'simple') : null
 			},
+			{ name: 'timezone', prefix: 'ht', needsDoc: true,
+				getValue: () => Foxtrick.util.time.getHtTimezone ? Foxtrick.util.time.getHtTimezone(document) : null
+			},
 		];
 
 		const tags = {};
