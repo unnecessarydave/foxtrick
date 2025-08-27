@@ -20,16 +20,6 @@
 	"internal": "true",
 	"list": [
 		{
-			"duty": "supporter",
-			"id": "14186219",
-			"name": "Noci_B"
-		},
-		{
-			"duty": "supporter",
-			"id": "7832203",
-			"name": "magrit"
-		},
-		{
 			"duty": "translator",
 			"id": "10038631",
 			"name": "Mohammad-SE"
@@ -798,6 +788,11 @@
 			"duty": "developer",
 			"id": "13992846",
 			"name": "UnnecessaryDave"
+		},
+		{
+			"duty": "supporter",
+			"id": "14186219",
+			"name": "Noci_B"
 		},
 		{
 			"duty": "translator",
@@ -1691,6 +1686,11 @@
 		},
 		{
 			"duty": "supporter",
+			"id": "7832203",
+			"name": "magrit"
+		},
+		{
+			"duty": "supporter",
 			"id": "7861087",
 			"name": "Benedictus_DE"
 		},
@@ -1802,7 +1802,7 @@
 		{
 			"duty": "supporter",
 			"id": "8554797",
-			"name": "Bokkolus"
+			"name": "Bokko_"
 		},
 		{
 			"duty": "supporter",
