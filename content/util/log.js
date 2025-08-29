@@ -293,10 +293,6 @@ Foxtrick.log.Reporter = {
 		const branch = this._getFtBranch();
 		const dsn = this._DSN;
 		const environment = branch === 'dev' ? 'development' : null;
-		// keepalive currently doesn't work with firefox
-		//@ts-expect-error
-		const keepalive = navigator && navigator.userAgentData ? true: false;
-
 		let release = null;
 		const version = this._getFtVersion();
 		if (version) {
@@ -320,6 +316,12 @@ Foxtrick.log.Reporter = {
 			},
 		);
 
+		// keepalive currently doesn't work with firefox
+		//@ts-expect-error
+		const keepalive = navigator && navigator.userAgentData ? true: false;
+		// content scripts send request data to background
+		let transport = Foxtrick.context === 'content' ? this._makeBackgroundTransport: sentry.makeFetchTransport;
+
 		return new sentry.BrowserClient({
 			beforeSend: (event, hint) => {
 				// Custom hint property to allow exceptions caught at the top
@@ -337,7 +339,7 @@ Foxtrick.log.Reporter = {
 			integrations,
 			release,
 			stackParser: sentry.defaultStackParser,
-			transport: sentry.makeFetchTransport,
+			transport,
 			transportOptions: {
 				fetchOptions: {
 					keepalive,
@@ -385,6 +387,49 @@ Foxtrick.log.Reporter = {
 	 */
 	_getHtTeam: function() {
 		return Foxtrick.modules?.Core?.TEAM ? Foxtrick.modules.Core.TEAM : null;
+	},
+
+	/**
+	 * Create a Sentry transport which forwards requests from a content script
+	 * to the extension background context via chrome.runtime messaging.
+	 * @param {object} options Transport options provided by Sentry (may include `url`, `headers`, and `fetchOptions`).
+	 * @returns {Function} A Sentry-compatible Transport created via `sentry.createTransport`.
+	 */
+	_makeBackgroundTransport: function(options) {
+		const sentry = Foxtrick.Sentry;
+
+		const makeRequest = function(request) {
+			return new Promise((resolve, reject) => {
+				if (!request)
+					return reject(new Error('no request'));
+
+				try {
+					// use values from the transport request, fall back to outer options
+					const url = request.url || options.url;
+					const headers = request.headers || options.headers || {};
+					const fetchOptions = request.fetchOptions || options.fetchOptions || {};
+					// send body and url to background
+					chrome.runtime.sendMessage({
+						__ft_sentry_send: true,
+						url,
+						body: request.body,
+						headers,
+						fetchOptions,
+					}, function(response) {
+						if (!response)
+							return reject(new Error('no response from background'));
+
+						if (response.error)
+							return reject(new Error(response.error));
+
+						resolve({ statusCode: response.statusCode, headers: response.headers });
+					});
+				} catch (e) {
+					reject(e);
+				}
+			});
+		}
+		return sentry.createTransport(options, makeRequest);
 	},
 
 	/**
@@ -508,6 +553,9 @@ Foxtrick.log.Reporter = {
 	 * @param {ReporterEventOptions} hint Additional Sentry hint data.
 	 */
 	reportException: function(error, hint) {
+		if (this._getFtBranch() === 'dev')
+			return; // don't report on dev branch;
+
 		if (!this._init())
 			return;
 
@@ -535,17 +583,70 @@ Foxtrick.log.Reporter = {
 	 * Send a browser session event to Sentry.
 	 */
 	sendSession: function() {
-		if (!this._init())
-			return;
-
 		if (this._getFtBranch() === 'dev')
 			return; // don't report on dev branch;
+
+		if (!this._init())
+			return;
 
 		const scope = this._scope;
 		this._setReportingData(scope);
 		scope.getClient().captureSession(scope.getSession());
 	},
 };
+
+(function() {
+	if (Foxtrick.context === 'background') {
+		chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+			if (msg && msg.__ft_sentry_send) {
+				// Reconstruct body as Uint8Array if it arrived as a plain object representing bytes.
+				let bodyToSend = msg.body;
+				try {
+					if (bodyToSend && typeof bodyToSend === 'object' &&
+							!ArrayBuffer.isView(bodyToSend) && !(bodyToSend instanceof ArrayBuffer)) {
+						const keys = Object.keys(bodyToSend);
+						const len = keys.length;
+						// safety cap (10 MiB) to avoid allocating huge blobs unexpectedly
+						const MAX_LEN = 10 * 1024 * 1024;
+						if (len > MAX_LEN) {
+							console.warn('Foxtrick Reporter: sentry message body too large, skipping reconstruction', len);
+						} else {
+							const uint8 = new Uint8Array(len);
+							for (const k of keys) {
+								const idx = Number(k);
+								const v = bodyToSend[k];
+								uint8[idx] = typeof v === 'number' ? v : Number(v) || 0;
+							}
+							bodyToSend = uint8;
+						}
+					}
+				} catch (e) { // eslint-disable-line no-unused-vars
+					// if reconstruction fails, fall back to original msg.body
+					bodyToSend = msg.body;
+				}
+
+				// Dispatch to sentry.
+				fetch(msg.url, {
+					method: 'POST',
+					body: bodyToSend,
+					headers: msg.headers,
+					...msg.fetchOptions,
+				}).then(r => {
+					sendResponse({
+						statusCode: r.status,
+						headers: {
+						'x-sentry-rate-limits': r.headers.get('X-Sentry-Rate-Limits'),
+						'retry-after': r.headers.get('Retry-After')
+						}
+					});
+				}).catch(e => {
+					sendResponse({ error: String(e) });
+				});
+				return true;
+			}
+		});
+	}
+})();
 
 /**
  * Report a bug to remote logging server, attaching debug log and prefs.
@@ -570,7 +671,7 @@ Foxtrick.reportBug = function(bug, prefs, refIdCb) {
 		return input.length > MAX ? input.slice(input.length - MAX) : input;
 	}
 
-	const MAX_LENGTH = 50;
+	const MAX_LENGTH = 50; // KiB
 	const referenceId = Math.floor((1 + Math.random()) * 0x10000000000).toString(16).slice(1);
 	const reportOptions = {
 		attachments: [
@@ -602,9 +703,6 @@ Foxtrick.reportError = function(err, options) {
 		const reporter = Foxtrick.log.Reporter;
 		if (!reporter)
 			return;
-
-		if (Foxtrick.branch?.split('-')[0] === 'dev')
-			return; // don't report on dev branch;
 
 		let reportOptions;
 		if (options) {
