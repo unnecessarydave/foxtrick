@@ -487,26 +487,8 @@ Foxtrick.log.Reporter = {
 			{ name: 'context', prefix: 'ft', needsDoc: false,
 				getValue: () => Foxtrick.context
 			},
-			{ name: 'currency', prefix: 'ft', needsDoc: true,
-				getValue: () => (this._getHtTeam() && Foxtrick.Prefs) ? Foxtrick.Prefs.getString('Currency.Code.' + this._getHtTeam().teamId) : null
-			},
-			{ name: 'htCountry', prefix: 'ft', needsDoc: false,
-				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htCountry') : null
-			},
-			{ name: 'htDateFormat', prefix: 'ft', needsDoc: false,
-				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htDateFormat') : null
-			},
-			{ name: 'htLanguage', prefix: 'ft', needsDoc: false,
-				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htLanguage') : null
-			},
 			{ name: 'platform', prefix: 'ft', needsDoc: false,
 				getValue: () => Foxtrick.platform
-			},
-			{ name: 'teamId', prefix: 'ft', needsDoc: true,
-				getValue: () => this._getHtTeam() ? (this._getHtTeam().teamId ? String(this._getHtTeam().teamId) : null) : null
-			},
-			{ name: 'teamName', prefix: 'ft', needsDoc: true,
-				getValue: () => this._getHtTeam() ? this._getHtTeam().teamName : null
 			},
 			{ name: 'version', prefix: 'ft', needsDoc: false,
 				getValue: () => this._getFtVersion()
@@ -514,11 +496,29 @@ Foxtrick.log.Reporter = {
 			{ name: 'classic', prefix: 'ht', needsDoc: true,
 				getValue: () => Foxtrick.Pages?.All?.isClassic ? Foxtrick.Pages.All.isClassic(document).toString() : null
 			},
+			{ name: 'country', prefix: 'ht', needsDoc: false,
+				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htCountry') : null
+			},
+			{ name: 'currency', prefix: 'ht', needsDoc: true,
+				getValue: () => (this._getHtTeam() && Foxtrick.Prefs) ? Foxtrick.Prefs.getString('Currency.Code.' + this._getHtTeam().teamId) : null
+			},
+			{ name: 'dateFormat', prefix: 'ht', needsDoc: false,
+				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htDateFormat') : null
+			},
+			{ name: 'language', prefix: 'ht', needsDoc: false,
+				getValue: () => Foxtrick.Prefs ? Foxtrick.Prefs.getString('htLanguage') : null
+			},
 			{ name: 'legacy', prefix: 'ht', needsDoc: true,
 				getValue: () => Foxtrick.Pages?.All?.isLegacy ? Foxtrick.Pages.All.isLegacy(document).toString() : null
 			},
 			{ name: 'stage', prefix: 'ht', needsDoc: true,
 				getValue: () => Foxtrick.isStage ? Foxtrick.isStage(document).toString() : null
+			},
+			{ name: 'teamId', prefix: 'ht', needsDoc: true,
+				getValue: () => this._getHtTeam() ? (this._getHtTeam().teamId ? String(this._getHtTeam().teamId) : null) : null
+			},
+			{ name: 'teamName', prefix: 'ht', needsDoc: true,
+				getValue: () => this._getHtTeam() ? this._getHtTeam().teamName : null
 			},
 			{ name: 'textDirection', prefix: 'ht', needsDoc: true,
 				getValue: () => Foxtrick.util?.layout?.isRtl ? (Foxtrick.util.layout.isRtl(document) ? 'RTL' : 'LTR') : null
