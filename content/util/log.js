@@ -292,15 +292,15 @@ Foxtrick.log.Reporter = {
 
 		const branch = this._getFtBranch();
 		const dsn = this._DSN;
-		const environment = branch === 'dev' ? 'development' : null;
+		const environment = branch === 'dev' ? 'development' : 'production';
 		let release = null;
 		const version = this._getFtVersion();
 		if (version) {
 			if (branch !== 'dev') {
-				release = `foxtrick-${branch}@${Foxtrick.version}`;
+				release = `foxtrick-${branch}@${version}`;
 			} else {
 				// Prevent the creation of spurious releases on sentry during development.
-				const majorVer = Foxtrick.version.split('.').slice(0, -1).join('.');
+				const majorVer = version.split('.').slice(0, -1).join('.');
 				release = `foxtrick-release@${majorVer}.0`;
 			}
 		}
