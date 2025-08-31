@@ -88,7 +88,7 @@ Foxtrick.modules.MatchLineupTweaks = {
 		}
 
 		var toggleDiv = Foxtrick.createFeaturedElement(doc, module, 'div');
-		toggleDiv.id = 'ft-split-lineup-toggle-div';
+		toggleDiv.id = SPLIT_TOGGLE_ID;
 
 		let toggle = doc.createElement('input');
 		toggle.type = 'checkbox';
@@ -111,7 +111,7 @@ Foxtrick.modules.MatchLineupTweaks = {
 		});
 
 		let togLabel = doc.createElement('label');
-		togLabel.setAttribute('for', 'ft-split-lineup-toggle');
+		togLabel.setAttribute('for', SPLIT_TOGGLE_ID);
 		togLabel.textContent = Foxtrick.L10n.getString(`module.${SPLIT_OPT_FULL}.desc`);
 		toggleDiv.appendChild(togLabel);
 
