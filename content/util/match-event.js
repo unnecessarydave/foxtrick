@@ -1238,6 +1238,18 @@ Foxtrick.util.matchEvent.addEventIndicator = function(evnt, invert) {
 
 	if (indType) {
 		// found a matching indicator
+
+		// avoid duplicates: if an indicator of this type already exists in the table, skip
+		try {
+			let existingClass = 'ft-match-report-' + indType.class;
+			if (table.querySelector && table.querySelector('tr.' + existingClass))
+				return;
+		}
+		catch (e) {
+			// defensive: if querySelector throws for any reason, continue and try to insert
+			Foxtrick.log(e);
+		}
+
 		let indicator = doc.createElement('tr');
 		let indicatorCell = doc.createElement('td');
 		indicator.appendChild(indicatorCell);
