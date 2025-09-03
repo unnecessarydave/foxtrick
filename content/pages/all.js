@@ -46,9 +46,9 @@ Foxtrick.Pages.All.isYouth = function(doc) {
 };
 
 /**
- * Test whether the page is in HT classic mode
+ * Test whether the page is in HT classic theme
  * @param {Document} doc
- * @return {boolean}
+ * @returns {boolean}
  */
 Foxtrick.Pages.All.isClassic = function (doc) {
 	return Foxtrick.hasClass(doc.querySelector('body'), 'classic');
@@ -58,11 +58,14 @@ Foxtrick.Pages.All.isClassic = function (doc) {
  * Test whether the page is a legacy page
  *
  * Legacy pages are those from the old HT design,
- * and do not imply classic mode.
+ * and do not always imply the classic theme.
  * @param {Document} doc
  * @returns {boolean}
  */
 Foxtrick.Pages.All.isLegacy = function (doc) {
+	if (/\.Classic\./i.test(doc.location.href))
+		return true;
+
 	/** @type {PAGE[]} */
 	var LEGACY_PAGES = [
 		'matchOrder',
