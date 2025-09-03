@@ -63,9 +63,25 @@ Foxtrick.Pages.All.isClassic = function (doc) {
  * @returns {boolean}
  */
 Foxtrick.Pages.All.isLegacy = function (doc) {
-	if (/\.Classic\./i.test(doc.location.href))
+	// url override
+	if (/\.Classic\.aspx/i.test(doc.location.pathname))
 		return true;
 
+	// classic theme enabled forces some pages to legacy mode
+	// match view is taken care of later on
+	if (Foxtrick.Pages.All.isClassic(doc)) {
+		/** @type {PAGE[]} */
+		var CLASSIC_PAGES = [
+			'allPlayers',
+			'playerDetails',
+			'youthPlayers',
+			'youthPlayerDetails'
+		];
+		if (Foxtrick.isPage(doc, CLASSIC_PAGES))
+			return true;
+	}
+
+	// always legacy
 	/** @type {PAGE[]} */
 	var LEGACY_PAGES = [
 		'matchOrder',
@@ -77,6 +93,7 @@ Foxtrick.Pages.All.isLegacy = function (doc) {
 	if (Foxtrick.isPage(doc, LEGACY_PAGES))
 		return true;
 
+	// legacy live
 	/** @type {PAGE[]} */
 	var NG_PAGES = [
 		'match',
