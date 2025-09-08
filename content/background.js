@@ -269,26 +269,24 @@ Foxtrick.loader.background.browserLoad = async function() {
 			Foxtrick.playSound(url);
 		};
 
-		if (Foxtrick.Manifest.manifest_version == 2) {
-			// from misc.js: tabs
-			this.requests.newTab = function({ url }) {
-				// @param url - the URL of new tab to create
-				Foxtrick.SB.tabs.create({ url });
-			};
-			this.requests.reuseTab = function({ url }) { // eslint-disable-line
-				// @param url - the URL of new tab to create
-				// if (Foxtrick.platform == 'Android') {
-				// 	// TODO
-				// 	// XUL Code:
-				// 	for (let [idx, browser] of Browser.browsers.entries()) {
-				// 		if (sender.tab.id == browser.tid) {
-				// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
-				// 			browser.loadURI(url);
-				// 		}
-				// 	}
-				// }
-			};
-		}
+		// from misc.js: tabs
+		this.requests.newTab = function({ url }) {
+			// @param url - the URL of new tab to create
+			Foxtrick.SB.tabs.create({ url });
+		};
+		this.requests.reuseTab = function({ url }) { // eslint-disable-line
+			// @param url - the URL of new tab to create
+			// if (Foxtrick.platform == 'Android') {
+			// 	// TODO
+			// 	// XUL Code:
+			// 	for (let [idx, browser] of Browser.browsers.entries()) {
+			// 		if (sender.tab.id == browser.tid) {
+			// 			Browser.selectedTab = Browser.getTabAtIndex(idx);
+			// 			browser.loadURI(url);
+			// 		}
+			// 	}
+			// }
+		};
 
 		// from notify.js
 		if (Foxtrick.Manifest.manifest_version == 2) {
