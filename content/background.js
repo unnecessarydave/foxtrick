@@ -117,9 +117,11 @@ Foxtrick.loader.background.browserLoad = async function() {
 		this.requests.pageLoad = function(request, sender, sendResponse) {
 			// access user setting directly here, since getBool uses a copy
 			// which needs updating just here
-			if (Foxtrick.arch == 'Sandboxed' && localStorage.getItem('preferences.updated')	||
-				Foxtrick.platform == 'Android' &&
-				Foxtrick.Prefs._prefs_gecko.getBoolPref('preferences.updated')) {
+			const arch = Foxtrick.arch;
+			const manifest = Foxtrick.Manifest.manifest_version;
+			if (arch == 'Sandboxed' && manifest == 2 && localStorage.getItem('preferences.updated')	||
+				arch == 'Sandboxed' && manifest == 3 && Foxtrick.Prefs.getBool('preferences.updated')	||
+				Foxtrick.platform == 'Android' && Foxtrick.Prefs._prefs_gecko.getBoolPref('preferences.updated')) {
 
 				// reInit
 				updateResources(true).then(() => {
