@@ -162,9 +162,9 @@ Foxtrick.util.modules.getModulePermissions = function() {
  * @typedef FTBackgroundModuleMixin
  * @prop {string} [MODULE_NAME] set automatically
  * @prop {(reInit?: boolean)=>void} [init]
- * @prop {(doc: document)=>void} [onLoad]
- * @prop {(doc: document)=>void} [onTabChange]
- * @prop {(doc: document)=>void} [update]
+ * @prop {(doc: Document=)=>void} [onLoad]
+ * @prop {(doc: Document=)=>void} [onTabChange]
+ * @prop {(doc: Document=)=>void} [update]
  */
 
 /**

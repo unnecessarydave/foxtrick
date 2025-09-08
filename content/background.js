@@ -107,7 +107,7 @@ Foxtrick.loader.background.browserLoad = async function() {
 			let m = /** @type {FTBackgroundModuleMixin} */ (module);
 			if (typeof m.onLoad === 'function') {
 				try {
-					m.onLoad(document);
+					Foxtrick.Manifest.manifest_version == 2 ? m.onLoad(document) : m.onLoad();
 				}
 				catch (e) {
 					Foxtrick.log('Error caught in module', m.MODULE_NAME, ':', e);
