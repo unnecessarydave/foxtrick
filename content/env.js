@@ -389,27 +389,75 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 		Foxtrick.InternalPath = Foxtrick.ResourcePath = chrome.runtime.getURL('content/');
 		Foxtrick.DataPath = chrome.runtime.getURL('res/');
 
-		// to tell which context the chrome script is running at
-		// either background page, or content script
-		Foxtrick.lazyProp(Foxtrick, 'context', function() {
-			var ret;
-			try {
-				var protocol = window.location.protocol;
-				if (protocol === 'chrome-extension:' || protocol === 'moz-extension:')
-					ret = 'background';
-				else
-					ret = 'content';
-			}
-			catch (e) {
-				ret = 'content';
-			}
-			return ret;
-		});
-
 		// default mv3 because offline document doesn't have chrome.runtime.getManifest
 		Foxtrick.Manifest = { manifest_version: 3 };
 		if (chrome.runtime.getManifest)
 			Foxtrick.Manifest = chrome.runtime.getManifest();
+
+		// to tell which context the chrome script is running at
+		// either background page, or content script
+		Foxtrick.lazyProp(Foxtrick, 'context', function() {
+			var ret;
+			if (Foxtrick.Manifest.manifest_version === 2) {
+				try {
+					var protocol = window.location.protocol;
+					if (protocol === 'chrome-extension:' || protocol === 'moz-extension:')
+						ret = 'background';
+					else
+						ret = 'content';
+				}
+				catch {
+					ret = 'content';
+				}
+			} else {
+				// set context to background for service worker only
+				if (typeof document === 'undefined')
+					ret = 'background';
+				else
+					ret = 'content';
+			}
+			return ret;
+		});
+
+		// Detailed execution environment: 'content-script' | 'service-worker' |
+		// 'action' | 'extension-page' | 'background-page'
+		Foxtrick.lazyProp(Foxtrick, 'execEnv', function() {
+			try {
+				var href = (typeof location !== 'undefined' && location.href) ? location.href : '';
+				var url = href ? new URL(href) : null;
+				var protocol = url ? url.protocol : '';
+				var pathname = url ? url.pathname : '';
+
+				// Background contexts
+				if (Foxtrick.context === 'background') {
+					if (Foxtrick.Manifest.manifest_version == 3) {
+						return 'service-worker';
+					}
+					// MV2 background is a page in the extension
+					if (protocol === 'chrome-extension:' || protocol === 'moz-extension:')
+						return 'background-page';
+				}
+
+				// Content contexts
+				if (Foxtrick.context === 'content') {
+					// Extension pages (popup/options) use the extension protocol
+					if (protocol === 'chrome-extension:' || protocol === 'moz-extension:') {
+						// popup/action
+						if (pathname && pathname.indexOf('popup.html') !== -1)
+							return 'action';
+						// options/preferences page
+						if (pathname && pathname.indexOf('preferences.html') !== -1)
+							return 'extension-page';
+						// other extension pages
+						return 'extension-page';
+					}
+					// Otherwise it's a content script
+					return 'content-script';
+				}
+				return null;
+			}
+			catch { return null; }
+		});
 
 		const offscreenMarker = new URL(location.href).searchParams.get('_offscreen') === '1';
 		Foxtrick.offscreen = Foxtrick.context === 'background' && offscreenMarker;
@@ -468,7 +516,7 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 			catch (e) {}
 		};
 
-		if (Foxtrick.context === 'content') {
+		if (Foxtrick.context === 'content' && Foxtrick.execEnv !== 'action') {
 			// register this tab for broadcastMessage messages and receive tabId
 			Foxtrick.SB.ext.sendRequest({ req: 'register' }, (response) => {
 				Foxtrick.SB.ext.tabId = response.tabId;
