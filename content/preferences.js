@@ -2035,7 +2035,9 @@ function initTextAndValues() {
  */
 async function init() {
 	try {
-		await initCoreModules(false);
+		if (Foxtrick.context === 'background') {
+			await initCoreModules(false);
+		}
 		getPageIds();
 		buildNeededPermissions();
 
@@ -2093,7 +2095,7 @@ async function init() {
 		// }
 	}
 	catch (e) {
-		Foxtrick.logFatalError('Preferences init:', e);
+		Foxtrick.logFatalError('Prefs init failed:', e);
 	}
 }
 
@@ -2122,19 +2124,16 @@ function initLoader() {
 		init();
 	}
 	else {
-		// safari prefs runs in content context for some people?!!
-		// add needed resources first
 		Foxtrick.SB.ext.sendRequest({ req: 'optionsPageLoad' }, (data) => {
-			try {
-				Foxtrick.entry.contentScriptInit(data);
-				init();
-			}
-			catch (e) {
-				Foxtrick.log('initLoader:', e);
-			}
+			Foxtrick.entry.contentScriptInit(data);
+			init();
 		});
 	}
 }
 
 // this is the preference script entry point for Sandboxed arch
-initLoader();
+try {
+	initLoader();
+} catch (e) {
+	Foxtrick.logFatalError('Prefs initLoader failed:', e);
+}

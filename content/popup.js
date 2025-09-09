@@ -1,72 +1,62 @@
-'use strict';
 /**
  * popup.js
  *
  * @author LA-MJ
  */
+'use strict';
 
-/* global chrome */
-
-// jscs:disable disallowFunctionDeclarations
-
-var BackgroundPage, isChrome = false, Foxtrick;
-if (Foxtrick && Foxtrick.Manifest.manifest_version == 3) {
-	if (typeof window.chrome == 'object')
-		isChrome = true;
-		Foxtrick.entry.init(false).then(() => {
+if (Foxtrick && Foxtrick.Manifest?.manifest_version == 3) {
+	try {
+		Foxtrick.SB.ext.sendRequest({ req: 'optionsPageLoad' }, (data) => {
+			Foxtrick.entry.contentScriptInit(data);
 			init();
-	});
+		});
+	} catch (e) {
+		Foxtrick.logFatalError('Popup init failed:', e);
+	}
 } else {
-	if (typeof window.chrome == 'object') {
-		BackgroundPage = chrome.extension.getBackgroundPage();
-		isChrome = true;
+	try {
+		let BackgroundPage = chrome.extension.getBackgroundPage();
+		//@ts-expect-error
 		Foxtrick = BackgroundPage.Foxtrick;
 		init();
+	} catch (e) {
+		Foxtrick.logFatalError('Popup init failed:', e);
 	}
 }
 
 function shutDown() {
 	window.close();
 }
+
 function visitLink() {
-	if (isChrome) {
-		// jshint -W040
+	if (chrome.tabs?.create) {
 		let url = this.href;
 		chrome.tabs.create({ url: url });
 		this.href = '';
-		// jshint +W040
-
 		window.close();
-
 		return false;
 	}
-
 	shutDown();
 }
 
 function toggleEnabled() {
 	var checked = document.getElementById('foxtrick-toolbar-deactivate').checked;
 	Foxtrick.Prefs.setBool('disableTemporary', checked);
-	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 function toggleHighlight() {
 	var checked = document.getElementById('foxtrick-toolbar-highlight').checked;
 	Foxtrick.Prefs.setBool('featureHighlight', checked);
-	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 function toggleTranslationKeys() {
 	var checked = document.getElementById('foxtrick-toolbar-translationKeys').checked;
 	Foxtrick.Prefs.setBool('translationKeys', checked);
-	Foxtrick.Prefs.setBool('preferences.updated', true);
 	window.close();
 }
 
 function clearCache() {
-	if (Foxtrick.Manifest.manifest_version == 3) {
-		Foxtrick.context = 'content';
-	}
 	Foxtrick.clearCaches();
 	window.close();
 }
