@@ -247,6 +247,9 @@ Foxtrick.log.Reporter = {
 	 */
 	_DSN: 'https://952707096a78dd7f67e360d0f95dc054@o4509770710384640.ingest.us.sentry.io/4509770715037696',
 
+	// Maximum number of reported error keys to keep in session storage.
+	_MAX_REPORTED_ERRORS: 100,
+
 	/**
 	 * Initialize the Sentry client and scope.
 	 * @private
@@ -548,13 +551,113 @@ Foxtrick.log.Reporter = {
 	},
 
 	/**
+	 * Add the normalized error key to the session-backed reported-errors list.
+	 *
+	 * It also enforces a maximum list size configured by `_MAX_REPORTED_ERRORS`.
+	 * @param {Error} error The error object to normalize and store.
+	 * @returns {Promise<void>} Resolves when the list has been persisted.
+	 */
+	_addReportedError: async function(error) {
+		try {
+			const key = this._normalizeErrorKey(error);
+			let list = await this._getReportedErrors();
+			if (!list.includes(key)) {
+				list.push(key);
+				if (list.length > this._MAX_REPORTED_ERRORS)
+					list = list.slice(list.length - this._MAX_REPORTED_ERRORS);
+				await this._setReportedErrors(list);
+			}
+		} catch {
+			// avoid re-triggering bug report
+		}
+	},
+
+	/**
+	 * Check whether the given error has already been
+	 * recorded in the reported-errors session list.
+	 * @param {Error} error The error to check.
+	 * @returns {Promise<boolean>} True if already recorded for this session.
+	 */
+	_alreadyReported: async function(error) {
+		try {
+			const key = this._normalizeErrorKey(error);
+			const reportedErrors = await this._getReportedErrors();
+			return reportedErrors.includes(key) ? true : false;
+		} catch {
+			// avoid re-triggering bug report
+			return false;
+		}
+	},
+
+	/**
+	 * Retrieve the reported-errors list from session storage.
+	 * @returns {Promise<Array<string>>} Array of normalized error keys.
+	 */
+	_getReportedErrors: async function() {
+		const list = await Foxtrick.session.get('Reporter.errorList');
+		return Array.isArray(list) ? list : [];
+	},
+
+	/**
+	 * Produce a short, stable key for an error by hashing its name, message
+	 * and stack.
+	 * @param {Error|*} error The error to normalize.
+	 * @returns {string} 8-character hex key representing the error.
+	 */
+	_normalizeErrorKey: function(error) {
+		// Create a short, stable hash for the error using its name, message and stack.
+		try {
+			if (!error) return String(error);
+			const name = error && error.name ? String(error.name) : '';
+			const message = error && error.message ? String(error.message) : '';
+			const stack = error && error.stack ? String(error.stack) : '';
+
+			// Build a metadata string and truncate to avoid hashing huge blobs.
+			const MAX_CHARS = 1024;
+			let meta = `${name}|${message}|${stack}`;
+			if (meta.length > MAX_CHARS)
+				meta = meta.slice(0, MAX_CHARS);
+
+			// Small DJB2 hash producing an 8-char hex string.
+			const hashString = function(s) {
+				let h = 5381;
+				for (let i = 0; i < s.length; i++) {
+					h = ((h << 5) + h) + s.charCodeAt(i);
+					// keep to 32-bit int
+					h = h & 0xFFFFFFFF;
+				}
+				return ('00000000' + (h >>> 0).toString(16)).slice(-8);
+			};
+
+			return hashString(meta);
+		} catch {
+			return String(error);
+		}
+	},
+
+	/**
+	 * Persist the reported-errors list to session storage.
+	 * @param {Array<string>} list Array of normalized error keys to store.
+	 * @returns {Promise<any>} The underlying session.set promise.
+	 */
+	_setReportedErrors: async function(list) {
+		return Foxtrick.session.set('Reporter.errorList', list);
+	},
+
+	/**
 	 * Report an exception to Sentry.
 	 * @param {Error} error The error/exception to report.
 	 * @param {ReporterEventOptions} hint Additional Sentry hint data.
 	 */
-	reportException: function(error, hint) {
+	reportException: async function(error, hint) {
 		if (this._getFtBranch() === 'dev')
 			return; // don't report on dev branch;
+
+		// only report any given error once per session
+		if (await this._alreadyReported(error)) {
+			console.log('already reported');
+			return;
+		}
 
 		if (!this._init())
 			return;
@@ -562,6 +665,7 @@ Foxtrick.log.Reporter = {
 		const scope = this._scope;
 		this._setReportingData(scope);
 		scope.captureException(error, hint);
+		await this._addReportedError(error);
 	},
 
 	/**
