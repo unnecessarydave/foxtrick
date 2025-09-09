@@ -30,23 +30,87 @@ Foxtrick.loader.background.requests = {};
  * @return {boolean}
  */
 Foxtrick.loader.background.contentRequestsListener = function(request, sender, sendResponse) {
-	try {
-		let reqHandlers = Foxtrick.loader.background.requests;
-		let handler = reqHandlers[request.req];
+	/**
+	 * Run the request handler. If the handler returns a Promise treat that as
+	 * an async response (return true) so the message channel stays open.
+	 * @returns {boolean}
+	 */
+	function runHandler() {
+		try {
+			let reqHandlers = Foxtrick.loader.background.requests;
+			let handler = reqHandlers[request.req];
 
-		if (handler)
-			return handler.call(reqHandlers, request, sender, sendResponse) || false;
-	}
-	catch (e) {
-		Foxtrick.log('Foxtrick - background onRequest error:', request.req, e);
+			if (handler) {
+				const res = handler.call(reqHandlers, request, sender, sendResponse);
+				// If handler returned a Promise it's async: return true to keep channel open.
+				if (res && typeof res === 'object' && typeof res.then === 'function')
+					return true;
+				return !!res;
+			}
+		}
+		catch (e) {
+			Foxtrick.log('Foxtrick - background onRequest error:', request.req, e);
 
-		/** @type {FT.BGError} */
-		let response = { error: 'Foxtrick - background onRequest: ' + e };
-		sendResponse(response);
+			/** @type {FT.BGError} */
+			let response = { error: 'Foxtrick - background onRequest: ' + e };
+			sendResponse(response);
+		}
+		return false;
 	}
-	return false;
+
+	// If resources already loaded, run handler synchronously and return its result.
+	if (Foxtrick.loader.background._resourcesLoaded)
+		return runHandler();
+
+	// Resources not ready: wait for them and then dispatch. Return true now
+	// so the message channel stays open for an async response.
+	Foxtrick.loader.background.waitForResources()
+		.then(() => {
+			// After resources are ready, run the handler. If handler wasn't found
+			// we still call sendResponse() to close the channel.
+			const result = runHandler();
+			if (!result) {
+				try { sendResponse(); } catch (e) { void e; }
+			}
+		})
+		.catch(err => {
+			Foxtrick.log('waitForResources error', err);
+			try { sendResponse({ error: 'waitForResources: ' + err }); } catch (e) { void e; }
+		});
+
+	return true;
 };
 
+Foxtrick.loader.background.waitForResources = async function(timeout=5000) {
+	/**
+	 * Wait until background resources are loaded.
+	 * @param {number} timeoutMs maximum time to wait in ms (required, > 0)
+	 * @returns {Promise<void>}
+	 */
+	return new Promise((resolve, reject) => {
+		if (typeof timeout !== 'number' || timeout <= 0)
+			return reject(new Error('timeoutMs argument required and must be a positive number'));
+
+		if (Foxtrick.loader.background._resourcesLoaded)
+			return resolve();
+
+		const intervalMs = 50;
+		let waited = 0;
+
+		const timer = setInterval(() => {
+			if (Foxtrick.loader.background._resourcesLoaded) {
+				clearInterval(timer);
+				return resolve();
+			}
+
+			waited += intervalMs;
+			if (waited >= timeout) {
+				clearInterval(timer);
+				return reject(new Error('timeout waiting for background resources'));
+			}
+		}, intervalMs);
+	});
+};
 
 // background script unload function
 Foxtrick.loader.background.browserUnload = function() {
@@ -102,8 +166,6 @@ Foxtrick.loader.background.browserLoad = async function() {
 				}
 			}
 		}
-
-		Foxtrick.SB.ext.onRequest.addListener(this.contentRequestsListener);
 
 		// -- requests functions --
 		// here goes the handlers to content requests of requestName
@@ -436,7 +498,7 @@ Foxtrick.loader.background.browserLoad = async function() {
 		// this.requests.updateViewportSize = function() {
 		// 	Browser.updateViewportSize();
 		// };
-
+		Foxtrick.loader.background._resourcesLoaded = true;
 	}
 	catch (e) {
 		Foxtrick.logFatalError('Background page init: ', e);
@@ -444,9 +506,10 @@ Foxtrick.loader.background.browserLoad = async function() {
 };
 
 // this is the background script entry point for sandboxed arch
-if (Foxtrick.arch == 'Sandboxed')
+if (Foxtrick.arch == 'Sandboxed') {
+	Foxtrick.SB.ext.onRequest.addListener(Foxtrick.loader.background.contentRequestsListener);
 	Foxtrick.loader.background.browserLoad();
-
+}
 
 /**
  * @typedef FT.ResourceDict
