@@ -30,7 +30,7 @@
 			"content/lib/PluralForm.js",
 			"content/lib/psico.js",
 			"content/lib/gauge.js",
-			"content/lib/exceptionless.universal.js",
+			"content/lib/sentry.js",
 			// <!-- end ext-lib -->
 
 			"content/lib/integration.js",
@@ -211,7 +211,6 @@
 			"content/presentation/highlight-ownerless.js",
 			"content/presentation/ht-date-format.js",
 			"content/presentation/large-flags.js",
-			"content/presentation/league-news-filter.js",
 			"content/presentation/local-time.js",
 			"content/presentation/loyalty-display.js",
 			"content/presentation/mobile-enhancements.js",
@@ -278,7 +277,7 @@
 		"*://chpp.hattrick.org/*",
 		"*://*.foxtrick.org/*",
 		"https://www.fantamondi.it/*",
-		"https://api.exceptionless.io/*"
+		"https://*.sentry.io/*"
 	],
 	"optional_permissions": [
 		"https://*.hattrick-youthclub.org/*",

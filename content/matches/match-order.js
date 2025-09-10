@@ -1065,7 +1065,21 @@ Foxtrick.modules['MatchOrderInterface'] = {
 			});
 		};
 
-		runMatchOrder(doc);
-		Foxtrick.util.inject.jsLink(doc, Foxtrick.InternalPath + 'resources/js/matchOrder.js');
+		let ordersDiv = doc.querySelector('#orders');
+		if (!ordersDiv)
+			return;
+
+		let pageLoadListener = function(doc) {
+			let found = doc.querySelector('#tab_penaltytakers div');
+			if (found) {
+				runMatchOrder(doc);
+				Foxtrick.util.inject.jsLink(doc, Foxtrick.InternalPath + 'resources/js/matchOrder.js');
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		Foxtrick.onChange(ordersDiv, pageLoadListener, { childList: true, subtree: true });
 	},
 };

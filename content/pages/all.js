@@ -46,9 +46,9 @@ Foxtrick.Pages.All.isYouth = function(doc) {
 };
 
 /**
- * Test whether the page is in HT classic mode
+ * Test whether the page is in HT classic theme
  * @param {Document} doc
- * @return {boolean}
+ * @returns {boolean}
  */
 Foxtrick.Pages.All.isClassic = function (doc) {
 	return Foxtrick.hasClass(doc.querySelector('body'), 'classic');
@@ -58,11 +58,30 @@ Foxtrick.Pages.All.isClassic = function (doc) {
  * Test whether the page is a legacy page
  *
  * Legacy pages are those from the old HT design,
- * and do not imply classic mode.
+ * and do not always imply the classic theme.
  * @param {Document} doc
  * @returns {boolean}
  */
 Foxtrick.Pages.All.isLegacy = function (doc) {
+	// url override
+	if (/\.Classic\.aspx/i.test(doc.location.pathname))
+		return true;
+
+	// classic theme enabled forces some pages to legacy mode
+	// match view is taken care of later on
+	if (Foxtrick.Pages.All.isClassic(doc)) {
+		/** @type {PAGE[]} */
+		var CLASSIC_PAGES = [
+			'allPlayers',
+			'playerDetails',
+			'youthPlayers',
+			'youthPlayerDetails'
+		];
+		if (Foxtrick.isPage(doc, CLASSIC_PAGES))
+			return true;
+	}
+
+	// always legacy
 	/** @type {PAGE[]} */
 	var LEGACY_PAGES = [
 		'matchOrder',
@@ -74,6 +93,7 @@ Foxtrick.Pages.All.isLegacy = function (doc) {
 	if (Foxtrick.isPage(doc, LEGACY_PAGES))
 		return true;
 
+	// legacy live
 	/** @type {PAGE[]} */
 	var NG_PAGES = [
 		'match',
@@ -209,6 +229,48 @@ Foxtrick.Pages.All.getTeamName = function(doc) {
 	}
 
 	return name;
+};
+
+/**
+ * Get user/manager information from the ht menu.
+ * @param {Document} doc The document object.
+ * @returns {object} An object containing userId and userName, or undefined if not found.
+ */
+Foxtrick.Pages.All.getUser = function(doc) {
+	let userId, userName;
+
+	const menuLinks =  doc.querySelectorAll('#menu a');
+	const managerLink = Foxtrick.nth((link) => {
+		return /\/Club\/Manager.*[?&]userId=\d+/i.test(link.href);
+	}, menuLinks);
+
+	if (managerLink) {
+		userId = Foxtrick.util.id.getUserIdFromUrl(managerLink.href);
+		userName = managerLink.textContent.trim();
+	}
+
+	return {
+		userId,
+		userName,
+	};
+};
+
+/**
+ * Get user/manager ID from the ht menu.
+ * @param {Document} doc The document object.
+ * @returns {number|undefined} The user ID, or undefined if not found.
+ */
+Foxtrick.Pages.All.getUserId = function(doc) {
+	return Foxtrick.Pages.All.getUser(doc).userId;
+};
+
+/**
+ * Get user/manager name from the ht menu.
+ * @param {Document} doc The document object.
+ * @returns {string|undefined} The user name, or undefined if not found.
+ */
+Foxtrick.Pages.All.getUserName = function(doc) {
+	return Foxtrick.Pages.All.getUser(doc).userName;
 };
 
 /**
