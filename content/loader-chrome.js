@@ -44,10 +44,8 @@ Foxtrick.loader.chrome.docLoadStart = function() {
 			try {
 				var beginInit = new Date();
 
-				if ('error' in data) {
-					Foxtrick.log(new Error(data.error));
-					return;
-				}
+				if ('error' in data)
+					throw new Error(data.error);
 
 				Foxtrick.entry.contentScriptInit(data);
 
@@ -85,25 +83,33 @@ Foxtrick.loader.chrome.docLoadStart = function() {
 
 				if (DOMContentLoaded) {
 					Foxtrick.log('LocalResourcesLoad took too long, running docLoad now.');
-					Foxtrick.entry.docLoad(document);
+					docLoad();
 				}
 				LocalResourcesLoaded = true;
 			}
 			catch (e) {
-				Foxtrick.log('loader init:', e);
+				Foxtrick.logFatalError('Loader - init error:', e);
 			}
 		});
+
+		const docLoad = function() {
+			try {
+				Foxtrick.entry.docLoad(document);
+			} catch (e) {
+				Foxtrick.logFatalError('Loader - docLoad error:', e);
+			}
+		}
 
 		// that's our normal entry point unless init took too long.
 		window.addEventListener('DOMContentLoaded', function() {
 			DOMContentLoaded = true;
 			if (LocalResourcesLoaded)
-				Foxtrick.entry.docLoad(document);
+				docLoad();
 		});
 
 	}
 	catch (e) {
-		Foxtrick.log(e);
+		Foxtrick.logFatalError('Loader - top level error:', e);
 	}
 };
 
