@@ -607,7 +607,7 @@
 		{
 			"duty": "supporter",
 			"id": "13049551",
-			"name": "Novecento_BOT"
+			"name": "<Novecento_BOT>"
 		},
 		{
 			"duty": "supporter",
@@ -788,6 +788,11 @@
 			"duty": "developer",
 			"id": "13992846",
 			"name": "UnnecessaryDave"
+		},
+		{
+			"duty": "supporter",
+			"id": "14186219",
+			"name": "Noci_B"
 		},
 		{
 			"duty": "translator",
@@ -1442,7 +1447,7 @@
 		{
 			"duty": "supporter",
 			"id": "5932699",
-			"name": "mm2007"
+			"name": "<mm2007>"
 		},
 		{
 			"duty": "translator",
@@ -1681,6 +1686,11 @@
 		},
 		{
 			"duty": "supporter",
+			"id": "7832203",
+			"name": "magrit"
+		},
+		{
+			"duty": "supporter",
 			"id": "7861087",
 			"name": "Benedictus_DE"
 		},
@@ -1767,7 +1777,7 @@
 		{
 			"duty": "supporter",
 			"id": "8329542",
-			"name": "Aristodemos"
+			"name": "<Aristodemos>"
 		},
 		{
 			"duty": "developer",
