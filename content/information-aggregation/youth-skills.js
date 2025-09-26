@@ -431,6 +431,13 @@ Foxtrick.modules['YouthSkills'] = {
 				if (!sEntry)
 					return;
 
+				// don't touch skills with 'reveal' link
+				const anchors = sEntry.querySelectorAll('a');
+				for (let anchor of anchors) {
+					if (Foxtrick.getUrlParam(anchor.href, 'actiontype') === 'unlock')
+						return;
+				}
+
 				// need to unhide blank row since we have new info from HY for this skill
 				let row = sEntry.closest('tr');
 				Foxtrick.removeClass(row, 'hidden');
