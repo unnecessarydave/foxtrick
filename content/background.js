@@ -415,15 +415,13 @@ Foxtrick.loader.background.browserLoad = async function() {
 		};
 
 		// from notify.js
-		if (Foxtrick.Manifest.manifest_version == 2) {
-			this.requests.notify = function(request, sender, sendResponse) {
-				Foxtrick.util.notify.create(request.msg, sender, request)
-					.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
-					.catch(Foxtrick.catch(sender));
+		this.requests.notify = function(request, sender, sendResponse) {
+			Foxtrick.util.notify.create(request.msg, sender, request)
+				.then(sendResponse, err => sendResponse(Foxtrick.jsonError(err)))
+				.catch(Foxtrick.catch(sender));
 
-				return true; // async
-			};
-		}
+			return true; // async
+		};
 
 		// from context-menu.js: dummy. request handled in there
 		this.requests.updateContextMenu = function() {};
