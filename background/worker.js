@@ -38,7 +38,7 @@ importScripts('../content/util/math.js');
 importScripts('../content/util/misc.js');
 importScripts('../content/util/module.js');
 importScripts('../content/util/note.js');
-// importScripts('../content/util/notify.js');
+importScripts('../content/util/notify.js');
 importScripts('../content/util/permissions.js');
 importScripts('../content/util/sanitize.js');
 importScripts('../content/util/session-store.js');
