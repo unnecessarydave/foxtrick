@@ -149,34 +149,55 @@ Foxtrick.jsonError = (err) => {
  * @param {string} url
  */
 Foxtrick.playSound = function(url) {
-	let play = function(url, type, volume) {
+	let play = async function(url, type, volume) {
+		// normalize and clamp volume to [0,1]
+		volume = Math.max(0, Math.min(1, Number(volume) || 1));
+
+		let music = new Audio();
+		music.preload = 'auto';
+
+		let canPlay = '';
 		try {
-			let music = new Audio();
-			let canPlay = music.canPlayType('audio/' + type);
-			Foxtrick.log('can play', type, ':', canPlay === '' ? 'no' : canPlay);
-
-			// @ts-ignore
-			if (canPlay === '' || canPlay === 'no')
-				return;
-
-			music.src = url;
-			music.volume = volume;
-			music.play();
+			canPlay = music.canPlayType('audio/' + type) || '';
+		} catch {
+			canPlay = '';
 		}
-		catch (e) {
-			Foxtrick.log('Playback failed', e);
+		Foxtrick.log('can play', type, ':', canPlay === '' ? 'no' : canPlay);
+
+		if (canPlay === '' || canPlay === 'no') {
+			Foxtrick.log('Browser reports it cannot play this audio type:', type);
+			throw new Error('Audio type not supported: ' + type);
+		}
+
+		music.src = url;
+		music.volume = volume;
+
+		let started = false;
+		try {
+			// Await the play() promise so callers can detect start failures.
+			await music.play();
+			started = true;
+
+			// Cleanup reference after playback ends to help GC
+			music.addEventListener('ended', function() {
+				try { music.src = ''; } catch {}
+			}, { once: true });
+
+			return music;
+		} finally {
+			// If play() failed, explicitly stop and unload the element
+			// to avoid holding decoder/OS resources in some engines.
+			if (!started) {
+				try { music.pause(); } catch {}
+				try { music.load(); } catch {}
+				try { music.src = ''; } catch {}
+			}
 		}
 	};
 
-	if (Foxtrick.context == 'content') {
-		// delegate to background due to playback delay
-		Foxtrick.SB.ext.sendRequest({ req: 'playSound', url: url });
-		return;
-	}
-
 	if (typeof url !== 'string') {
 		Foxtrick.log('Bad sound:', url);
-		return;
+		return Promise.reject(new TypeError('Bad sound'));
 	}
 	let soundUrl = url.replace(/^foxtrick:\/\//, Foxtrick.ResourcePath);
 
@@ -185,7 +206,7 @@ Foxtrick.playSound = function(url) {
 		let dataURLRe = /^data:audio\/(.+?);/;
 		if (!dataURLRe.test(soundUrl)) {
 			Foxtrick.log('Bad data URL:', soundUrl);
-			return;
+			return Promise.reject(new Error('Bad data URL'));
 		}
 
 		type = dataURLRe.exec(soundUrl)[1];
@@ -194,7 +215,7 @@ Foxtrick.playSound = function(url) {
 		let extRe = /\.([^.]+)$/;
 		if (!extRe.test(soundUrl)) {
 			Foxtrick.log('Not a sound file:', url);
-			return;
+			return Promise.reject(new Error('Not a sound file'));
 		}
 
 		type = extRe.exec(soundUrl)[1];
@@ -203,7 +224,10 @@ Foxtrick.playSound = function(url) {
 	let volume = (parseInt(Foxtrick.Prefs.getString('volume'), 10) || 100) / 100;
 	Foxtrick.log('play', volume, soundUrl.slice(0, 100));
 
-	play(soundUrl, type, volume);
+	// call play and return the Promise so callers can await playback start.
+	return play(soundUrl, type, volume).catch(function(e) {
+		Foxtrick.log('playSound error', e);
+	});
 };
 
 /**
