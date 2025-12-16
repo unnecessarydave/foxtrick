@@ -395,11 +395,6 @@ Foxtrick.loader.background.browserLoad = async function() {
 			return true; // async
 		};
 
-		this.requests.playSound = function({ url }) {
-			// @param url - the URL of new tab to create
-			Foxtrick.playSound(url);
-		};
-
 		// from misc.js: tabs
 		this.requests.newTab = function({ url }) {
 			// @param url - the URL of new tab to create
