@@ -302,7 +302,7 @@
 		"https://*.sentry.io/*"
 	],
 	"action": {
-		"default_icon": "skin/disabled.png",
+		"default_icon": "/skin/icon-24.png",
 		"default_title": "Foxtrick",
 		"default_popup": "content/popup.html"
 	},
