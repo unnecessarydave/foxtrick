@@ -58,57 +58,92 @@
 		onLoad: function(document) {
 			var entries = contextEntries;
 
-			// returns copy function on click
-			var copy = function(entry) {
-				return function() {
-					// FIXME copying from background
-					// does not work in WebExt
-					Foxtrick.copy(document, entry.copyText);
-				};
-			};
-
 			// called from background script
 			var chromeInit = function() {
-				// update menu in background on mousedown
-				Foxtrick.SB.ext.onRequest.addListener((request) => {
-					if (request.req !== 'updateContextMenu')
-						return;
+				if (Foxtrick.Manifest.manifest_version == 2) {
+					// returns copy function on click
+					var copy = function(entry) {
+						return function() {
+							// FIXME copying from background
+							// does not work in WebExt
+							Foxtrick.copy(document, entry.copyText);
+						};
+					};
 
-					var documentUrlPatterns = [
-						'*://*.hattrick.org/*',
-						'*://*.hattrick.ws/*',
-						'*://*.hattrick.bz/*',
-						'*://*.hat-trick.net/*',
-						'*://*.hattrick.uol.com.br/*',
-						'*://*.hattrick.interia.pl/*',
-						'*://*.hattrick.name/*',
-						'*://*.hattrick.fm/*',
-					];
+					// update menu in background on mousedown
+					Foxtrick.SB.ext.onRequest.addListener((request) => {
+						if (request.req !== 'updateContextMenu')
+							return;
 
-					// remove old entries
-					for (let type in entries) {
-						let e = entries[type];
-						if (e.item !== null) {
-							chrome.contextMenus.remove(e.item);
-							e.item = null;
+						var documentUrlPatterns = [
+							'*://*.hattrick.org/*',
+						];
+
+						// remove old entries
+						for (let type in entries) {
+							let e = entries[type];
+							if (e.item !== null) {
+								chrome.contextMenus.remove(e.item);
+								e.item = null;
+							}
 						}
-					}
 
-					// add new entries
-					for (let type in request.entries) {
-						let target = entries[type];
-						let source = request.entries[type];
+						// add new entries
+						for (let type in request.entries) {
+							let target = entries[type];
+							let source = request.entries[type];
 
-						target.copyText = source.copyText;
-						target.item = chrome.contextMenus.create({
-							title: source.title,
-							contexts: ['all'],
-							onclick: copy(target),
-							documentUrlPatterns,
-						});
+							target.copyText = source.copyText;
+							target.item = chrome.contextMenus.create({
+								title: source.title,
+								contexts: ['all'],
+								onclick: copy(target),
+								documentUrlPatterns,
+							});
+						}
+					});
+				} else {
+					// mv3 implementation
+
+				    // event handler that populates the menu as per the request
+				    // sent from the browser after right-click
+					const handler = async function(request) {
+						if (request.req !== 'updateContextMenu')
+							return;
+
+						const documentUrlPatterns = [
+							'*://*.hattrick.org/*',
+						];
+
+						// removeAll is only Promisified in chrome 123+
+						await new Promise(resolve => chrome.contextMenus.removeAll(resolve));
+
+						// add new entries
+						for (let type in request.entries) {
+							let source = request.entries[type];
+
+							chrome.contextMenus.create({
+								id: type,
+								title: source.title,
+								contexts: ['all'],
+								documentUrlPatterns,
+							});
+						}
+
+						return true;
 					}
-				});
-			};
+					Foxtrick.SB.ext.onRequest.addListener(handler);
+
+					// add menu onClick listener - sends message to content script
+					// telling it which entry in the menu was clicked
+					const _onClicked = async function(info, tab) {
+						if (tab && tab.id != null) {
+						chrome.tabs.sendMessage(tab.id, { type: 'ft-context-menu-copy', menuId: info.menuItemId });
+						}
+					};
+					chrome.contextMenus.onClicked.addListener(_onClicked);
+				}
+			}
 
 			// called from background script
 			var safariInit = function() {
