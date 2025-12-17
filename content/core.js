@@ -249,7 +249,6 @@ Foxtrick.modules.Core = {
 			Foxtrick.util.inject.css(doc, CSS, 'ft-feature-highlight-css');
 			Foxtrick.Prefs.setBool('featureHighlight', true);
 		}
-		Foxtrick.modules.UI.update(doc);
 	},
 
 	/**
