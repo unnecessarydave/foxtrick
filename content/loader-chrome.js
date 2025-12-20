@@ -64,9 +64,15 @@ Foxtrick.loader.chrome.docLoadStart = function() {
 					moduleCss.parentNode.removeChild(moduleCss);
 
 				// inject CSS
-				Foxtrick.util.inject.css(document, data.cssText, 'ft-module-css');
-
-				Foxtrick.entry.cssLoaded = true;
+				if (Foxtrick.Manifest.manifest_version == 2) {
+					Foxtrick.util.inject.css(document, data.cssText, 'ft-module-css');
+					Foxtrick.entry.cssLoaded = true;
+				} else {
+					Foxtrick.util.css.getCssTextCollection().then(cssText => {
+						Foxtrick.util.inject.css(document, cssText, 'ft-module-css');
+						Foxtrick.entry.cssLoaded = true;
+					});
+				}
 
 				if (Foxtrick.platform == 'Safari') {
 					// safari context menu special paste listener
