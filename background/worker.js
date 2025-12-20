@@ -38,3 +38,12 @@ importScripts('../content/shortcuts-and-tweaks/context-menu-copy.js');
 // entry point
 importScripts('../content/entry.js');
 importScripts('../content/background.js');
+
+const startHandler = () => {
+    // always disable these at start/restart
+	Foxtrick.Prefs.setBool('featureHighlight', false);
+	Foxtrick.Prefs.setBool('translationKeys', false);
+};
+
+chrome.runtime.onStartup.addListener(startHandler);
+chrome.runtime.onInstalled.addListener(startHandler);
