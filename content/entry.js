@@ -417,11 +417,13 @@ Foxtrick.entry.checkCSS = function(doc) {
 	if (Foxtrick.util.layout.hasMultipleTeams(doc))
 		html.dataset.multiple = 'true';
 
-	// reload CSS if not loaded
-	if (!Foxtrick.entry.cssLoaded) {
-		Foxtrick.log('CSS not loaded');
+	if (Foxtrick.Manifest.manifest_version == 2) {
+		// reload CSS if not loaded
+		if (!Foxtrick.entry.cssLoaded) {
+			Foxtrick.log('CSS not loaded');
 
-		Foxtrick.util.css.reloadModuleCSS(doc);
-		Foxtrick.entry.cssLoaded = true;
+			Foxtrick.util.css.reloadModuleCSS(doc);
+			Foxtrick.entry.cssLoaded = true;
+		}
 	}
 };
