@@ -164,8 +164,10 @@ Foxtrick.loader.background.browserLoad = async function() {
 		};
 
 		await updateResources();
-		Foxtrick.Prefs.setBool('featureHighlight', false);
-		Foxtrick.Prefs.setBool('translationKeys', false);
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			Foxtrick.Prefs.setBool('featureHighlight', false);
+			Foxtrick.Prefs.setBool('translationKeys', false);
+		}
 
 		// calls module.onLoad() after the extension is loaded
 		for (let module of Object.values(Foxtrick.modules)) {
