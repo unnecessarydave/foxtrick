@@ -216,9 +216,16 @@ Foxtrick.util.css.loadModuleCSS = function(doc) {
 	Foxtrick.util.css.unloadModuleCSS(doc);
 
 	let files = Foxtrick.util.css.collectModuleCSS();
-	Foxtrick.SB.ext.sendRequest({ req: 'getCss', files }, (data) => {
-		Foxtrick.util.inject.css(doc, data.cssText, 'ft-module-css');
-	});
+
+	if (Foxtrick.Manifest.manifest_version == 2) {
+		Foxtrick.SB.ext.sendRequest({ req: 'getCss', files }, (data) => {
+			Foxtrick.util.inject.css(doc, data.cssText, 'ft-module-css');
+		});
+	} else {
+		Foxtrick.util.css.getCssFileArrayToString(files).then(cssText => {
+			Foxtrick.util.inject.css(doc, cssText, 'ft-module-css')
+		});
+	}
 };
 
 /**

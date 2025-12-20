@@ -151,7 +151,8 @@ Foxtrick.loader.background.browserLoad = async function() {
 			for (let [lang, obj] of Object.entries(Foxtrick.L10n.htLanguagesJSON))
 				htLanguagesJSONText[lang] = JSON.stringify(obj);
 
-			cssTextCollection = await Foxtrick.util.css.getCssTextCollection();
+			if (Foxtrick.Manifest.manifest_version == 2)
+				cssTextCollection = await Foxtrick.util.css.getCssTextCollection();
 
 			let localeCode = Foxtrick.Prefs.getString('htLanguage');
 			if (localeCode) {
@@ -197,6 +198,7 @@ Foxtrick.loader.background.browserLoad = async function() {
 				arch == 'Sandboxed' && manifest == 3 && Foxtrick.Prefs.getBool('preferences.updated')	||
 				Foxtrick.platform == 'Android' && Foxtrick.Prefs._prefs_gecko.getBoolPref('preferences.updated')) {
 
+				Foxtrick.log('Preference update detected - updating resource dictionary.');
 				// reInit
 				updateResources(true).then(() => {
 					sendResponse(buildResource());
@@ -241,7 +243,8 @@ Foxtrick.loader.background.browserLoad = async function() {
 
 				if (request.req == 'pageLoad') {
 					Foxtrick.modules.UI.update(sender.tab);
-					resource.cssText = cssTextCollection;
+					if (Foxtrick.Manifest.manifest_version == 2)
+						resource.cssText = cssTextCollection;
 				}
 
 				return resource;
@@ -346,13 +349,15 @@ Foxtrick.loader.background.browserLoad = async function() {
 			}
 		};
 
-		// from misc.js. getting files, convert text
-		this.requests.getCss = function({ files }, sender, sendResponse) {
-			// @param files - an array of files to be loaded into string
-			Foxtrick.util.css.getCssFileArrayToString(files).then(cssText => {
-				sendResponse({ cssText })});
-			return true; //async
-		};
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			// from misc.js. getting files, convert text
+			this.requests.getCss = function({ files }, sender, sendResponse) {
+				// @param files - an array of files to be loaded into string
+				Foxtrick.util.css.getCssFileArrayToString(files).then(cssText => {
+					sendResponse({ cssText })});
+				return true; //async
+			};
+		}
 
 		// TODO
 		// this.requests.convertImages = function(request, sender, sendResponse) {
