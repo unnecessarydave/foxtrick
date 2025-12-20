@@ -276,7 +276,7 @@ Foxtrick.fetch = function(url, params) {
  * @param  {number}          [now]
  * @return {Promise<string|FetchError>}
  */
-Foxtrick.load = function(url, params, lifeTime, now) {
+Foxtrick.load = async function(url, params, lifeTime, now) {
 	let pUrl = Foxtrick.parseURL(url);
 
 	if (Foxtrick.context == 'content') {
@@ -310,7 +310,7 @@ Foxtrick.load = function(url, params, lifeTime, now) {
 		});
 	}
 
-	let obj = Foxtrick.cache.getFor(pUrl, params, lifeTime, now);
+	let obj = await Foxtrick.cache.getFor(pUrl, params, lifeTime, now);
 	if (obj && 'promise' in obj)
 		return obj.promise;
 
@@ -350,12 +350,16 @@ Foxtrick.cache = (function() {
 		 */
 		const CACHE_OBJECTS = new Map();
 
+		// session key prefix where persisted cache entries are stored
+		// each cached entry will be stored under SESSION_KEY_PREFIX + id
+		const SESSION_KEY_PREFIX = 'fetchCache.';
+
 		/**
 		 * Generate an ID to index cache objects by
 		 *
 		 * @param  {string} url
 		 * @param  {object} [params]
-		 * @return {string}
+		 * @returns {string}
 		 */
 		var genId = function(url, params) {
 			let id = url;
@@ -370,18 +374,32 @@ Foxtrick.cache = (function() {
 		 *
 		 * @param  {string}        url
 		 * @param  {object}        [params]
-		 * @return {FTCacheObject}
+		 * @returns {Promise<FTCacheObject>}
 		 */
 		var get = function(url, params) {
 			let id = genId(url, params);
 
 			let obj = CACHE_OBJECTS.get(id);
-			if (!obj) {
-				// no cache
-				return null;
+			if (obj) {
+				return Promise.resolve(obj);
+			} else {
+				if (Foxtrick.Manifest.manifest_version == 2) {
+					return null;
+				} else {
+					// no in-memory cache: try to restore from session
+					let key = SESSION_KEY_PREFIX + id;
+					return Foxtrick.session.get(key).then(entry => {
+						if (entry && typeof entry === 'object' && typeof entry.value === 'string') {
+							var cacheObj = { promise: Promise.resolve(entry.value) };
+							if (entry.lifeTime)
+								cacheObj.lifeTime = entry.lifeTime;
+							CACHE_OBJECTS.set(id, cacheObj);
+							return cacheObj;
+						}
+						return null;
+					});
+				}
 			}
-
-			return obj;
 		};
 
 		/**
@@ -389,19 +407,41 @@ Foxtrick.cache = (function() {
 		 *
 		 * obj should be {promise: Promise, lifeTime}.
 		 *
+		 * When the promise fulfills with a string, persist that value to
+		 * session storage so the service worker can restore it after unload.
+		 * Note: persistence only stores fulfilled responses (no pending or
+		 * rejected promises are preserved).
+		 *
 		 * @param  {string}        url
 		 * @param  {object}        params
 		 * @param  {FTCacheObject} obj
 		 */
 		var set = function(url, params, obj) {
 			let id = genId(url, params);
+
+			if (obj === null) {
+				CACHE_OBJECTS.delete(id);
+				if (Foxtrick.Manifest.manifest_version == 3)
+					Foxtrick.session.set(SESSION_KEY_PREFIX + id, null);
+				return;
+			}
+
 			CACHE_OBJECTS.set(id, obj);
 
 			if (obj && obj.promise) {
-				obj.promise.catch(() => {
+				obj.promise.then(value => {
+					// Only persist primitive/string results (successful fetches)
+					if (Foxtrick.Manifest.manifest_version == 3 && typeof value === 'string') {
+						var key = SESSION_KEY_PREFIX + id;
+						Foxtrick.session.set(key, { value: value, lifeTime: obj.lifeTime || null });
+					}
+				}).catch(() => {
 					// bad promise: remove cache object
 					if (CACHE_OBJECTS.get(id) === obj)
 						CACHE_OBJECTS.delete(id);
+
+					if (Foxtrick.Manifest.manifest_version == 3)
+						Foxtrick.session.set(SESSION_KEY_PREFIX + id, null);
 				});
 			}
 		};
@@ -423,11 +463,11 @@ Foxtrick.cache = (function() {
 			 * @param  {object}        [params]
 			 * @param  {number|string} [aLifeTime]
 			 * @param  {number}        [now]
-			 * @return {FTCacheObject|FTCacheMiss}
+			 * @returns {Promise<FTCacheObject|FTCacheMiss>}
 			 */
-			getFor: function(url, params, aLifeTime, now) {
+			getFor: async function(url, params, aLifeTime, now) {
 
-				let obj = get(url, params);
+				let obj = await get(url, params);
 				if (!obj)
 					return null;
 
@@ -453,7 +493,7 @@ Foxtrick.cache = (function() {
 				}
 
 				if (typeof aLifeTime === 'number' &&
-				    (typeof cache !== 'object' || cache.getTime() > aLifeTime)) {
+					(typeof cache !== 'object' || cache.getTime() > aLifeTime)) {
 					// obj.lifeTime was not a number but aLifeTime is
 					// or aLifeTime is sooner than obj.lifeTime
 
@@ -474,7 +514,7 @@ Foxtrick.cache = (function() {
 				}
 
 				Foxtrick.log('Using cache for:', url, 'until', cache.toString(),
-				             'now:', date.toString());
+							 'now:', date.toString());
 
 				return obj;
 
@@ -490,7 +530,7 @@ Foxtrick.cache = (function() {
 			 * @param  {string}        url
 			 * @param  {object}        [params]
 			 * @param  {number|string} [lifeTime]
-			 * @return {function(Promise<string|FetchError>):void}
+			 * @returns {function(Promise<string|FetchError>):void}
 			 */
 			setFor: function(url, params, lifeTime) {
 				return (pr) => {
@@ -522,6 +562,8 @@ Foxtrick.cache = (function() {
 			 */
 			clear: function() {
 				CACHE_OBJECTS.clear();
+				if (Foxtrick.Manifest.manifest_version == 3)
+					Foxtrick.session.deleteBranch(SESSION_KEY_PREFIX);
 			},
 		};
 
