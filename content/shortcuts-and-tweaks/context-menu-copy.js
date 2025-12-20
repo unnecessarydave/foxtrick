@@ -10,44 +10,48 @@
 	if (Foxtrick.platform == 'Android')
 		return;
 
-	// option: corresponding to OPTIONS
-	// func: function to be called for getting text
-	// item: menu item for Firefox and Chrome
-	// copyText: text to be copied
-	var contextEntries = {
-		'foxtrick-popup-copy-id': {
-			option: 'Id',
-			func: Foxtrick.util.htMl.getId,
-			item: null,
-			copyText: null,
-		},
-		'foxtrick-popup-copy-link': {
-			option: 'Link',
-			func: Foxtrick.util.htMl.getLink,
-			item: null,
-			copyText: null,
-		},
-		'foxtrick-popup-copy-external-link': {
-			option: 'external',
-			func: function(node) {
-				return Foxtrick.util.htMl.getLink(node, { external: true });
+	if (Foxtrick.Manifest.manifest_version == 2 ||
+		(Foxtrick.Manifest.manifest_version == 3 && Foxtrick.context == 'content')) {
+
+		// option: corresponding to OPTIONS
+		// func: function to be called for getting text
+		// item: menu item for Firefox and Chrome
+		// copyText: text to be copied
+		var contextEntries = {
+			'foxtrick-popup-copy-id': {
+				option: 'Id',
+				func: Foxtrick.util.htMl.getId,
+				item: null,
+				copyText: null,
 			},
-			item: null,
-			copyText: null,
-		},
-		'foxtrick-popup-copy-ht-ml': {
-			option: 'HtMl',
-			func: Foxtrick.util.htMl.getHtMl,
-			item: null,
-			copyText: null,
-		},
-		'foxtrick-popup-copy-table': {
-			option: 'Table',
-			func: Foxtrick.util.htMl.getTable,
-			item: null,
-			copyText: null,
-		},
-	};
+			'foxtrick-popup-copy-link': {
+				option: 'Link',
+				func: Foxtrick.util.htMl.getLink,
+				item: null,
+				copyText: null,
+			},
+			'foxtrick-popup-copy-external-link': {
+				option: 'external',
+				func: function(node) {
+					return Foxtrick.util.htMl.getLink(node, { external: true });
+				},
+				item: null,
+				copyText: null,
+			},
+			'foxtrick-popup-copy-ht-ml': {
+				option: 'HtMl',
+				func: Foxtrick.util.htMl.getHtMl,
+				item: null,
+				copyText: null,
+			},
+			'foxtrick-popup-copy-table': {
+				option: 'Table',
+				func: Foxtrick.util.htMl.getTable,
+				item: null,
+				copyText: null,
+			},
+		};
+	}
 
 	Foxtrick.modules.ContextMenuCopy = {
 		MODULE_CATEGORY: Foxtrick.moduleCategories.SHORTCUTS_AND_TWEAKS,
