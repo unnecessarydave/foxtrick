@@ -231,7 +231,14 @@ Foxtrick.util.api = {
 		clearCacheSpan.textContent = Foxtrick.L10n.getString('api.clearCache');
 		clearCacheSpan.title = Foxtrick.L10n.getString('api.clearCache.title');
 		bottom.insertBefore(clearCacheSpan, bottom.firstChild);
-		Foxtrick.onClick(clearCacheSpan, Foxtrick.util.api.clearCache);
+		Foxtrick.onClick(clearCacheSpan, function() {
+			try {
+				const doc = this.ownerDocument;
+				// clear all caches to be consistent with other 'clear cache' links
+				Foxtrick.clearCaches();
+				doc.location.reload();
+			} catch (e) { Foxtrick.log(e); }
+		});
 	},
 
 	/**
