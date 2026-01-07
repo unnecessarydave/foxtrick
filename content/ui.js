@@ -179,27 +179,54 @@ if (Foxtrick.platform == 'Chrome') {
 		if (!tab || !tab.id)
 			return;
 
-		if (Foxtrick.Manifest.manifest_version == 2)
-			chrome.pageAction.show(tab.id);  // icon always shown in mv3
+		if (Foxtrick.Manifest.manifest_version == 2) {
+			chrome.pageAction.show(tab.id);
 
-		var iconUrl = '', statusText = '';
-		if (Foxtrick.Prefs.getBool('disableTemporary')) {
-			iconUrl = '../skin/disabled-24.png';
-			statusText = Foxtrick.L10n.getString('status.disabled');
+			let iconUrl = '', statusText = '';
+			if (Foxtrick.Prefs.getBool('disableTemporary')) {
+				iconUrl = '../skin/disabled-24.png';
+				statusText = Foxtrick.L10n.getString('status.disabled');
+			}
+			else {
+				iconUrl = '../skin/icon-24.png';
+				statusText = Foxtrick.L10n.getString('status.active');
+			}
+			let tooltipText = Foxtrick.L10n.getString('toolbar.title') + ' ' +
+				Foxtrick.version + ' ' + Foxtrick.branch + ' (' + statusText + ')';
+
+			chrome.pageAction.setIcon({ tabId: tab.id, path: iconUrl });
+			chrome.pageAction.setTitle({ tabId: tab.id, title: tooltipText });
+		} else {
+			// mv3
+			if (!tab.url)
+				return; // called too early
+
+			const pageURL = tab.url;
+			if (Foxtrick.isHtUrl(pageURL) && !Foxtrick.isExcluded(pageURL)) {
+				chrome.action.enable(tab.id);
+			}
+
+			let iconUrl = '', statusText = '';
+			if (!Foxtrick.isHtUrl(pageURL) || Foxtrick.isExcluded(pageURL)) {
+				iconUrl = '../skin/disabled-24.png';
+				statusText = Foxtrick.L10n.getString('status.enabled').replace('%s', pageURL);
+			} else if (Foxtrick.Prefs.getBool('disableOnStage') && Foxtrick.isStage(pageURL)) {
+				iconUrl = '../skin/disabled-24.png';
+				statusText = Foxtrick.L10n.getString('status.enabled').replace('%s', 'stage');
+			} else if (Foxtrick.Prefs.getBool('disableTemporary')) {
+				iconUrl = '../skin/disabled-24.png';
+				statusText = Foxtrick.L10n.getString('status.disabled');
+			} else {
+				iconUrl = '../skin/icon-24.png';
+				statusText = Foxtrick.L10n.getString('status.active');
+			}
+
+			let tooltipText = Foxtrick.L10n.getString('toolbar.title') + ' ' +
+				Foxtrick.version + ' ' + Foxtrick.branch + ' (' + statusText + ')';
+
+			chrome.action.setIcon({ tabId: tab.id, path: iconUrl });
+			chrome.action.setTitle({ tabId: tab.id, title: tooltipText });
 		}
-		else {
-			iconUrl = '../skin/icon-24.png';
-			statusText = Foxtrick.L10n.getString('status.active');
-		}
-		var tooltipText = Foxtrick.L10n.getString('toolbar.title') + ' ' +
-			Foxtrick.version + ' ' + Foxtrick.branch + ' (' + statusText + ')';
-
-		const actionApi = Foxtrick.Manifest.manifest_version == 2 ? chrome.pageAction : chrome.action;
-
-		if (actionApi.setIcon)
-			actionApi.setIcon({ tabId: tab.id, path: iconUrl });
-		if (actionApi.setTitle)
-			actionApi.setTitle({ tabId: tab.id, title: tooltipText });
 	};
 }
 

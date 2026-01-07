@@ -24,6 +24,14 @@ Foxtrick.loader.chrome.docLoadStart = function() {
 	// eslint-disable-next-line consistent-this
 	const LOADER = this;
 	try {
+		const updateUI = function() {
+			if (document.readyState === 'complete') {
+				Foxtrick.SB.ext.sendRequest({ req: 'updateUI'});
+				document.removeEventListener('readystatechange', updateUI);
+			}
+		};
+		document.addEventListener('readystatechange', updateUI);
+
 		if (!Foxtrick.isHtUrl(document.location.href) || Foxtrick.isExcluded(document))
 			return;
 
@@ -104,7 +112,7 @@ Foxtrick.loader.chrome.docLoadStart = function() {
 			} catch (e) {
 				Foxtrick.logFatalError('Loader - docLoad error:', e);
 			}
-		}
+		};
 
 		// that's our normal entry point unless init took too long.
 		window.addEventListener('DOMContentLoaded', function() {
