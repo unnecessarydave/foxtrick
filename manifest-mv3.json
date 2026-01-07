@@ -275,7 +275,6 @@
 	"name": "Foxtrick",
 	"permissions": [
 		"declarativeContent",
-		"activeTab",
 		"storage",
 		"cookies",
 		"contextMenus",
@@ -303,7 +302,8 @@
 	"action": {
 		"default_icon": "/skin/icon-24.png",
 		"default_title": "Foxtrick",
-		"default_popup": "content/popup.html"
+		"default_popup": "content/popup.html",
+		"default_state": "disabled"
 	},
 	"minimum_chrome_version": "116",
 	"options_ui" : {
