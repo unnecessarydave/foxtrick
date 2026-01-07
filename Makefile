@@ -64,6 +64,7 @@ ROOT_FOLDERS_CHROME = $(ROOT_FOLDERS) \
 	background/
 
 ROOT_FOLDERS_FIREFOX = $(ROOT_FOLDERS) \
+	background/
 
 SCRIPT_FOLDERS = \
 	api/ \
@@ -134,7 +135,7 @@ endif
 
 	# copy manifest
 	# - note: this will not propagate manifest changes to build-dev/firefox
-	# - do make clean-firefox and restart mozilla web-ext
+	# - do "make clean-firefox firefox" and restart mozilla web-ext
 	[ -f $(BUILD_DIR)/manifest.json ] || cp $(MANIFEST_FIREFOX) $(BUILD_DIR)/manifest.json
 
 	# content/
@@ -186,6 +187,10 @@ endif
 	cat foxtrick.js foxtrick.android > foxtrick.android.js; \
 	rm foxtrick.android
 
+	# remove chrome configuration
+	cd $(BUILD_DIR); \
+	sed -i '/\/\/ <!-- chrome-specific -->/,/\/\/ <!-- end chrome-specific -->/d' manifest.json
+
 	# strip manifest comments
 	cd $(BUILD_DIR); \
 	sed -i -r '/\/\/ <!--/d' manifest.json
@@ -223,9 +228,9 @@ endif
 	# copy manifest
 	cp $(MANIFEST_CHROME) $(BUILD_DIR)/manifest.json
 
-	# remove manifest gecko info
+	# remove firefox configuration
 	cd $(BUILD_DIR); \
-	sed -i '/<!-- gecko-specific -->/,/<!-- end gecko-specific -->/d' manifest.json
+	sed -i '/\/\/ <!-- firefox-specific -->/,/\/\/ <!-- end firefox-specific -->/d' manifest.json
 
 	# content/
 	[ -d $(BUILD_DIR)/content ] || mkdir $(BUILD_DIR)/content

@@ -111,7 +111,7 @@
 
 				    // event handler that populates the menu as per the request
 				    // sent from the browser after right-click
-					const handler = async function(request) {
+					const handler = function(request) {
 						if (request.req !== 'updateContextMenu')
 							return;
 
@@ -119,23 +119,29 @@
 							'*://*.hattrick.org/*',
 						];
 
-						// removeAll is only Promisified in chrome 123+
-						await new Promise(resolve => chrome.contextMenus.removeAll(resolve));
+						const createMenus =  function() {
+							for (let type in request.entries) {
+								let source = request.entries[type];
 
-						// add new entries
-						for (let type in request.entries) {
-							let source = request.entries[type];
+								chrome.contextMenus.create({
+									id: type,
+									title: source.title,
+									contexts: ['all'],
+									documentUrlPatterns,
+								});
+							}
+						};
 
-							chrome.contextMenus.create({
-								id: type,
-								title: source.title,
-								contexts: ['all'],
-								documentUrlPatterns,
-							});
+						if (typeof browser === 'undefined') {
+							// Chrome
+							// removeAll is only Promisified in chrome 123+
+							new Promise(resolve => chrome.contextMenus.removeAll(resolve)).then(createMenus);
+						} else {
+							// Firefox
+							browser.contextMenus.removeAll().then(createMenus);
 						}
-
 						return true;
-					}
+					};
 					Foxtrick.SB.ext.onRequest.addListener(handler);
 
 					// add menu onClick listener - sends message to content script

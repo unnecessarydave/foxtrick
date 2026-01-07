@@ -294,7 +294,6 @@
 		"default_title": "Foxtrick enabled",
 		"default_popup": "content/popup.html"
 	},
-	"minimum_chrome_version": "73",
 	"options_ui" : {
 		"page": "content/preferences.html",
 		"chrome_style": false,
@@ -302,7 +301,7 @@
 		"open_in_tab": true
 	},
 	"homepage_url": "https://foxtrick-ng.github.io/",
-	// <!-- gecko-specific -->
+	// <!-- firefox-specific -->
 	"browser_specific_settings": {
 		"gecko": {
 			"strict_min_version": "63.0a1",
@@ -310,6 +309,6 @@
 			"id": "foxtrick-webext-dev@foxtrick.org"
 		}
 	},
-	// <!-- end gecko-specific -->
-	"version": "0.18.0"
+	// <!-- end firefox-specific -->
+	"version": "0.19.0"
 }

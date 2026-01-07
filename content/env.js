@@ -42,9 +42,18 @@ Foxtrick.platform = 'Browser';
  *
  * Signifies separation of permissions
  *
- * @type {string}
+ * @type {Foxtrick.context}
  */
 Foxtrick.context = 'content';
+
+/**
+ * Detailed execution environment.
+ *
+ * 'content-script' | 'service-worker' | 'event-page' | 'background-page'| 'action' | 'extension-page'
+ *
+ * @type {Foxtrick.execEnv}
+ */
+Foxtrick.execEnv = 'content-script';
 
 /**
  * Path to content/ files from an internal context.
@@ -413,14 +422,15 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 				// set context to background for service worker only
 				if (typeof document === 'undefined')
 					ret = 'background';
+				else if (location.href == Foxtrick.Manifest.background.page)
+					ret = 'background';
 				else
 					ret = 'content';
 			}
 			return ret;
 		});
 
-		// Detailed execution environment: 'content-script' | 'service-worker' |
-		// 'action' | 'extension-page' | 'background-page'
+		// detailed execution environment
 		Foxtrick.lazyProp(Foxtrick, 'execEnv', function() {
 			try {
 				var href = (typeof location !== 'undefined' && location.href) ? location.href : '';
@@ -431,7 +441,10 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 				// Background contexts
 				if (Foxtrick.context === 'background') {
 					if (Foxtrick.Manifest.manifest_version == 3) {
-						return 'service-worker';
+						if (Foxtrick.Manifest.background.page)
+							return 'event-page';
+						else
+							return 'service-worker';
 					}
 					// MV2 background is a page in the extension
 					return 'background-page';
@@ -587,3 +600,6 @@ if (Foxtrick.platform !== 'Android') {
 /** @typedef {(response?: any) => void} ResponseCb */
 // eslint-disable-next-line max-len
 /** @typedef {(message: any, sender: chrome.runtime.MessageSender, sendResponse: ResponseCb) => Promise<boolean>|boolean|void} OnMessageListener */
+
+/** @typedef {'background'|'content'} Foxtrick.context */
+/** @typedef {'content-script'|'service-worker'|'event-page'|'background-page'|'action'|'extension-page'} Foxtrick.execEnv */

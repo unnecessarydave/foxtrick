@@ -164,6 +164,11 @@ if (Foxtrick.platform == 'Chrome') {
 		actionApi.onClicked.addListener(function(tab) {
 			Foxtrick.Prefs.disable(tab); // in case pop-up is disabled
 		});
+
+		// mv3 action should be disabled by default, but Firefox does not support
+		// default_state in manifest, so we disable by default here
+		if (Foxtrick.Manifest.manifest_version == 3 && Foxtrick.execEnv == 'event-page')
+			chrome.action.disable();
 	};
 
 	Foxtrick.modules.UI.update = function(tab) {
@@ -229,7 +234,6 @@ if (Foxtrick.platform == 'Chrome') {
 		}
 	};
 }
-
 
 else if (Foxtrick.platform == 'Safari') {
 
