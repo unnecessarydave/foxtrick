@@ -416,24 +416,18 @@ Foxtrick.isHtUrl = function(url) {
 	const HT_RES = [
 		/^(https?:)?\/\/(www(\d{2})?\.)?hattrick\.org(\/|$)/i,
 		/^(https?:)?\/\/stage\.hattrick\.org(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.ws(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.bz(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hat-trick\.net(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.uol\.com\.br(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.interia\.pl(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.name(\/|$)/i,
-		/^(https?:)?\/\/www(\d{2})?\.hattrick\.fm(\/|$)/i,
 	];
 	return Foxtrick.any(re => re.test(url), HT_RES);
 };
 
 /**
- * @param  {document} doc
- * @return {boolean}
+ * @param  {document|string} page document object or url string
+ * @returns {boolean}
  */
-Foxtrick.isStage = function(doc) {
+Foxtrick.isStage = function(page) {
 	const STAGE_RE = /^https?:\/\/stage\.hattrick\.org(\/|$)/i;
-	return STAGE_RE.test(doc.URL);
+	let url = typeof page === 'string' ? page: page.URL;
+	return STAGE_RE.test(url);
 };
 
 /**

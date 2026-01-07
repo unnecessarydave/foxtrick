@@ -314,6 +314,11 @@ Foxtrick.loader.background.browserLoad = async function() {
 				sendResponse(Foxtrick.jsonError(e));
 				return false;
 			}
+		}
+
+		// update page action
+		this.requests.updateUI = function(request, sender) {
+			Foxtrick.modules.UI.update(sender.tab);
 		};
 
 		// ----- end of init part. ------

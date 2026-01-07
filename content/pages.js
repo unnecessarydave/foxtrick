@@ -261,16 +261,24 @@ Foxtrick.isPageHref = function(href, reStr) {
 };
 
 /**
- * Test whether Foxtrick should not run on this document
+ * Test whether Foxtrick should not run on this page
  *
- * @param  {document} doc
- * @return {boolean}
+ * @param  {document|string} page document object or url string
+ * @returns {boolean}
  */
-Foxtrick.isExcluded = function(doc) {
+Foxtrick.isExcluded = function(page) {
 	for (let i in this.pagesExcluded) {
 		let pageRe = this.pagesExcluded[i];
-		// eslint-disable-next-line no-restricted-properties
-		if (this.isPageHref(doc.location.pathname + doc.location.search, pageRe)) {
+
+		let location;
+		if (typeof page === 'string') {
+			const url = new URL(page);
+			location = url.pathname + url.search;
+		} else {
+			location = page.location.pathname + page.location.search
+		}
+
+		if (this.isPageHref(location, pageRe)) {
 			// page excluded, return
 			return true;
 		}
