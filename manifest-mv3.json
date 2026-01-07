@@ -20,8 +20,13 @@
 		}
 	],
 	"background": {
-        "service_worker": "background/worker.js"
-    },
+		// <!-- chrome-specific -->
+		"service_worker": "background/worker.js"
+		// <!-- end chrome-specific -->
+		// <!-- firefox-specific -->
+		"page": "background/background.html"
+		// <!-- end firefox-specific -->
+	},
 	"content_scripts": [ {
 		"js": [
 			// <!-- essential -->
@@ -274,7 +279,9 @@
 	},
 	"name": "Foxtrick",
 	"permissions": [
+		// <!-- chrome-specific -->
 		"declarativeContent",
+		// <!-- end chrome-specific -->
 		"storage",
 		"cookies",
 		"contextMenus",
@@ -300,25 +307,32 @@
 		"https://*.sentry.io/*"
 	],
 	"action": {
+		// <!-- chrome-specific -->
+		"default_state": "disabled",
+		// <!-- end chrome-specific -->
+		// <!-- firefox-specific -->
+		"default_area": "navbar",
+		// <!-- end firefox-specific -->
 		"default_icon": "/skin/icon-24.png",
 		"default_title": "Foxtrick",
-		"default_popup": "content/popup.html",
-		"default_state": "disabled"
+		"default_popup": "content/popup.html"
 	},
+	// <!-- chrome-specific -->
 	"minimum_chrome_version": "116",
+	// <!-- end chrome-specific -->
 	"options_ui" : {
 		"page": "content/preferences.html",
 		"open_in_tab": true
 	},
 	"homepage_url": "https://foxtrick-ng.github.io/",
-	// <!-- gecko-specific -->
+	// <!-- firefox-specific -->
 	"browser_specific_settings": {
 		"gecko": {
-			"strict_min_version": "63.0a1",
+			"strict_min_version": "109.0",
 			"update_url": "https://www.foxtrick.org/nightly/update.rdf",
 			"id": "foxtrick-webext-dev@foxtrick.org"
 		}
 	},
-	// <!-- end gecko-specific -->
+	// <!-- end firefox-specific -->
 	"version": "0.19.0"
 }
