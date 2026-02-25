@@ -482,7 +482,7 @@ Foxtrick.Pages.Players.getPlayerList = function(doc, callback, options) {
 		}
 		else {
 			args.push(['file', 'players']);
-			args.push(['version', '2.4']);
+			args.push(['version', '2.8']);
 			args.push(['teamId', teamId]);
 
 			if (!options || !options.currentSquad) {
