@@ -272,8 +272,7 @@
 		"contextMenus",
 		"notifications",
 		"clipboardWrite",
-		"*://chpp.hattrick.org/*",
-		"*://*.foxtrick.org/*"
+		"*://chpp.hattrick.org/*"
 	],
 	"optional_permissions": [
 		"https://*.hattrick-youthclub.org/*",
