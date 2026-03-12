@@ -10,10 +10,14 @@ Foxtrick.modules.TableOfStatisticalTruth = {
 	MODULE_CATEGORY: Foxtrick.moduleCategories.INFORMATION_AGGREGATION,
 	PAGES: ['oldSeries', 'seriesHistoryNew'],
 	CSS: Foxtrick.InternalPath + 'resources/css/table-of-statistical-truth.css',
+	PERMISSIONS: { module: { origins: ['https://www.fantamondi.it/HTMS/*'] } },
 
 	/** @param {document} doc */
-	run: function(doc) {
+	run: async function(doc) {
 		var module = this;
+
+		if (!(await Foxtrick.Prefs.isModuleOptionPermitted(module, 'module')))
+			return;
 
 		/** @type {HTMLSelectElement} */
 		var seasonSelect = doc.querySelector('#mainBody select');
