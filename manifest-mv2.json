@@ -279,13 +279,6 @@
 		"https://*.hattrick-youthclub.org/*",
 		"https://api.mercattrick.com/*",
 		"https://www.fantamondi.it/HTMS/*",
-		"https://vimeo.com/api/*",
-		"https://www.youtube.com/*",
-		"https://www.dailymotion.com/services/*",
-		"https://secure.flickr.com/services/oembed/*",
-		"http://backend.deviantart.com/*",
-		"https://soundcloud.com/*",
-		"https://imageshack.us/*",
 		"https://*.sentry.io/*"
 	],
 	"page_action": {
