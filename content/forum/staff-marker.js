@@ -443,8 +443,7 @@ Foxtrick.modules.StaffMarker = {
 
 		var parsePromises = Foxtrick.map(function(url) {
 
-			// FIXME: mirror code in load.js for now; change this when HT_TIME nonsense is reviewed
-			let ts = Foxtrick.modules.Core?.HT_TIME ? Foxtrick.modules.Core.HT_TIME : Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
+			let ts = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 			return Foxtrick.load(url, undefined, ts + this.CACHE_MSECS)
 			.then(function(text) {
 

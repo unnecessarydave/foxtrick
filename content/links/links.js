@@ -169,8 +169,7 @@ Foxtrick.modules.Links = {
 			// Foxtrick.log('loading feed:', feed);
 
 			try {
-				// FIXME: mirror code in load.js for now; change this when HT_TIME nonsense is reviewed
-				let ts = Foxtrick.modules.Core?.HT_TIME ? Foxtrick.modules.Core.HT_TIME : Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
+				let ts = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 				let text = /** @type {string} */ (await Foxtrick.load(feed, undefined, ts + this.CACHE_MSECS));
 
 				if (text) {
