@@ -282,20 +282,14 @@ Foxtrick.load = async function(url, params, lifeTime, now) {
 	if (Foxtrick.context == 'content') {
 		return new Promise(function(fulfill, reject) {
 
-			var HT_TIME = Foxtrick.modules.Core.HT_TIME;
-			if (!HT_TIME) {
-				// No HT_TIME yet. We have been too quick
-				// Lets put us 1 day in the future
-				Foxtrick.log('no HT_TIME yet');
-				HT_TIME = Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
-			}
+			let TIME = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 
 			let req = {
 				req: 'load',
 				url: pUrl,
 				params,
 				lifeTime,
-				now: HT_TIME,
+				now: TIME,
 			};
 
 			Foxtrick.SB.ext.sendRequest(req, function(response) {

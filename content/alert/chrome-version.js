@@ -39,7 +39,7 @@ Foxtrick.modules['NotifyChromeVersion'] = {
     NEXT_CHECK_KEY: `NotifyChromeVersion.nextCheck`,
 
     run: async function(doc) {
-        /** @ts-ignore */
+        //@ts-expect-error
         if (!navigator.userAgentData) // only defined in chromium browsers
             return;
 
@@ -47,9 +47,8 @@ Foxtrick.modules['NotifyChromeVersion'] = {
 
         /**
          * Timestamp representing the current time
-         * - Foxtrick.load() uses UTC HT_TIME for comparisons, so we do the same.
          */
-        const NOW = Foxtrick.modules.Core.HT_TIME || Date.now();
+        const NOW = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 
         /**
          * Compare two version strings in the format x.x.x.x
@@ -98,7 +97,7 @@ Foxtrick.modules['NotifyChromeVersion'] = {
         /**
          * Logging helper function
          * - Uses Foxtrick.log() to log messages with the module name as prefix.
-         * @param {String} text - The message to log.
+         * @param {string} text - The message to log.
          */
         const log = function(text) {
             Foxtrick.log(`${MODULE.MODULE_NAME || 'NotifyChromeVersion'}: ${text}`);
@@ -139,7 +138,7 @@ Foxtrick.modules['NotifyChromeVersion'] = {
             // Parse updates array in json.
             let updates;
             try {
-                /** @ts-ignore - if jsonText is not a string, FetchError will be caught in try/catch above */
+                //@ts-expect-error - if jsonText is not a string, FetchError will be caught in try/catch above */
                 const json = JSON.parse(jsonText);
                 updates = json.addons?.[MODULE.GUID]?.updates;
                 if (!updates || !Array.isArray(updates))

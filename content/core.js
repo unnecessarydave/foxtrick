@@ -38,11 +38,18 @@ Foxtrick.modules.Core = {
 	PLAYER_LIST: [],
 
 	/**
-	 * UTC timestamp
+	 * HT timestamp
 	 *
 	 * @type {number}
 	 */
 	HT_TIME: 0,
+
+	/**
+	 * UTC timestamp
+	 *
+	 * @type {number}
+	 */
+	UTC_TIME: Date.now(),
 
 	/**
 	 * @param {document} doc
@@ -54,10 +61,11 @@ Foxtrick.modules.Core = {
 
 		CORE.monitorWeekChanges(doc);
 
-		const UTC = Foxtrick.util.time.getUTCDate(doc);
-		if (UTC) {
-			CORE.HT_TIME = UTC.getTime();
-			Foxtrick.Prefs.setString('lastTime', String(CORE.HT_TIME));
+		Foxtrick.Prefs.setString('lastTime', String(CORE.UTC_TIME));
+
+		const HT_TIME = Foxtrick.util.time.getHTTimeStamp(doc);
+		if (HT_TIME) {
+			CORE.HT_TIME = HT_TIME;
 		}
 
 		if (Foxtrick.isPage(doc, 'matchOrder')) {

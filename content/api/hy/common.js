@@ -95,8 +95,7 @@ Foxtrick.api.hy.ignoreHours = Foxtrick.util.time.HOURS_IN_DAY;
  * @return {Promise<TData>}
  */
 Foxtrick.api.hy._fetchViaCache = async (api, fetch, cacheDays, teamId) => {
-	// this produces a valid UNIX timestamp that can be compared to HY
-	const now = Foxtrick.modules.Core.HT_TIME;
+	const now = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 	const MSEC = Foxtrick.util.time.MSECS_IN_SEC;
 	const cacheTime = cacheDays * Foxtrick.util.time.MSECS_IN_DAY;
 
@@ -195,10 +194,7 @@ Foxtrick.api.hy._fetchViaCache = async (api, fetch, cacheDays, teamId) => {
  * @return {Promise<string|FetchError>} rejects with { status, text }
  */
 Foxtrick.api.hy._fetchOrIgnore = async (api, url, params) => {
-	const MSEC = Foxtrick.util.time.MSECS_IN_SEC;
 	const HOURS_IN_DAY = Foxtrick.util.time.HOURS_IN_DAY;
-	const MAX_SEC = 59;
-	const msecMod = MAX_SEC * MSEC;
 
 	const HTTP_ERROR = 503;
 
@@ -209,7 +205,7 @@ Foxtrick.api.hy._fetchOrIgnore = async (api, url, params) => {
 	const ignoreMsec = ignoreHours * Foxtrick.util.time.MSECS_IN_HOUR;
 
 	const ignored = await Foxtrick.storage.get('YouthClub.ignoreUntil');
-	const now = Foxtrick.modules.Core.HT_TIME + msecMod;
+	const now = Foxtrick.modules.Core.UTC_TIME || Date.now() + Foxtrick.util.time.MSECS_IN_DAY;
 	if (now <= ignored) {
 		let text = Foxtrick.L10n.getString('youthclub.api.down');
 		let status = HTTP_ERROR;
