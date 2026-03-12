@@ -560,17 +560,15 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 					ACTIVE_TABS.clear();
 					ACTIVE_TABS.add(senderId);
 
-					if (Foxtrick.Manifest.manifest_version == 2) {
-						for (let i of tabListOld) {
-							let msg = { req: 'checkAlive', id: i };
-							chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
-						}
+					for (let i of tabListOld) {
+						let msg = { req: 'checkAlive', id: i };
+						chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
 					}
 				};
 
 				// listen to tab register
 				Foxtrick.SB.ext.onRequest.addListener((request, sender, sendResponse) => {
-					if (request.req != 'register')
+					if (request.req != 'register' || !sender.tab?.id)
 						return;
 					updateTabList(sender.tab.id);
 					sendResponse({ tabId: sender.tab.id });
