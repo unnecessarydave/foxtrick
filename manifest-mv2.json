@@ -273,12 +273,12 @@
 		"notifications",
 		"clipboardWrite",
 		"*://chpp.hattrick.org/*",
-		"*://*.foxtrick.org/*",
-		"https://www.fantamondi.it/*"
+		"*://*.foxtrick.org/*"
 	],
 	"optional_permissions": [
 		"https://*.hattrick-youthclub.org/*",
 		"https://api.mercattrick.com/*",
+		"https://www.fantamondi.it/HTMS/*",
 		"http://no9-online.de/*",
 		"http://www.latehome.de/*",
 		"https://vimeo.com/api/*",

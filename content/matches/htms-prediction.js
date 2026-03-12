@@ -12,6 +12,7 @@ Foxtrick.modules['HTMSPrediction'] = {
 	CSS: Foxtrick.InternalPath + 'resources/css/htms-statistics.css',
 	NICE: -1, // before ratings
 	OPTIONS: ['Mimimi'],
+	PERMISSIONS: { module: { origins: ['https://www.fantamondi.it/HTMS/*'] } },
 
 	copy: function(div) {
 		var HTMSClone = Foxtrick.cloneElement(div, true);
@@ -319,9 +320,12 @@ Foxtrick.modules['HTMSPrediction'] = {
 		htmstable.parentNode.insertBefore(p, htmstable.nextSibling);
 	},
 
-	run: function(doc) {
+	run: async function(doc) {
 		if (Foxtrick.Pages.Match.isPrematch(doc) || Foxtrick.Pages.Match.inProgress(doc) ||
 		    Foxtrick.Pages.Match.isNewLive(doc))
+			return;
+
+		if (!(await Foxtrick.Prefs.isModuleOptionPermitted(this, 'module')))
 			return;
 
 		var ratingstable = Foxtrick.Pages.Match.getRatingsTable(doc);
