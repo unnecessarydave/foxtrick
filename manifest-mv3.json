@@ -286,7 +286,7 @@
 		"clipboardWrite"
 	],
 	"host_permissions": [
-		"*://chpp.hattrick.org/*"
+		"https://chpp.hattrick.org/*"
 	],
 	"optional_host_permissions": [
 		"https://*.hattrick-youthclub.org/*",
