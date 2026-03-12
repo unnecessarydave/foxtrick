@@ -24,10 +24,19 @@ Foxtrick.containsPermission = function(types, callback) {
 					callback(response);
 				}
 			});
+		} else {
+			if (Foxtrick.Manifest.manifest_version == 3) {
+				try {
+					chrome.permissions.contains(types)
+						.then( result => callback(result) )
+						.catch( err => callback({ __permError: String(err) }) );
+				} catch (e) {
+					callback({ __permError: String(e) });
+				}
+			} else {
+				chrome.permissions.contains(types, callback);
+			}
 		}
-		else
-			chrome.permissions.contains(types, callback);
-
 		return;
 	}
 	callback(true);
