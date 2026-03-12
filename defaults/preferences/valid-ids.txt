@@ -103,9 +103,7 @@ module.ExtraPlayerInfo.enabled
 module.ExtraShortcuts.AddLeft.enabled
 module.ExtraShortcuts.AddSpace.enabled
 module.ExtraShortcuts.FoxTrickPrefs.enabled
-module.ExtraShortcuts.Latehome.enabled
 module.ExtraShortcuts.ManageCHPP.enabled
-module.ExtraShortcuts.No9.enabled
 module.ExtraShortcuts.Prefs.enabled
 module.ExtraShortcuts.Stage.enabled
 module.ExtraShortcuts.Supporterstats.enabled
