@@ -448,22 +448,21 @@ Foxtrick.loader.background.browserLoad = async function() {
 		this.requests.cacheClear = () => Foxtrick.cache.clear();
 
 		// from misc.js
-		if (Foxtrick.Manifest.manifest_version == 2) {
-			this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
-				Foxtrick.cookies.get(key, name) // never rejects
-					.then(sendResponse)
-					.catch(Foxtrick.catch(sender));
+		this.requests.cookiesGet = function({ key, name }, sender, sendResponse) {
+			Foxtrick.cookies.get(key, name) // never rejects
+				.then(sendResponse)
+				.catch(Foxtrick.catch(sender));
 
-				return true; // async
-			};
-			this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
-				Foxtrick.cookies.set(key, value, name) // never rejects
-					.then(sendResponse)
-					.catch(Foxtrick.catch(sender));
+			return true; // async
+		};
+		this.requests.cookiesSet = function({ key, value, name }, sender, sendResponse) {
+			Foxtrick.cookies.set(key, value, name) // never rejects
+				.then(sendResponse)
+				.catch(Foxtrick.catch(sender));
 
-				return true; // async
-			};
-		}
+			return true; // async
+		};
+
 		// from permissions.js
 		if (Foxtrick.Manifest.manifest_version == 2) {
 			this.requests.containsPermission = ({ types }, sender, sendResponse) => {
