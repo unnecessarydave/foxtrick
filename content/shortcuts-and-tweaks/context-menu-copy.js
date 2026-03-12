@@ -7,7 +7,7 @@
 'use strict';
 
 (function() {
-	if (Foxtrick.platform == 'Android' || Foxtrick.offscreen)
+	if (Foxtrick.platform == 'Android')
 		return;
 
 	// option: corresponding to OPTIONS

@@ -459,8 +459,6 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 			catch { return null; }
 		});
 
-		const offscreenMarker = new URL(location.href).searchParams.get('_offscreen') === '1';
-		Foxtrick.offscreen = Foxtrick.context === 'background' && offscreenMarker;
 
 		var ACTIVE_TABS = new Set();
 
