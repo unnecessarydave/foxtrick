@@ -279,9 +279,6 @@
 	},
 	"name": "Foxtrick",
 	"permissions": [
-		// <!-- chrome-specific -->
-		"declarativeContent",
-		// <!-- end chrome-specific -->
 		"storage",
 		"cookies",
 		"contextMenus",
