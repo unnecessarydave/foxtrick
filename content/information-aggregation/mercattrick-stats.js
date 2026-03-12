@@ -4,6 +4,9 @@ Foxtrick.modules['MercattrickStats'] = {
 	MODULE_CATEGORY: Foxtrick.moduleCategories.INFORMATION_AGGREGATION,
 	PAGES: ['transferSearchResult'],
 	OPTIONS: ['enableTLPage'],
+	PERMISSIONS: {
+		module: { origins: ['https://api.mercattrick.com/*'] }
+	},
 
 	CSS: Foxtrick.InternalPath + 'resources/css/mercattrick-stats.css',
 	IMAGES: {
@@ -18,9 +21,10 @@ Foxtrick.modules['MercattrickStats'] = {
 	/**
 	 * @param	{document}	doc
 	 */
-	run: function(doc) {
+	run: async function(doc) {
 		if (Foxtrick.isPage(doc, 'transferSearchResult') &&
-			Foxtrick.Prefs.isModuleOptionEnabled('MercattrickStats', 'enableTLPage')) {
+			Foxtrick.Prefs.isModuleOptionEnabled('MercattrickStats', 'enableTLPage') &&
+			await Foxtrick.Prefs.isModuleOptionPermitted(this, 'module')) {
 			// no other pages for now
 			this.runTL(doc);
 		}
