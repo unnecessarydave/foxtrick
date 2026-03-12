@@ -18,6 +18,131 @@ if (!Foxtrick.util)
 Foxtrick.util.notify = {};
 
 /**
+ * In-memory store for pending MV3 notification metadata.
+ * Used by top-level listeners registered in init() to handle notification clicks.
+ * Entries are ephemeral — lost on service worker restart, which is acceptable
+ * since all callers treat notifications as fire-and-forget.
+ * @type {Map<string, {url: string, tab: chrome.tabs.Tab, tabOpts: object, tabOptsBtn: object}>}
+ */
+Foxtrick.util.notify._pending = new Map();
+
+/**
+ * Focus or navigate the origin tab when a notification is acted upon.
+ *
+ * If tabOpts.url is set, opens a new tab next to the origin.
+ * Otherwise focuses the origin tab, falling back to creating a new tab
+ * with fallbackUrl if the origin tab was closed.
+ *
+ * @param  {chrome.tabs.Tab} originTab
+ * @param  {object}          tabOpts
+ * @param  {string}          fallbackUrl  URL to use if the origin tab is gone
+ * @return {Promise<chrome.tabs.Tab>}
+ */
+Foxtrick.util.notify._updateOriginTab = function(originTab, tabOpts, fallbackUrl) {
+	var focusWindow = function(winId) {
+		return new Promise(function(resolve) {
+			chrome.windows.update(winId, { focused: true }, resolve);
+		});
+	};
+
+	return new Promise(function(resolve) {
+		if (!tabOpts)
+			Foxtrick.log(new Error(`tabOpts is ${tabOpts}`));
+
+		if (tabOpts.url) {
+			// open URLs in a new tab next to original
+			// set correct position
+			// not setting opener since originTab may already be closed
+			let newOpts = Object.assign({
+				windowId: originTab.windowId,
+				index: originTab.index + 1,
+			}, tabOpts);
+
+			chrome.tabs.create(newOpts, resolve);
+			return;
+		}
+
+		chrome.tabs.update(originTab.id, tabOpts, (tab) => {
+			if (chrome.runtime.lastError) {
+				// tab closed, restore
+				let restoreOpts = Object.assign({
+					url: fallbackUrl,
+					windowId: originTab.windowId,
+					index: originTab.index,
+				}, tabOpts);
+
+				chrome.tabs.create(restoreOpts, resolve);
+			}
+			else {
+				resolve(tab);
+			}
+		});
+	}).then(function(tab) {
+		return focusWindow(tab.windowId).then(function() {
+			return tab;
+		});
+	});
+};
+
+/**
+ * Register persistent notification event listeners for MV3.
+ *
+ * Must be called synchronously during service worker startup
+ * (i.e. during importScripts) so Chrome persists the listeners
+ * across service worker restarts.
+ *
+ * Click/button-click handlers look up pending notification metadata
+ * from the in-memory _pending Map. If the service worker has restarted
+ * since the notification was created, the entry will be gone and the
+ * click is a no-op — this is an acceptable degradation.
+ */
+Foxtrick.util.notify.init = function() {
+	var pending = Foxtrick.util.notify._pending;
+	var updateTab = Foxtrick.util.notify._updateOriginTab;
+
+	var clearNote = function(noteId) {
+		return new Promise(function(resolve) {
+			chrome.notifications.clear(noteId, resolve);
+		});
+	};
+
+	chrome.notifications.onClicked.addListener(async function(noteId) {
+		var entry = pending.get(noteId);
+		pending.delete(noteId);
+		if (!entry)
+			return;
+
+		try {
+			await clearNote(noteId);
+			await updateTab(entry.tab, entry.tabOpts, entry.url);
+		}
+		catch (e) {
+			Foxtrick.log('notify onClicked error:', e);
+		}
+	});
+
+	// eslint-disable-next-line no-unused-vars
+	chrome.notifications.onButtonClicked.addListener(async function(noteId, btnIdx) {
+		var entry = pending.get(noteId);
+		pending.delete(noteId);
+		if (!entry)
+			return;
+
+		try {
+			await clearNote(noteId);
+			await updateTab(entry.tab, entry.tabOptsBtn, entry.url);
+		}
+		catch (e) {
+			Foxtrick.log('notify onButtonClicked error:', e);
+		}
+	});
+
+	chrome.notifications.onClosed.addListener(function(noteId) {
+		pending.delete(noteId);
+	});
+};
+
+/**
  * Create a desktop notification with a given message and link to source
  * Returns a promise that fulfills with the url once user acts on the notification
  * OR rejects with Foxtrick.TIMEOUT_ERROR if the notification is closed
@@ -42,51 +167,8 @@ Foxtrick.util.notify.create = function(msg, source, opts) {
 
 	var gId = '', gUrl = '', gTabOpts = {}, gTabOptsBtn = {};
 
-	var updateOriginTab = function(originTab, tabOpts) {
-		var focusWindow = function(winId) {
-			return new Promise(function(resolve) {
-				chrome.windows.update(winId, { focused: true }, resolve);
-			});
-		};
-
-		return new Promise(function(resolve) {
-			if (!tabOpts)
-				Foxtrick.log(new Error(`tabOpts is ${tabOpts}`));
-
-			if (tabOpts.url) {
-				// open URLs in a new tab next to original
-				// set correct position
-				// not setting opener since originTab may already be closed
-				let newOpts = Object.assign({
-					windowId: originTab.windowId,
-					index: originTab.index + 1,
-				}, tabOpts);
-
-				chrome.tabs.create(newOpts, resolve);
-				return;
-			}
-
-			chrome.tabs.update(originTab.id, tabOpts, (tab) => {
-				if (chrome.runtime.lastError) {
-					// tab closed, restore
-					let restoreOpts = Object.assign({
-						url: gUrl,
-						windowId: originTab.windowId,
-						index: originTab.index,
-					}, tabOpts);
-
-					chrome.tabs.create(restoreOpts, resolve);
-				}
-				else {
-					resolve(tab);
-				}
-			});
-		}).then(function(tab) {
-			return focusWindow(tab.windowId).then(function() {
-				return tab;
-			});
-		});
-	};
+	var updateOriginTab = (originTab, tabOpts) =>
+		Foxtrick.util.notify._updateOriginTab(originTab, tabOpts, gUrl);
 
 	var createChrome = async function() {
 		var options = {
@@ -149,8 +231,9 @@ Foxtrick.util.notify.create = function(msg, source, opts) {
 		if (notes && gId in notes)
 			await clearNote(gId);
 
+		var nId;
 		try {
-			await createNote(gId, options);
+			nId = await createNote(gId, options);
 		}
 		catch (err) {
 			// opera and FF do not support buttons
@@ -161,9 +244,23 @@ Foxtrick.util.notify.create = function(msg, source, opts) {
 			delete options.buttons;
 			gTabOpts.url = gTabOptsBtn.url;
 
-			await createNote(gId, options);
+			nId = await createNote(gId, options);
 		}
 
+		// MV3: resolve immediately, let top-level listeners handle interaction.
+		// This prevents dangling message channels that can crash the browser
+		// when the extension is reloaded from the service worker context.
+		if (Foxtrick.Manifest.manifest_version == 3) {
+			Foxtrick.util.notify._pending.set(nId, {
+				url: gUrl,
+				tab: source.tab,
+				tabOpts: gTabOpts,
+				tabOptsBtn: gTabOptsBtn,
+			});
+			return gUrl;
+		}
+
+		// MV2: wait for user interaction via per-notification listeners
 		return new Promise((fulfill, reject) => {
 			var unregister = () => {};
 
@@ -323,3 +420,11 @@ Foxtrick.util.notify.create = function(msg, source, opts) {
 		});
 	});
 };
+
+// MV3: register persistent notification listeners at service worker startup.
+// This runs synchronously during importScripts, satisfying Chrome's requirement
+// that event listeners are registered in the first turn of the event loop.
+(() => {
+	if (Foxtrick.context === 'background' && Foxtrick.Manifest.manifest_version == 3)
+		Foxtrick.util.notify.init();
+})();
