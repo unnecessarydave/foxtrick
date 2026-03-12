@@ -16,12 +16,7 @@ Foxtrick.modules['ExtraShortcuts'] = {
 		'FoxTrickPrefs',
 		'Stage',
 		'Supporterstats', 'Transfers', 'Prefs', 'ManageCHPP',
-		'No9', 'Latehome',
 	],
-	PERMISSIONS: {
-		No9: { origins: ['http://no9-online.de/*'] },
-		Latehome: { origins: ['http://www.latehome.de/*'] },
-	},
 	LINKS: {
 		Stage: {
 			link: '',
@@ -38,13 +33,6 @@ Foxtrick.modules['ExtraShortcuts'] = {
 		},
 	},
 
-	RADIOS: ['No9', 'Latehome'],
-
-	// following also need to be entered in manifest.json->optional_permissions
-	RADIO_URLS: [
-		'http://radio-no9.de/_no9/no9status.php',
-		'http://www.latehome.de/foxtrick/status.php',
-	],
 	CSS: Foxtrick.InternalPath + 'resources/css/extra-shortcuts.css',
 
 	OPTIONS_CSS: [
@@ -64,94 +52,6 @@ Foxtrick.modules['ExtraShortcuts'] = {
 		let relative = doc.location.pathname + doc.location.search;
 		let link = new URL(relative, origin == STAGE_ORIGIN ? PROD_ORIGIN : STAGE_ORIGIN);
 		module.LINKS.Stage.link = link.href;
-
-		/**
-		 * @param {string} url
-		 * @param {string} radio
-		 */
-		var checkRadio = function(url, radio) {
-			Foxtrick.util.load.xml(url, function(radioXML) {
-				if (radioXML == null || radioXML.getElementsByTagName('radio').length == 0)
-					return;
-
-				if (radioXML.getElementsByTagName('status').length == 0)
-					return;
-
-				var span = doc.getElementById(radio + 'Span');
-
-				var list = doc.createElement('ul');
-				list.className = 'ft-pop';
-				list.setAttribute('style', 'margin-top:-1px;');
-
-				let [status] = radioXML.getElementsByTagName('status');
-
-				if (status.textContent === 'online') {
-					let item = doc.createElement('li');
-					let h2 = doc.createElement('h2');
-					let [iconOnline] = radioXML.getElementsByTagName('iconOnline');
-					h2.textContent = iconOnline.getAttribute('value');
-					item.appendChild(h2);
-					list.appendChild(item);
-
-					{
-						let item = doc.createElement('li');
-						let [song] = radioXML.getElementsByTagName('song');
-						item.textContent = song.getAttribute('value');
-						item.appendChild(doc.createElement('br'));
-						item.appendChild(doc.createTextNode(song.textContent));
-						list.appendChild(item);
-					}
-
-					let streams = radioXML.getElementsByTagName('stream');
-					for (let j = 0; j < streams.length; ++j) {
-						let item = doc.createElement('li');
-						let link = doc.createElement('a');
-						link.href = Foxtrick.util.sanitize.parseUrl(streams[j].textContent);
-						link.target = '_blank';
-						link.rel = 'noopener';
-						link.textContent = streams[j].getAttribute('value');
-						item.appendChild(link);
-						list.appendChild(item);
-					}
-
-					let iconurl = Foxtrick.util.sanitize.parseUrl(iconOnline.textContent);
-					let img1 = doc.getElementById(radio + 'Icon');
-
-					let style = `background-image:url('${iconurl}');`;
-					style += 'margin-left:2px;background-repeat:no-repeat;';
-					img1.setAttribute('style', style);
-					Foxtrick.Prefs.setString(radio + 'CurrentIcon', iconurl);
-				}
-				else {
-					let item = doc.createElement('li');
-					let h2 = doc.createElement('h2');
-					let [iconOffline] = radioXML.getElementsByTagName('iconOffline');
-					h2.textContent = iconOffline.getAttribute('value');
-					item.appendChild(h2);
-					list.appendChild(item);
-
-					let iconurl = Foxtrick.util.sanitize.parseUrl(iconOffline.textContent);
-					let img1 = doc.getElementById(radio + 'Icon');
-					let style = `background-image:url('${iconurl}');`;
-					style += 'margin-left:2px;background-repeat:no-repeat;';
-					img1.setAttribute('style', style);
-					Foxtrick.Prefs.setString(radio + 'CurrentIcon', iconurl);
-				}
-
-				let websites = radioXML.getElementsByTagName('website');
-				for (let j = 0; j < websites.length; ++j) {
-					let item = doc.createElement('li');
-					let link = doc.createElement('a');
-					link.href = Foxtrick.util.sanitize.parseUrl(websites[j].textContent);
-					link.target = '_blank';
-					link.rel = 'noopener';
-					link.textContent = websites[j].getAttribute('value');
-					item.appendChild(link);
-					list.appendChild(item);
-				}
-				span.appendChild(list);
-			});
-		};
 
 		var shortcuts = doc.getElementById('shortcuts') ||
 			doc.getElementById('shortcutsNoSupporter');
@@ -206,39 +106,5 @@ Foxtrick.modules['ExtraShortcuts'] = {
 				targetNode.appendChild(link);
 		}
 
-		for (let [i, radio] of module.RADIOS.entries()) {
-			if (!Foxtrick.Prefs.isModuleOptionEnabled('ExtraShortcuts', radio))
-				continue;
-
-			let link = Foxtrick.createFeaturedElement(doc, module, 'a');
-			link.className = 'ft_extra-shortcuts';
-
-			// link.target='_blank';
-			link.id = radio + 'Id';
-			let img1 = doc.createElement('img');
-			img1.setAttribute('class', 'ftSCRadio');
-			img1.src = '/Img/Icons/transparent.gif';
-			img1.id = radio + 'Icon';
-			let curIcon = Foxtrick.Prefs.getString(radio + 'CurrentIcon');
-			if (curIcon != null) {
-				let style = `margin-left:2px;background-image:url('${curIcon}')`;
-				img1.setAttribute('style', style);
-			}
-			link.appendChild(img1);
-
-			let span = doc.createElement('div');
-			span.className = 'ft-pop-up-container';
-			span.id = radio + 'Span';
-			span.appendChild(link);
-
-			if (Foxtrick.Prefs.isModuleOptionEnabled('ExtraShortcuts', 'AddLeft'))
-				targetNode.insertBefore(span, targetNode.firstChild);
-			else if (targetNode.lastChild.nodeName == 'BR')
-				targetNode.insertBefore(span, targetNode.lastChild);
-			else
-				targetNode.appendChild(span);
-
-			checkRadio(module.RADIO_URLS[i], radio);
-		}
 	},
 };
