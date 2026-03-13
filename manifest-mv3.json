@@ -306,7 +306,7 @@
 		"default_popup": "content/popup.html"
 	},
 	// <!-- chrome-specific -->
-	"minimum_chrome_version": "116",
+	"minimum_chrome_version": "109",
 	// <!-- end chrome-specific -->
 	"options_ui" : {
 		"page": "content/preferences.html",
