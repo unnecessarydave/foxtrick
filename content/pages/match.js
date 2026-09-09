@@ -885,9 +885,25 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 		if (!foundBodypart)
 			continue;
 
+		if (Foxtrick.Prefs.isModuleOptionEnabled('OriginalFace', 'ColouredYouth'))
+			src = src.replace(/y_/, '');
+
+		// use protocol agnostic URLs
+		src = src.replace(/^https?:/, '');
+
+		let img = doc.createElement('img');
+		img.src = src;
+
 		/** @type {number[]} */
 		let sizes = SZ[bodypart];
-		let [width, height] = sizes.map(s => Math.round(s / FACTOR));
+		let [width, height] = [0, 0];
+		if (oldFaces) {
+			[width, height] = sizes.map(s => Math.round(s / FACTOR));
+		} else {
+			[width, height] = img.naturalWidth != 0 ?
+				[Math.round(img.naturalWidth / FACTOR), Math.round(img.naturalHeight / FACTOR)]
+				: sizes.map(s => Math.round(s / FACTOR));
+		}
 
 		let styleString = '';
 		if (!oldFaces) {
@@ -896,15 +912,7 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 			styleString = 'top:' + y + 'px;left:' + x + 'px;position:absolute;';
 		}
 
-		if (Foxtrick.Prefs.isModuleOptionEnabled('OriginalFace', 'ColouredYouth'))
-			src = src.replace(/y_/, '');
-
-		// use protocol agnostic URLs
-		src = src.replace(/^https?:/, '');
-
-		let img = doc.createElement('img');
 		img.setAttribute('style', styleString);
-		img.src = src;
 		img.width = width;
 		img.height = height;
 		shirtDiv.appendChild(img);
