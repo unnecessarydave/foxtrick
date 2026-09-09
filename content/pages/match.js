@@ -839,7 +839,6 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 
 	/* eslint-disable no-magic-numbers */
 	var sizes = {
-		backgrounds: [0, 0], // don't show
 		kits: [92, 123],
 		bodies: [92, 123],
 		faces: [92, 123],
@@ -848,16 +847,17 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 		goatees: [70, 70],
 		noses: [70, 70],
 		hair: [92, 123],
-		misc: [0, 0], // don't show (eg cards)
+		// backgrounds: [0, 0], // don't show
+		// misc: [0, 0], // don't show (eg cards)
 	};
 	var sizesOld = {
-		backgrounds: [0, 0], // don't show
 		faces: [47, 49],
 		eyes: [47, 49],
 		mouths: [47, 49],
 		noses: [47, 49],
 		hair: [47, 49],
-		misc: [0, 0], // don't show (eg cards)
+		// backgrounds: [0, 0], // don't show
+		// misc: [0, 0], // don't show (eg cards)
 	};
 	/* eslint-enable no-magic-numbers */
 
@@ -874,11 +874,15 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 	for (let layer of layers) {
 		let src = xml.text('Image', layer);
 		let bodypart;
+		let foundBodypart = false;
+		
 		for (bodypart in SZ) {
-			if (src.search(bodypart) != -1)
+			if (src.search(bodypart) != -1) {
+				foundBodypart = true;
 				break;
+			}
 		}
-		if (!bodypart)
+		if (!foundBodypart)
 			continue;
 
 		/** @type {number[]} */
