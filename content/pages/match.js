@@ -847,6 +847,7 @@ Foxtrick.Pages.Match.makeAvatar = function(shirtDiv, avatarXml, scale) {
 		goatees: [70, 70],
 		noses: [70, 70],
 		hair: [92, 123],
+		necks: [92, 123],
 		// backgrounds: [0, 0], // don't show
 		// misc: [0, 0], // don't show (eg cards)
 	};
