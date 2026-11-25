@@ -546,7 +546,19 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 		else if (Foxtrick.context === 'background') {
 			(function() {
 
-				var confirmAlive = function(response) {
+				var confirmAlive = function(tabId, response) {
+					// Closed or navigated tabs may no longer have a message receiver.
+					let error = chrome.runtime.lastError;
+					if (error) {
+						if (error.message === 'Could not establish connection. Receiving end does not exist.' ||
+						    error.message === `No tab with id: ${tabId}.`) {
+							Foxtrick.log('Removing inactive tab from register:', tabId);
+						}
+						else {
+							Foxtrick.log('Unexpected tab liveness check error for tab', tabId, ':', error.message);
+						}
+						return;
+					}
 					if (response)
 						ACTIVE_TABS.add(response.id);
 				};
@@ -562,7 +574,7 @@ Foxtrick.lazyProp = function(obj, prop, calc) {
 
 					for (let i of tabListOld) {
 						let msg = { req: 'checkAlive', id: i };
-						chrome.tabs.sendMessage(Number(i), msg, confirmAlive);
+						chrome.tabs.sendMessage(Number(i), msg, response => confirmAlive(i, response));
 					}
 				};
 
